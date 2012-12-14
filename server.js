@@ -6,18 +6,23 @@ var server = express();
 var igneous = require('igneous');
 var igneous_middleware = igneous({
 	root: __dirname +'/assets',
-	minify: true,
+	minify: false,
 	flows: [
 		{
-			route: 'styles.css',
+			route: '/styles/irc.css',
 			type: 'css',
 			base: '/styles',
 			paths: [
-				'/'
+				'/vendor/bootstrap',
+				'/irc.styl',
+				'/channels.styl',
+				'/channel.styl',
+				'/messages.styl',
+				'/users.styl'
 			]
 		},
 		{
-			route: 'irc.js',
+			route: '/scripts/irc.js',
 			type: 'js',
 			base: '/scripts',
 			paths: [
@@ -26,11 +31,25 @@ var igneous_middleware = igneous({
 				'/vendor/backbone',
 				'/vendor/glenoid',
 				'/vendor/handlebars',
-				'irc.js'
+				'/irc.js',
+				'/models',
+				'/collections',
+				'/views',
+				'/routers',
+				'application.js'
 			]
+		},
+		{
+			route: '/templates/irc.js',
+			type: 'jst',
+			jst_lang: 'handlebars',
+			jst_namespace: 'templates',
+			base: '/templates',
+			paths: ['/']
 		}
 	]
 });
+server.use( igneous_middleware );
 
 // Set up templates for Express
 var hogy = require('hogy');
