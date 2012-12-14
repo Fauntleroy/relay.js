@@ -1,3 +1,6 @@
+// We want _
+var _ = require('lodash');
+
 // Set up Express
 var express = require('express');
 var server = express();
@@ -69,36 +72,77 @@ var io = socketio.listen( http_server );
 
 // Set up IRC
 var irc = require('irc');
-var irc_client = new irc.Client( 'irc.freenode.net', 'fauntlebot', {
-	channels: ['#irchub']
-});
+var clients = {};
+var Client = function( parameters ){
 
-irc_client.addListener( 'registered', function( message ){
-	console.log( '>>> REGISTERED.', message );
-});
+	if( clients[parameters.server +'/'+ parameters.user] ) return clients[parameters.server +'/'+ parameters.user];
 
-irc_client.addListener( 'motd', function( motd ){
-	console.log( '>>> MOTD.', motd );
-});
+	var irc_client = new irc.Client( parameters.server, parameters.user, {
+		channels: parameters.channels
+	});
 
-irc_client.addListener( 'topic', function( channel, topic, nick, message ){
-	console.log( '>>> TOPIC.', channel, topic, nick, message );
-});
+	irc_client.addListener( 'registered', function( message ){
+		console.log( '>>> REGISTERED.', message );
+	});
 
-irc_client.addListener( 'names', function( channel, names ){
-	console.log( '>>> NAMES.', names );
-});
+	irc_client.addListener( 'motd', function( motd ){
+		console.log( '>>> MOTD.', motd );
+	});
 
-irc_client.addListener( 'join', function( channel, nick, message ){
-	console.log( '>>> JOIN.', channel, nick, message );
-});
+	irc_client.addListener( 'topic', function( channel, topic, nick, message ){
+		console.log( '>>> TOPIC.', channel, topic, nick, message );
+	});
 
-irc_client.addListener( 'message', function( from, to, message ){
-	console.log( '>>> MESSAGE, from: '+ from +', to: '+ to +', message: '+ message );
-});
+	irc_client.addListener( 'names', function( channel, names ){
+		console.log( '>>> NAMES.', names );
+	});
+
+	irc_client.addListener( 'message', function( from, to, message ){
+		console.log( '>>> MESSAGE, from: '+ from +', to: '+ to +', message: '+ message );
+	});
+
+	io.of( '/'+ parameters.server +'/'+ parameters.user ).on( 'connection', function( client ){
+
+		console.log( '>>> SOCKET CONNECTED!!!' );
+
+		irc_client.addListener( 'join', function( channel, nick, message ){
+			console.log( '>>> JOIN.', channel, nick, message );
+			client.emit( 'join', channel, nick, message );
+		});
+
+		irc_client.addListener( 'part', function( channel, nick, reason, message ){
+			console.log( '>>> PART.', channel, nick, reason, message );
+			client.emit( 'part', channel, nick, reason, message );
+		});
+
+		client.on( 'join', function( channel ){
+console.log('client wants to join....', channel);
+			irc_client.join( channel );
+
+		});
+
+		client.on( 'part', function( channel ){
+
+			irc_client.part( channel );
+
+		});
+
+		client.emit( 'chans', _(irc_client.chans).keys() );
+		
+	});
+
+	clients[parameters.server +'/'+ parameters.user] = this;
+
+};
 
 // Routes
 server.get( '/', function( req, res ){
+
+	var client = new Client({
+		server: 'irc.freenode.net',
+		user: 'irchub',
+		channels: ['#irchub']
+	});
 
 	res.render( 'index.tpl', {
 

@@ -5,6 +5,7 @@
 	<title>IRCHUB</title>
 
 	<link rel="stylesheet" href="/styles/irc.css" />
+	<script src="/socket.io/socket.io.js"></script>
 	<script src="/templates/irc.js"></script>
 	<script src="/scripts/irc.js"></script>
 
