@@ -93,10 +93,6 @@ var Client = function( parameters ){
 		console.log( '>>> TOPIC.', channel, topic, nick, message );
 	});
 
-	irc_client.addListener( 'names', function( channel, names ){
-		console.log( '>>> NAMES.', names );
-	});
-
 	io.of( '/'+ parameters.server +'/'+ parameters.user ).on( 'connection', function( client ){
 
 		console.log( '>>> SOCKET CONNECTED!!!' );
@@ -108,6 +104,11 @@ var Client = function( parameters ){
 
 		irc_client.addListener( 'part', function( channel, nick, reason, message ){
 			client.emit( 'part', channel, nick, reason, message );
+		});
+
+		irc_client.addListener( 'names', function( channel, nicks ){
+			console.log( '>>> NAMES.', nicks );
+			client.emit( 'names', channel, nicks );
 		});
 
 		irc_client.addListener( 'message', function( from, to, message ){

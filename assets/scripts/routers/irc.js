@@ -7,7 +7,7 @@ irc.Routers.Application = Backbone.Router.extend({
 	default: function(){
 
 		irc.user = {
-			name: 'irchub'
+			nick: 'irchub'
 		};
 		irc.socket = io.connect('/irc.freenode.net/irchub');
 

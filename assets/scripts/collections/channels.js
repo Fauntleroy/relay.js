@@ -38,7 +38,7 @@ irc.Collections.Channels = Backbone.Collection.extend({
 
 	doJoin: function( channel, nick, message ){
 
-		if( nick === irc.user.name ){
+		if( nick === irc.user.nick ){
 
 			var joined = new this.model({ name: channel });
 
@@ -51,7 +51,7 @@ irc.Collections.Channels = Backbone.Collection.extend({
 
 	doPart: function( channel, nick, reason, message ){
 
-		if( nick === irc.user.name ){
+		if( nick === irc.user.nick ){
 
 			var parted_channels = this.where({ name: channel });
 			this.remove( parted_channels );
