@@ -4,6 +4,9 @@ irc.Models.Channel = Backbone.Model.extend({
 
 		_(this).bindAll( 'active' );
 
+		this.messages = new irc.Collections.Messages( null, { channel: this.get('name') });
+		this.users = new irc.Collections.Users( null, { channel: this.get('name') })
+
 	},
 
 	active: function(){

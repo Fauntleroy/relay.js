@@ -97,10 +97,6 @@ var Client = function( parameters ){
 		console.log( '>>> NAMES.', names );
 	});
 
-	irc_client.addListener( 'message', function( from, to, message ){
-		console.log( '>>> MESSAGE, from: '+ from +', to: '+ to +', message: '+ message );
-	});
-
 	io.of( '/'+ parameters.server +'/'+ parameters.user ).on( 'connection', function( client ){
 
 		console.log( '>>> SOCKET CONNECTED!!!' );
@@ -111,20 +107,26 @@ var Client = function( parameters ){
 		});
 
 		irc_client.addListener( 'part', function( channel, nick, reason, message ){
-			console.log( '>>> PART.', channel, nick, reason, message );
 			client.emit( 'part', channel, nick, reason, message );
 		});
 
-		client.on( 'join', function( channel ){
-console.log('client wants to join....', channel);
-			irc_client.join( channel );
+		irc_client.addListener( 'message', function( from, to, message ){
+			console.log( '>>> MESSAGE, from: '+ from +', to: '+ to +', message: '+ message );
+			client.emit( 'message', from, to, message );
+		});
 
+		client.on( 'join', function( channel ){
+			irc_client.join( channel );
 		});
 
 		client.on( 'part', function( channel ){
-
 			irc_client.part( channel );
+		});
 
+		client.on( 'say', function( target, message ){
+			console.log('say:',target,message);
+			irc_client.say( target, message );
+			client.emit( 'message', parameters.user, target, message );
 		});
 
 		client.emit( 'chans', _(irc_client.chans).keys() );

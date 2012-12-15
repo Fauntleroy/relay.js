@@ -32,7 +32,7 @@ irc.Collections.Channels = Backbone.Collection.extend({
 		for( var i in channels ) channels_to_join.push({ name: channels[i] });
 
 		this.add( channels_to_join );
-		this.last().active();
+		if( this.last() ) this.last().active();
 
 	},
 
