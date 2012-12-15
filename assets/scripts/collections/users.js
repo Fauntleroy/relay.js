@@ -5,7 +5,8 @@ irc.Collections.Users = Backbone.Collection.extend({
 	initialize: function( models, parameters ){
 
 		this.channel = parameters.channel;
-		this.socket = irc.socket;
+		this.connection = parameters.connection;
+		this.socket = this.connection.socket;
 
 		_( this ).bindAll( 'doNames', 'doPart', 'doJoin' );
 
@@ -30,7 +31,7 @@ irc.Collections.Users = Backbone.Collection.extend({
 
 	doPart: function( channel, nick, reason, message ){
 
-		if( this.channel === channel && irc.user.nick !== nick ){
+		if( channel === this.channel && nick !== this.connection.get('nick') ){
 
 			var parting_users = this.where({ nick: nick });
 			this.remove( parting_users );
@@ -41,7 +42,7 @@ irc.Collections.Users = Backbone.Collection.extend({
 
 	doJoin: function( channel, nick, message ){
 
-		if( this.channel === channel && irc.user.nick !== nick ){
+		if( channel === this.channel && nick !== this.connection.get('nick') ){
 
 			this.add({
 				nick: nick

@@ -1,0 +1,28 @@
+<div class="modal hide fade">
+	<form>
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h3>Connect</h3>
+		</div>
+		<div class="modal-body">
+			<fieldset>
+				<legend>Server</legend>
+				<label for="connect_server">Server</label>
+				<input id="connect_server" name="server" placeholder="ex: irc.freenode.net" />
+				<label for="connect_channels">Channels</label>
+				<input id="connect_channels" name="channels" placeholder="#irchub" /><span class="help-inline">Optional</span>
+			</fieldset>
+			<fieldset>
+				<legend>Authentication</legend>
+				<label for="connect_nick">Nick</label>
+				<input id="connect_nick" name="nick" />
+				<label for="connect_password">Password</label>
+				<input id="connect_password" name="password" /><span class="help-inline">Optional</span>
+			</fieldset>
+		</div>
+		<div class="modal-footer">
+			<button class="btn" type="cancel">Cancel</button>
+			<button class="btn btn-primary" type="submit">Connect</button>
+		</div>
+	</form>
+</div>

@@ -8,8 +8,9 @@
     "express": "3.x",
     "igneous": "0.1.x",
     "hogy": "0.0.x",
-    "socket.io": "0.9.x",
-    "irc": "0.3.x"
+    "socket.io": "git://github.com/Fauntleroy/socket.io.git#Branch_0.9.13",
+    "irc": "0.3.x",
+    "node-uuid": "1.4.x"
   },
   "scripts": {
     "start": "node server.js"

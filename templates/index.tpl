@@ -12,9 +12,11 @@
 </head>
 <body>
 
+	<div id="connect"></div>
+
 	<div id="application">
 		<div id="user"></div>
-		<div id="channels"></div>
+		<div id="connections"></div>
 		<div id="channel"></div>
 	</div>
 

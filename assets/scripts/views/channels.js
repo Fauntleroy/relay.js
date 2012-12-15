@@ -1,6 +1,5 @@
 irc.Views.Channels = Backbone.View.extend({
 
-	el: '#channels',
 	template: templates.channels,
 	channel_template: templates.channel_listing,
 
@@ -16,22 +15,23 @@ irc.Views.Channels = Backbone.View.extend({
 		this.collection.on( 'add', this.renderChannel );
 		this.collection.on( 'remove', this.removeChannel );
 
-		this.render();
-
 	},
 
 	render: function(){
 
-		this.$el.html( this.template() );
+		var html = this.template();
+		this.$el.html( html );
 
 		this.$channels = this.$el.find('ul.list');
 
 		this.collection.each( this.renderChannel );
 
+		return this;
+
 	},
 
 	renderChannel: function( channel ){
-
+console.log( 'this.$channels', this.$channels, this.$channels.length );
 		this.$channels.append( this.channel_template( channel.toJSON() ) );
 
 	},

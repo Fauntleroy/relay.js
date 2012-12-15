@@ -2,11 +2,12 @@ irc.Collections.Channels = Backbone.Collection.extend({
 
 	model: irc.Models.Channel,
 
-	initialize: function(){
+	initialize: function( models, parameters ){
 
 		_(this).bindAll( 'join', 'part', 'doChans', 'doJoin', 'doPart' );
 
-		this.socket = irc.socket;
+		this.connection = parameters.connection;
+		this.socket = this.connection.socket;
 
 		this.socket.on( 'chans', this.doChans );
 		this.socket.on( 'join', this.doJoin );
@@ -38,12 +39,9 @@ irc.Collections.Channels = Backbone.Collection.extend({
 
 	doJoin: function( channel, nick, message ){
 
-		if( nick === irc.user.nick ){
+		if( nick === this.connection.get('nick') ){
 
-			var joined = new this.model({ name: channel });
-
-			this.add( joined );
-			joined.active();
+			this.add({ name: channel });
 
 		}
 
@@ -51,7 +49,7 @@ irc.Collections.Channels = Backbone.Collection.extend({
 
 	doPart: function( channel, nick, reason, message ){
 
-		if( nick === irc.user.nick ){
+		if( nick === this.connection.get('nick') ){
 
 			var parted_channels = this.where({ name: channel });
 			this.remove( parted_channels );

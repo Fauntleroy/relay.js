@@ -5,7 +5,8 @@ irc.Collections.Messages = Backbone.Collection.extend({
 	initialize: function( models, parameters ){
 
 		this.channel = parameters.channel;
-		this.socket = irc.socket;
+		this.connection = parameters.connection;
+		this.socket = this.connection.socket;
 
 		_( this ).bindAll( 'say', 'doMessage' );
 
@@ -22,7 +23,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 	doMessage: function( from, to, message ){
 
 		if( to === this.channel ){
-			console.log( message );
+			console.log( from, to, message );
 			this.add({
 				user: from,
 				contents: message

@@ -30,6 +30,8 @@ var igneous_middleware = igneous({
 			base: '/scripts',
 			paths: [
 				'/vendor/jquery',
+				'/vendor/jquery.serializeObject',
+				'/vendor/bootstrap',
 				'/vendor/underscore',
 				'/vendor/backbone',
 				'/vendor/glenoid',
@@ -66,88 +68,49 @@ var http = require('http');
 var http_server = http.createServer( server );
 http_server.listen( 8080 );
 
+// Routes
+server.get( '/', function( req, res ){
+
+	res.render( 'index.tpl', {});
+
+});
+
 // Set up Socket.io
 var socketio = require('socket.io');
 var io = socketio.listen( http_server );
 
-// Set up IRC
-var irc = require('irc');
-var clients = {};
-var Client = function( parameters ){
+io.configure( function(){
+	io.set( 'close timeout', 30 );
+});
 
-	if( clients[parameters.server +'/'+ parameters.user] ) return clients[parameters.server +'/'+ parameters.user];
+var Client = require('./irc_client.js')( io );
 
-	var irc_client = new irc.Client( parameters.server, parameters.user, {
-		channels: parameters.channels
+io.sockets.on( 'connection', function( client ){
+
+	console.log( '>> CLIENT CONNECT' );
+
+	client.on( 'new_irc_connection', function( parameters ){
+
+		console.log( '>> CLIENT CONNECT TO SERVER:', parameters );
+
+		var irc_client = new Client({
+			server: parameters.server,
+			nick: parameters.nick,
+			channels: parameters.channels.split(',')
+		});
+
+		client.emit( 'irc_connection', {
+			id: irc_client.id,
+			server: irc_client.server,
+			nick: irc_client.nick,
+			namespace: irc_client.namespace
+		});
+
 	});
 
-	irc_client.addListener( 'registered', function( message ){
-		console.log( '>>> REGISTERED.', message );
-	});
+	client.on( 'disconnect', function(){
 
-	irc_client.addListener( 'motd', function( motd ){
-		console.log( '>>> MOTD.', motd );
-	});
-
-	irc_client.addListener( 'topic', function( channel, topic, nick, message ){
-		console.log( '>>> TOPIC.', channel, topic, nick, message );
-	});
-
-	io.of( '/'+ parameters.server +'/'+ parameters.user ).on( 'connection', function( client ){
-
-		console.log( '>>> SOCKET CONNECTED!!!' );
-
-		irc_client.addListener( 'join', function( channel, nick, message ){
-			console.log( '>>> JOIN.', channel, nick, message );
-			client.emit( 'join', channel, nick, message );
-		});
-
-		irc_client.addListener( 'part', function( channel, nick, reason, message ){
-			client.emit( 'part', channel, nick, reason, message );
-		});
-
-		irc_client.addListener( 'names', function( channel, nicks ){
-			console.log( '>>> NAMES.', nicks );
-			client.emit( 'names', channel, nicks );
-		});
-
-		irc_client.addListener( 'message', function( from, to, message ){
-			console.log( '>>> MESSAGE, from: '+ from +', to: '+ to +', message: '+ message );
-			client.emit( 'message', from, to, message );
-		});
-
-		client.on( 'join', function( channel ){
-			irc_client.join( channel );
-		});
-
-		client.on( 'part', function( channel ){
-			irc_client.part( channel );
-		});
-
-		client.on( 'say', function( target, message ){
-			console.log('say:',target,message);
-			irc_client.say( target, message );
-			client.emit( 'message', parameters.user, target, message );
-		});
-
-		client.emit( 'chans', _(irc_client.chans).keys() );
-		
-	});
-
-	clients[parameters.server +'/'+ parameters.user] = this;
-
-};
-
-// Routes
-server.get( '/', function( req, res ){
-
-	var client = new Client({
-		server: 'irc.freenode.net',
-		user: 'irchub',
-		channels: ['#irchub']
-	});
-
-	res.render( 'index.tpl', {
+		console.log( '>> CLIENT DISCONNECT FROM SERVER' );
 
 	});
 
