@@ -31,7 +31,7 @@ irc.Views.Channels = Backbone.View.extend({
 	},
 
 	renderChannel: function( channel ){
-console.log( 'this.$channels', this.$channels, this.$channels.length );
+
 		this.$channels.append( this.channel_template( channel.toJSON() ) );
 
 	},

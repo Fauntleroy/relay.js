@@ -17,6 +17,9 @@ var igneous_middleware = igneous({
 			base: '/styles',
 			paths: [
 				'/vendor/bootstrap',
+				'/vendor/jquery.sparkartTags',
+				'/bootstrap_overrides.styl',
+				'/sparkartTags_overrides.styl',
 				'/irc.styl',
 				'/channels.styl',
 				'/channel.styl',
@@ -30,7 +33,9 @@ var igneous_middleware = igneous({
 			base: '/scripts',
 			paths: [
 				'/vendor/jquery',
+				'/vendor/jquery.links',
 				'/vendor/jquery.serializeObject',
+				'/vendor/jquery.sparkartTags',
 				'/vendor/bootstrap',
 				'/vendor/underscore',
 				'/vendor/backbone',
@@ -55,6 +60,7 @@ var igneous_middleware = igneous({
 	]
 });
 server.use( igneous_middleware );
+server.use( express.static('./assets') );
 
 // Set up templates for Express
 var hogy = require('hogy');
@@ -81,9 +87,10 @@ var io = socketio.listen( http_server );
 
 io.configure( function(){
 	io.set( 'close timeout', 30 );
+	io.set( 'log level', 1 );
 });
 
-var Client = require('./irc_client.js')( io );
+var Adapter = require('./irc_adapter.js')( io );
 
 io.sockets.on( 'connection', function( client ){
 
@@ -93,24 +100,20 @@ io.sockets.on( 'connection', function( client ){
 
 		console.log( '>> CLIENT CONNECT TO SERVER:', parameters );
 
-		var irc_client = new Client({
+		var irc_adapter = new Adapter({
 			server: parameters.server,
 			nick: parameters.nick,
-			channels: parameters.channels.split(',')
+			channels: parameters.channels
 		});
 
 		client.emit( 'irc_connection', {
-			id: irc_client.id,
-			server: irc_client.server,
-			nick: irc_client.nick,
-			namespace: irc_client.namespace
+			id: irc_adapter.id,
+			server: irc_adapter.server,
+			nick: irc_adapter.nick,
+			namespace: irc_adapter.namespace
 		});
 
-	});
-
-	client.on( 'disconnect', function(){
-
-		console.log( '>> CLIENT DISCONNECT FROM SERVER' );
+		console.log( '>> IRC CLIENT', irc_adapter.client );
 
 	});
 

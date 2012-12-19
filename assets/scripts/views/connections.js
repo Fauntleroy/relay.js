@@ -3,6 +3,10 @@ irc.Views.Connections = Backbone.View.extend({
 	el: '#connections',
 	template: templates.connections,
 
+	events: {
+		'click button[name="new_connection"]': 'clickNewConnection'
+	},
+
 	initialize: function(){
 
 		_( this ).bindAll( 'render', 'renderConnection' );
@@ -32,6 +36,14 @@ irc.Views.Connections = Backbone.View.extend({
 		var $connection = connection_view.render().$el;
 
 		this.$connections.append( $connection );
+
+	},
+
+	clickNewConnection: function( e ){
+
+		e.preventDefault();
+
+		irc.views.connect.show();
 
 	}
 

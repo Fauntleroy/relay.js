@@ -8,25 +8,146 @@ irc.Collections.Messages = Backbone.Collection.extend({
 		this.connection = parameters.connection;
 		this.socket = this.connection.socket;
 
-		_( this ).bindAll( 'say', 'doMessage' );
+		_( this ).bindAll( 'say', 'doMessage', 'doNotice', 'doAction', 'doJoin', 'doPart', 'doQuit', 'doTopic', 'doMOTD' );
 
 		this.socket.on( 'message', this.doMessage );
+		this.socket.on( 'notice', this.doNotice );
+		this.socket.on( 'action', this.doAction );
+		this.socket.on( 'join', this.doJoin );
+		this.socket.on( 'part', this.doPart );
+		this.socket.on( 'quit', this.doQuit );
+		this.socket.on( 'topic', this.doTopic );
+
+		this.socket.on( 'motd', this.doMOTD );
 
 	},
 
-	say: function( message ){
+	say: function( target, message ){
 
-		this.socket.emit( 'say', this.channel, message );
+		if( arguments.length === 1 ){
+			message = target;
+			target = this.channel;
+		}
+
+		this.socket.emit( 'say', target, message );
 
 	},
 
 	doMessage: function( from, to, message ){
 
-		if( to === this.channel ){
-			console.log( from, to, message );
+		if( from === this.connection.get('nick') && to === this.channel ){
+
 			this.add({
-				user: from,
+				message: true,
+				nick: from,
 				contents: message
+			});
+
+		}
+		else if( to === this.channel || ( from === this.channel && to === this.connection.get('nick') ) ){
+
+			this.add({
+				message: true,
+				nick: from,
+				contents: message
+			});
+
+		}
+
+	},
+
+	doNotice: function( from, to, text ){
+
+		// How do I know which channel this is in?!?!
+		if( !from && !this.channel ){
+
+			this.add({
+				notice: true,
+				from: this.connection.get('server'),
+				to: to,
+				text: text
+			});
+
+		}
+
+	},
+
+	doAction: function( from, to, text ){
+
+		if( to === this.channel ){
+
+			this.add({
+				action: true,
+				nick: from,
+				contents: text
+			});
+
+		}
+
+	},
+
+	doJoin: function( channel, nick ){
+
+		if( channel === this.channel ){
+
+			this.add({
+				join: true,
+				nick: nick
+			});
+
+		}
+
+	},
+
+	doPart: function( channel, nick, reason ){
+
+		if( channel === this.channel ){
+
+			this.add({
+				part: true,
+				nick: nick,
+				reason: reason
+			});
+
+		}
+
+	},
+
+	doQuit: function( nick, reason, channels ){
+
+		if( _( channels ).indexOf( this.channel ) >= 0 ){
+
+			this.add({
+				part: true,
+				nick: nick,
+				reason: reason
+			});
+
+		}
+
+	},
+
+	doTopic: function( channel, topic, nick ){
+
+		if( channel === this.channel ){
+
+			this.add({
+				topic: true,
+				nick: nick,
+				topic_text: topic
+			});
+
+		}
+
+	},
+
+	doMOTD: function( text ){
+
+		if( !this.channel ){
+
+			this.add({
+				motd: true,
+				text: text
 			});
 
 		}

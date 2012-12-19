@@ -1,1 +1,27 @@
-<li><b>{{user}}</b> {{contents}}</li>
+{{#message}}
+<li class="message"><strong>{{nick}}</strong> <span>{{contents}}</span></li>
+{{/message}}
+
+{{#action}}
+<li class="action">* <strong>{{nick}}</strong> <span>{{contents}}</span></li>
+{{/action}}
+
+{{#notice}}
+<li class="notice">{{#from}}-<strong>{{.}}</strong>-{{/from}} <span>{{text}}</span></li>
+{{/notice}}
+
+{{#join}}
+<li class="join"><i class="icon-chevron-right"></i> <strong>{{nick}}</strong> joined the channel.</li>
+{{/join}}
+
+{{#part}}
+<li class="part"><i class="icon-chevron-left"></i> <strong>{{nick}}</strong> left the channel{{#reason}} ( {{.}} ){{/reason}}.</li>
+{{/part}}
+
+{{#topic}}
+<li class="topic"><i class="icon-pencil"></i> <strong>{{nick}}</strong> changed the topic to <em>{{topic_text}}</em>.</li>
+{{/topic}}
+
+{{#motd}}
+<li class="motd"><pre>{{text}}</pre></li>
+{{/motd}}

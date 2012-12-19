@@ -1,0 +1,82 @@
+div.sparkart-tags {
+	
+	position: relative;	
+	
+}
+
+
+
+/* Tags input */
+
+div.sparkart-tags ul.tags {
+
+	list-style: none;
+	margin: 0;
+	padding: 2px;
+	border: 1px inset;
+	cursor: text;
+	
+}
+
+div.sparkart-tags ul.tags > *:not(.sparkart-suggest),
+.sparkart-tags.pseudo {
+	
+	display: inline-block;
+	box-sizing: border-box;
+	margin: 2px 2px;
+	padding: 4px 6px;
+	font: 14px sans-serif;
+	
+}
+
+div.sparkart-tags ul.tags > li.tag {
+	
+	border-radius: 4px;
+	color: #fff;
+	background: #00a9c7;
+	
+}
+
+div.sparkart-tags ul.tags > li.tag:hover {
+	
+	background: #0098b6;	
+	
+}
+
+div.sparkart-tags ul.tags > li.tag > a.remove {
+	
+	opacity: 0.7;
+	margin: 0 5px 0 0;
+	outline: none;
+	text-decoration: none;
+	color: #fff;
+	
+}
+
+div.sparkart-tags ul.tags > li.tag > a.remove:hover {
+	
+	opacity: 1;	
+	
+}
+
+div.sparkart-tags ul.tags > input[name="new"] {
+	
+	padding-left: 0;
+	border: none;
+	outline: none;
+	
+}
+
+
+
+/* Pseudo input.
+Properly sizes tag input box */
+
+.sparkart-tags .pseudo {
+	
+	position: fixed;
+	top: -9001px;
+	left: -9001px;
+	visibility: hidden;
+	
+}

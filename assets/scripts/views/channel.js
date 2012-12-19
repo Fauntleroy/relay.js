@@ -5,7 +5,7 @@ irc.Views.Channel = Backbone.View.extend({
 
 	initialize: function(){
 
-		_( this ).bindAll( 'renderChannel' );
+		_( this ).bindAll( 'render', 'clear', 'renderChannel', 'renderTopic' );
 
 		irc.on( 'channels:active', this.renderChannel );
 
@@ -16,8 +16,12 @@ irc.Views.Channel = Backbone.View.extend({
 		var html = this.template( this.model.toJSON() );
 		this.$el.html( html );
 
+		this.$info = this.$el.children('.info');
+		this.$topic = this.$info.children('.topic');
 		this.$messages = this.$el.children('.messages');
 		this.$users = this.$el.children('.users');
+
+		this.$topic.links();
 
 		this.messages = new irc.Views.Messages({ collection: this.model.messages, el: this.$messages });
 		this.users = new irc.Views.Users({ collection: this.model.users, el: this.$users });
@@ -28,10 +32,30 @@ irc.Views.Channel = Backbone.View.extend({
 
 	},
 
+	clear: function(){
+
+		this.$el.html('');
+
+	},
+
 	renderChannel: function( channel ){
 
 		this.model = channel;
-		this.render();
+
+		if( this.model ){
+			this.model.on( 'change:topic', this.renderTopic );
+			this.render();
+		}
+		else {
+			this.clear();
+		}
+
+	},
+
+	renderTopic: function( channel, topic ){
+
+		this.$topic.text( topic );
+		this.$topic.links();
 
 	}
 

@@ -2,9 +2,13 @@ irc.Views.Connection = Backbone.View.extend({
 
 	template: templates.connection,
 
+	events: {
+		'click div.info a[href="#quit"]': 'clickQuit'
+	},
+
 	initialize: function(){
 
-		_( this ).bindAll( 'render', 'destroy' );
+		_( this ).bindAll( 'render', 'clickQuit', 'destroy' );
 
 		this.model.on( 'remove', this.destroy );
 
@@ -23,6 +27,14 @@ irc.Views.Connection = Backbone.View.extend({
 		this.$channels.html( $channels );
 
 		return this;
+
+	},
+
+	clickQuit: function( e ){
+
+		e.preventDefault();
+
+		this.model.quit();
 
 	},
 

@@ -13,6 +13,8 @@ irc.Views.Message = Backbone.View.extend({
 		var html = this.template( this.model.toJSON() );
 		this.setElement( html );
 
+		this.$el.links();
+
 		return this;
 
 	}
