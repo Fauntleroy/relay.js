@@ -1,0 +1,92 @@
+$left_bar_width = 250px;
+$right_bar_width = 150px;
+$channel_title_height = 65px;
+$new_message_height = 40px;
+
+h1, h2, h3, h4, h5, h6, legend {
+
+	font-family: 'Roboto', sans-serif;
+
+}
+
+#connections {
+
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: $left_bar_width;
+
+}
+
+#channel {
+
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: $left_bar_width;
+
+	div.info {
+
+		h2 {
+
+			display: inline-block;
+
+		}
+
+		sub.topic {
+
+			bottom: 0;
+
+		}
+
+	}
+
+	div.messages {
+
+		position: absolute;
+		top: $channel_title_height;
+		right: $right_bar_width;
+		bottom: 0;
+		left: 0;
+
+		ul.list {
+
+			list-style: none;
+			overflow: auto;
+			position: absolute
+			top: 0;
+			right: 0;
+			bottom: $new_message_height;
+			left: 0;
+			margin: 0;
+			padding: 0;
+
+		}
+
+		form.new {
+
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			height: $new_message_height;
+			margin: 0;
+			padding: 0;
+
+		}
+
+	}
+
+	div.users {
+
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		width: $right_bar_width;
+
+	}
+
+}

@@ -16,6 +16,7 @@ var igneous_middleware = igneous({
 			type: 'css',
 			base: '/styles',
 			paths: [
+				'/roboto.css',
 				'/vendor/bootstrap',
 				'/vendor/jquery.sparkartTags',
 				'/bootstrap_overrides.styl',
