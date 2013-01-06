@@ -11,6 +11,7 @@ irc.Views.Messages = Backbone.View.extend({
 		_( this ).bindAll( 'render', 'renderMessage', 'scrollBottom', 'submitNew' );
 
 		this.collection.on( 'add', this.renderMessage );
+		$(window).on( 'resize', this.scrollBottom );
 
 	},
 
@@ -31,24 +32,25 @@ irc.Views.Messages = Backbone.View.extend({
 
 		var message_view = new irc.Views.Message({ model: message });
 		var $message = message_view.render().$el;
+		var force_scroll = ( message.get('nick') === this.collection.connection.get('nick') );
+
+		this.$messages.append( $message );
+
+		this.scrollBottom( force_scroll );
+
+	},
+
+	scrollBottom: function( force ){
 
 		var frame_height = this.$messages.height();
 		var frame_scrollheight = this.$messages[0].scrollHeight;
 		var frame_scrolltop = this.$messages.scrollTop();
 		var frame_scrollbottom = frame_scrolltop + frame_height;
+		var is_near_bottom = frame_scrollbottom + 10 > frame_scrollheight;
 
-		this.$messages.append( $message );
-
-		if( frame_scrollbottom + 10 > frame_scrollheight || message.get('nick') === this.collection.connection.get('nick') ) this.scrollBottom();
-
-	},
-
-	scrollBottom: function(){
-
-		var frame_height = this.$messages.height();
-		var frame_scrollheight = this.$messages[0].scrollHeight;
-
-		this.$messages.scrollTop( frame_scrollheight - frame_height );
+		if( is_near_bottom || force ){
+			this.$messages.scrollTop( frame_scrollheight - frame_height );
+		}
 
 	},
 
