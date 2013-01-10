@@ -11,7 +11,7 @@ irc.Views.Connections = Backbone.View.extend({
 
 		_( this ).bindAll( 'render', 'renderConnection' );
 
-		this.collection.on( 'add', this.renderConnection );
+		this.listenTo( this.collection, 'add', this.renderConnection );
 
 		this.render();
 
