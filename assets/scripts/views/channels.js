@@ -12,8 +12,8 @@ irc.Views.Channels = Backbone.View.extend({
 
 		_(this).bindAll( 'render', 'renderChannel', 'removeChannel', 'clickName', 'clickPart' );
 
-		this.collection.on( 'add', this.renderChannel );
-		this.collection.on( 'remove', this.removeChannel );
+		this.listenTo( this.collection, 'add', this.renderChannel );
+		this.listenTo( this.collection, 'remove', this.removeChannel );
 
 	},
 

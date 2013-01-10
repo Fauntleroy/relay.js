@@ -6,7 +6,7 @@ irc.Views.User = Backbone.View.extend({
 
 		_( this ).bindAll( 'render', 'destroy' );
 
-		this.model.on( 'remove', this.destroy );
+		this.listenTo( this.model, 'remove', this.destroy );
 
 	},
 

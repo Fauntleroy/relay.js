@@ -7,7 +7,7 @@ irc.Views.Channel = Backbone.View.extend({
 
 		_( this ).bindAll( 'render', 'clear', 'renderChannel', 'renderTopic' );
 
-		irc.on( 'channels:active', this.renderChannel );
+		this.listenTo( irc, 'channels:active', this.renderChannel );
 
 	},
 
@@ -23,6 +23,9 @@ irc.Views.Channel = Backbone.View.extend({
 
 		this.$topic.links();
 
+		// Manage the subviews
+		if( this.messages ) this.messages.remove();
+		if( this.users ) this.users.remove();
 		this.messages = new irc.Views.Messages({ collection: this.model.messages, el: this.$messages });
 		this.users = new irc.Views.Users({ collection: this.model.users, el: this.$users });
 		this.messages.render();
@@ -43,7 +46,7 @@ irc.Views.Channel = Backbone.View.extend({
 		this.model = channel;
 
 		if( this.model ){
-			this.model.on( 'change:topic', this.renderTopic );
+			this.listenTo( this.model, 'change:topic', this.renderTopic );
 			this.render();
 		}
 		else {
@@ -54,8 +57,7 @@ irc.Views.Channel = Backbone.View.extend({
 
 	renderTopic: function( channel, topic ){
 
-		this.$topic.text( topic );
-		this.$topic.links();
+		this.$topic.text( topic ).links();
 
 	}
 
