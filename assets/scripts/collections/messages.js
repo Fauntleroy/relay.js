@@ -26,7 +26,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 
 		if( arguments.length === 1 ){
 			message = target;
-			target = this.channel;
+			target = this.channel.get('name');
 		}
 
 		this.socket.emit( 'say', target, message );
@@ -35,7 +35,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 
 	doMessage: function( from, to, message ){
 
-		if( from === this.connection.get('nick') && to === this.channel ){
+		if( from === this.connection.get('nick') && to === this.channel.get('name') ){
 
 			this.add({
 				message: true,
@@ -44,7 +44,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 			});
 
 		}
-		else if( to === this.channel || ( from === this.channel && to === this.connection.get('nick') ) ){
+		else if( to === this.channel.get('name') || ( from === this.channel.get('name') && to === this.connection.get('nick') ) ){
 
 			this.add({
 				message: true,
