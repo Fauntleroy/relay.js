@@ -59,7 +59,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 	doNotice: function( from, to, text ){
 
 		// How do I know which channel this is in?!?!
-		if( !from && !this.channel ){
+		if( !from && !this.channel.get('name') ){
 
 			this.add({
 				notice: true,
@@ -74,7 +74,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 
 	doAction: function( from, to, text ){
 
-		if( to === this.channel ){
+		if( to === this.channel.get('name') ){
 
 			this.add({
 				action: true,
@@ -88,7 +88,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 
 	doJoin: function( channel, nick ){
 
-		if( channel === this.channel ){
+		if( channel === this.channel.get('name') ){
 
 			this.add({
 				join: true,
@@ -101,7 +101,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 
 	doPart: function( channel, nick, reason ){
 
-		if( channel === this.channel ){
+		if( channel === this.channel.get('name') ){
 
 			this.add({
 				part: true,
@@ -115,7 +115,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 
 	doQuit: function( nick, reason, channels ){
 
-		if( _( channels ).indexOf( this.channel ) >= 0 ){
+		if( _( channels ).indexOf( this.channel.get('name') ) >= 0 ){
 
 			this.add({
 				part: true,
@@ -129,7 +129,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 
 	doTopic: function( channel, topic, nick ){
 
-		if( channel === this.channel ){
+		if( channel === this.channel.get('name') ){
 
 			this.add({
 				topic: true,
@@ -143,7 +143,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 
 	doMOTD: function( text ){
 
-		if( !this.channel ){
+		if( !this.channel.get('name') ){
 
 			this.add({
 				motd: true,
