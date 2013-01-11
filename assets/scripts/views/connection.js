@@ -10,7 +10,7 @@ irc.Views.Connection = Backbone.View.extend({
 
 		_( this ).bindAll( 'render', 'clickQuit', 'destroy' );
 
-		this.model.on( 'remove', this.destroy );
+		this.listenTo( this.model, 'remove', this.destroy );
 
 	},
 

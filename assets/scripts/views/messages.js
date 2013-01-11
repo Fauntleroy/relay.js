@@ -10,7 +10,7 @@ irc.Views.Messages = Backbone.View.extend({
 
 		_( this ).bindAll( 'render', 'renderMessage', 'scrollBottom', 'submitNew' );
 
-		this.collection.on( 'add', this.renderMessage );
+		this.listenTo( this.collection, 'add', this.renderMessage );
 		$(window).on( 'resize', this.scrollBottom );
 
 	},
