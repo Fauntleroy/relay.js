@@ -10,6 +10,10 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/templates/irc.js"></script>
 	<script src="/scripts/irc.js"></script>
+	<script src="/scripts/vendor/igneous/live.js"></script>
+	<script>
+		igneous.watch('/styles/irc.css');
+	</script>
 
 </head>
 <body>
