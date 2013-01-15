@@ -9,9 +9,10 @@ irc.Views.ChannelListing = Backbone.View.extend({
 
 	initialize: function(){
 
-		_( this ).bindAll( 'render', 'remove', 'clickName', 'clickPart' );
+		_( this ).bindAll( 'render', 'remove', 'updateUnread', 'clickName', 'clickPart' );
 
 		this.listenTo( this.model, 'remove destroy', this.remove );
+		this.listenTo( this.model, 'change:unread', this.updateUnread );
 
 	},
 
@@ -21,8 +22,16 @@ irc.Views.ChannelListing = Backbone.View.extend({
 		this.setElement( html );
 
 		this.$name = this.$el.children('.name');
+		this.$unread = this.$el.children('.unread');
 
 		return this;
+
+	},
+
+	updateUnread: function( channel, unread ){
+
+		this.$unread.text( unread );
+		this.$el.toggleClass( 'unread', ( unread > 0 ) );
 
 	},
 

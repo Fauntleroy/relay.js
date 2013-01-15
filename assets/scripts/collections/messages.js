@@ -17,7 +17,6 @@ irc.Collections.Messages = Backbone.Collection.extend({
 		this.socket.on( 'part', this.doPart );
 		this.socket.on( 'quit', this.doQuit );
 		this.socket.on( 'topic', this.doTopic );
-
 		this.socket.on( 'motd', this.doMOTD );
 
 	},
@@ -35,16 +34,10 @@ irc.Collections.Messages = Backbone.Collection.extend({
 
 	doMessage: function( from, to, message ){
 
-		if( from === this.connection.get('nick') && to === this.channel.get('name') ){
-
-			this.add({
-				message: true,
-				nick: from,
-				contents: message
-			});
-
-		}
-		else if( to === this.channel.get('name') || ( from === this.channel.get('name') && to === this.connection.get('nick') ) ){
+		var from_self_to_channel = ( from === this.connection.get('nick') && to === this.channel.get('name') );
+		var from_user_to_self = ( from === this.channel.get('name') && to === this.connection.get('nick') );
+	
+		if( from_self_to_channel || to === this.channel.get('name') || from_user_to_self ){
 
 			this.add({
 				message: true,

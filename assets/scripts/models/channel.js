@@ -2,12 +2,13 @@ irc.Models.Channel = Backbone.Model.extend({
 
 	defaults: {
 		type: 'channel',
-		active: false
+		active: false,
+		unread: 0
 	},
 
 	initialize: function(){
 
-		_( this ).bindAll( 'active', 'part', 'doActive', 'doTopic' );
+		_( this ).bindAll( 'active', 'part', 'doAddMessage', 'doActive', 'doTopic' );
 
 		this.connection = this.collection.connection;
 		this.socket = this.connection.socket;
@@ -15,6 +16,7 @@ irc.Models.Channel = Backbone.Model.extend({
 		this.messages = new irc.Collections.Messages( null, { channel: this, connection: this.connection });
 		this.users = new irc.Collections.Users( null, { channel: this, connection: this.connection })
 
+		this.messages.on( 'add', this.doAddMessage );
 		this.socket.on( 'topic', this.doTopic );
 
 		irc.on( 'channels:active', this.doActive );
@@ -27,7 +29,11 @@ irc.Models.Channel = Backbone.Model.extend({
 
 		if( !this.get('active') ){
 
-			this.set( 'active', true );
+			this.set({
+				active: true,
+				unread: 0
+			});
+			this.trigger( 'active', this );
 			irc.trigger( 'channels:active', this );
 
 		}
@@ -37,6 +43,17 @@ irc.Models.Channel = Backbone.Model.extend({
 	part: function(){
 
 		this.socket.emit( 'part', this.get('name') );
+
+	},
+
+	doAddMessage: function( message ){
+
+		if( !this.get('active') && message.get('message') ){
+
+			var unread = this.get('unread');
+			this.set( 'unread', unread + 1 );
+
+		}
 
 	},
 
