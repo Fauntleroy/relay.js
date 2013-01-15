@@ -131,6 +131,9 @@ irc.Collections.Messages = Backbone.Collection.extend({
 
 		if( channel === this.channel.get('name') ){
 
+			// Raw names look like 'ptard!uid6724@gateway/web/irccloud.com/x-gipmkavsanmekmde'
+			nick = nick.split('!')[0];
+
 			this.add({
 				topic: true,
 				nick: nick,
