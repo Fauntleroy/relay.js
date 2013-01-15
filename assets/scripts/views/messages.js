@@ -40,13 +40,15 @@ irc.Views.Messages = Backbone.View.extend({
 
 	},
 
+	// Scrolls to the bottom of the chat messages
 	scrollBottom: function( force ){
 
 		var frame_height = this.$messages.height();
 		var frame_scrollheight = this.$messages[0].scrollHeight;
 		var frame_scrolltop = this.$messages.scrollTop();
 		var frame_scrollbottom = frame_scrolltop + frame_height;
-		var is_near_bottom = frame_scrollbottom + 10 > frame_scrollheight;
+		var last_message_height = this.$messages.find('li:last-child').height();
+		var is_near_bottom = frame_scrollbottom + 15 > frame_scrollheight - last_message_height;
 
 		if( is_near_bottom || force ){
 			this.$messages.scrollTop( frame_scrollheight - frame_height );
