@@ -1,19 +1,12 @@
 irc.Views.Channels = Backbone.View.extend({
 
 	template: templates.channels,
-	channel_template: templates.channel_listing,
-
-	events: {
-		'click a.name': 'clickName',
-		'click a.part': 'clickPart'
-	},
 
 	initialize: function(){
 
-		_(this).bindAll( 'render', 'renderChannel', 'removeChannel', 'clickName', 'clickPart' );
+		_(this).bindAll( 'render', 'renderChannel' );
 
 		this.listenTo( this.collection, 'add', this.renderChannel );
-		this.listenTo( this.collection, 'remove', this.removeChannel );
 
 	},
 
@@ -32,41 +25,9 @@ irc.Views.Channels = Backbone.View.extend({
 
 	renderChannel: function( channel ){
 
-		this.$channels.append( this.channel_template( channel.toJSON() ) );
-
-	},
-
-	removeChannel: function( channel ){
-
-		var index = this.collection.indexOf( channel );
-		var $channel = this.$channels.find('li:eq('+ index +')');
-
-		$channel.remove();
-
-	},
-
-	clickName: function( e ){
-
-		e.preventDefault();
-
-		var $target = $( e.target );
-		var $channel = $target.closest('li');
-		var index = $channel.index();
-
-		this.collection.at( index ).active();
-
-	},
-
-	clickPart: function( e ){
-
-		e.preventDefault();
-
-		var $target = $( e.target );
-		var $channel = $target.closest('li');
-		var index = $channel.index();
-		var channel = this.collection.at( index );
-
-		this.collection.part( channel.get('name') );
+		var channel_listing_view = new irc.Views.ChannelListing({ model: channel });
+		var $channel_listing = channel_listing_view.render().$el;
+		this.$channels.append( $channel_listing );
 
 	}
 

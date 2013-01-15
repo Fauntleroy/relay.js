@@ -7,7 +7,7 @@ irc.Models.Channel = Backbone.Model.extend({
 
 	initialize: function(){
 
-		_( this ).bindAll( 'active', 'doActive', 'doTopic' );
+		_( this ).bindAll( 'active', 'part', 'doActive', 'doTopic' );
 
 		this.connection = this.collection.connection;
 		this.socket = this.connection.socket;
@@ -31,6 +31,12 @@ irc.Models.Channel = Backbone.Model.extend({
 			irc.trigger( 'channels:active', this );
 
 		}
+
+	},
+
+	part: function(){
+
+		this.socket.emit( 'part', this.get('name') );
 
 	},
 
