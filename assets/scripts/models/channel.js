@@ -48,6 +48,8 @@ irc.Models.Channel = Backbone.Model.extend({
 
 	doAddMessage: function( message ){
 
+		irc.trigger( 'active:messages:add', message );
+
 		if( !this.get('active') && message.get('message') ){
 
 			var unread = this.get('unread');
