@@ -18,10 +18,14 @@ module.exports = function( io ){
 		});
 
 		var irc_client = this.client = new irc.Client( parameters.server, parameters.nick, {
+			password: parameters.password || null,
+			port: parameters.port || 6667,
 			channels: channels,
 			floodProtection: false,
 			floodProtectionDelay: 1000
 		});
+
+		if( parameters.nick_password ) irc_client.say( 'NickServ', 'IDENTIFY '+ parameters.nick_password );
 
 		io.of( this.namespace ).on( 'connection', function( client ){
 

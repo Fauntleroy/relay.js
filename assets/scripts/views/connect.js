@@ -58,7 +58,7 @@ irc.Views.Connect = Backbone.View.extend({
 
 		var parameters = this.$form.serializeObject();
 		parameters.channels = parameters.channels.split(',');
-console.log( parameters.channels );
+console.log( parameters );
 		this.connect( parameters );
 		this.hide();		
 

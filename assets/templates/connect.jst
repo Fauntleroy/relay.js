@@ -6,18 +6,21 @@
 		</div>
 		<div class="modal-body">
 			<fieldset>
-				<legend>Server</legend>
 				<label for="connect_server">Server</label>
 				<input id="connect_server" name="server" placeholder="ex: irc.freenode.net" type="text" />
+				<label for="connect_port">Server Port</label>
+				<input id="connect_port" name="port" type="text" /><span class="help-inline">Optional</span>
+				<label for="connect_password">Server Password</label>
+				<input id="connect_password" name="password" type="password" /><span class="help-inline">Optional</span>
 				<label for="connect_channels">Channels</label>
 				<input id="connect_channels" name="channels" placeholder="#irchub" type="text" /><span class="help-inline">Optional</span>
 			</fieldset>
+			<hr />
 			<fieldset>
-				<legend>Authentication</legend>
 				<label for="connect_nick">Nick</label>
 				<input id="connect_nick" name="nick" type="text" />
-				<!--<label for="connect_password">Password</label>
-				<input id="connect_password" name="password" type="text" /><span class="help-inline">Optional</span>-->
+				<label for="connect_nick_password">Password</label>
+				<input id="connect_nick_password" name="nick_password" type="password" /><span class="help-inline">Optional</span>
 			</fieldset>
 		</div>
 		<div class="modal-footer">

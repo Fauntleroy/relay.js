@@ -210,7 +210,7 @@ Sparkart Tags
 				
 				$this.sparkartTags('update');
 				
-				if( !method_options.silent && tags.length ) $this.trigger( 'remove', tags );
+				//if( !method_options.silent && tags.length ) $this.trigger( 'remove', tags );
 				
 			});
 		
@@ -223,7 +223,7 @@ Sparkart Tags
 				
 				var $this = $(this);
 				var data = $this.data('sparkart_tags');	
-				
+
 				data.$tags.children().not( data.$tag_input ).not( data.$suggest ).remove();
 				
 				for( var i in data.tags ){

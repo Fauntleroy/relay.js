@@ -33,8 +33,11 @@ io.sockets.on( 'connection', function( client ){
 
 		var irc_adapter = new Adapter({
 			server: parameters.server,
+			port: parameters.port,
+			password: parameters.password,
 			nick: parameters.nick,
-			channels: parameters.channels
+			nick_password: parameters.nick_password,
+			channels: parameters.channels,
 		});
 
 		client.emit( 'irc_connection', {
