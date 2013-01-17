@@ -79,12 +79,12 @@ irc.Views.Messages = Backbone.View.extend({
 			}
 			else if( command.match( /^\/(?:me|action)/i ) ){
 
-				this.collection.socket.emit( 'action', this.collection.channel, message_bits.join(' ') );
+				this.collection.socket.emit( 'action', this.collection.channel.get('name'), message_bits.join(' ') );
 
 			}
 			else if( command.match( /^\/topic/i ) ){
 
-				this.collection.socket.emit( 'topic', this.collection.channel, message_bits.join(' ') );
+				this.collection.socket.emit( 'topic', this.collection.channel.get('name'), message_bits.join(' ') );
 
 			}
 			else if( command.match( /^\/join/i ) ){
@@ -94,7 +94,7 @@ irc.Views.Messages = Backbone.View.extend({
 			}
 			else if( command.match( /^\/part/i ) ){
 
-				this.collection.socket.emit( 'part', this.collection.channel );
+				this.collection.socket.emit( 'part', this.collection.channel.get('name') );
 
 			}
 			else if( command.match( /^\/quit/i ) ){

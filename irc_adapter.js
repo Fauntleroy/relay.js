@@ -34,23 +34,27 @@ module.exports = function( io ){
 			});
 
 			irc_client.addListener( 'join', function( channel, nick, message ){
-				console.log( '>>> JOIN', channel, nick );
-				client.emit( 'join', channel, nick );
+				var timestamp = Date.now();
+				console.log( '>>> JOIN', channel, nick, timestamp );
+				client.emit( 'join', channel, nick, timestamp );
 			});
 
 			irc_client.addListener( 'part', function( channel, nick, reason, message ){
-				console.log( '>>> PART', channel, nick, reason );
-				client.emit( 'part', channel, nick, reason );
+				var timestamp = Date.now();
+				console.log( '>>> PART', channel, nick, reason, timestamp );
+				client.emit( 'part', channel, nick, reason, timestamp );
 			});
 
 			irc_client.addListener( 'quit', function( nick, reason, channels, message ){
-				console.log( '>>> QUIT', nick, reason, channels );
-				client.emit( 'quit', nick, reason, channels );
+				var timestamp = Date.now();
+				console.log( '>>> QUIT', nick, reason, channels, timestamp );
+				client.emit( 'quit', nick, reason, channels, timestamp );
 			})
 
 			irc_client.addListener( 'motd', function( motd ){
-				client.emit( 'motd', motd );
-				console.log( '>>> MOTD.', motd );
+				var timestamp = Date.now();
+				client.emit( 'motd', motd, timestamp );
+				console.log( '>>> MOTD.', motd, timestamp );
 			});
 
 			irc_client.addListener( 'names', function( channel, nicks ){
@@ -59,18 +63,21 @@ module.exports = function( io ){
 			});
 
 			irc_client.addListener( 'topic', function( channel, topic, nick, message ){
-				console.log( '>>> TOPIC.', channel, topic, nick );
-				client.emit( 'topic', channel, topic, nick );
+				var timestamp = Date.now();
+				console.log( '>>> TOPIC.', channel, topic, nick, timestamp );
+				client.emit( 'topic', channel, topic, nick, timestamp );
 			});
 
 			irc_client.addListener( 'message', function( from, to, message ){
-				console.log( '>>> MESSAGE', from, to, message );
-				client.emit( 'message', from, to, message );
+				var timestamp = Date.now();
+				console.log( '>>> MESSAGE', from, to, message, timestamp );
+				client.emit( 'message', from, to, message, timestamp );
 			});
 
 			irc_client.addListener( 'notice', function( nick, to, text, message ){
-				console.log( '>>> NOTICE', nick, to, text );
-				client.emit( 'notice', nick, to, text );
+				var timestamp = Date.now();
+				console.log( '>>> NOTICE', nick, to, text, timestamp );
+				client.emit( 'notice', nick, to, text, timestamp );
 			});
 
 			irc_client.addListener( 'nick', function( old_nick, new_nick, channels, message ){
@@ -98,7 +105,8 @@ module.exports = function( io ){
 				var text_bits = text.split(' ');
 				var command = text_bits.shift();
 				if( command === 'ACTION' ){
-					client.emit( 'action', from, to, text_bits.join(' ') );
+					var timestamp = Date.now();
+					client.emit( 'action', from, to, text_bits.join(' '), timestamp );
 				}
 			});
 
@@ -118,19 +126,22 @@ module.exports = function( io ){
 			client.on( 'say', function( target, message ){
 				irc_client.say( target, message );
 				// IRC doesn't send us our own messages
-				client.emit( 'message', irchub_client.nick, target, message );
+				var timestamp = Date.now();
+				client.emit( 'message', irchub_client.nick, target, message, timestamp );
 			});
 
 			client.on( 'notice', function( target, message ){
 				irc_client.send( 'NOTICE', target, message );
 				// IRC doesn't send us our own notices
-				client.emit( 'notice', irchub_client.nick, target, message );
+				var timestamp = Date.now();
+				client.emit( 'notice', irchub_client.nick, target, message, timestamp );
 			});
 
 			client.on( 'action', function( target, message ){
 				irc_client.action( target, message );
 				// IRC doesn't send us our own actions
-				client.emit( 'action', irchub_client.nick, target, message );
+				var timestamp = Date.now();
+				client.emit( 'action', irchub_client.nick, target, message, timestamp );
 			});
 
 			client.on( 'topic', function( channel, topic ){

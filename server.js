@@ -1,3 +1,5 @@
+var PORT = process.env.PORT || 8080;
+
 // We want _
 var _ = require('lodash');
 
@@ -8,7 +10,7 @@ var server = express();
 // Set up HTTP server to be used with Socket.io/Express
 var http = require('http');
 var http_server = http.createServer( server );
-http_server.listen( 8080 );
+http_server.listen( PORT );
 
 // Set up Socket.io
 var socketio = require('socket.io');
@@ -87,6 +89,7 @@ var igneous_middleware = igneous({
 				'/vendor/backbone',
 				'/vendor/glenoid',
 				'/vendor/handlebars',
+				'/handlebars_helpers.js',
 				'/irc.js',
 				'/models',
 				'/collections',

@@ -12,10 +12,12 @@
     "irc": "0.3.x",
     "node-uuid": "1.4.x"
   },
+  "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "engines": {
     "node": "0.8.x"
-  }
+  },
+  "subdomain": "fauntleroy.irchub"
 }

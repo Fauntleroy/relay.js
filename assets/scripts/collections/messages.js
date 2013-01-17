@@ -32,7 +32,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 
 	},
 
-	doMessage: function( from, to, message ){
+	doMessage: function( from, to, message, timestamp ){
 
 		var from_self_to_channel = ( from === this.connection.get('nick') && to === this.channel.get('name') );
 		var from_user_to_self = ( from === this.channel.get('name') && to === this.connection.get('nick') );
@@ -42,14 +42,15 @@ irc.Collections.Messages = Backbone.Collection.extend({
 			this.add({
 				message: true,
 				nick: from,
-				contents: message
+				contents: message,
+				timestamp: timestamp
 			});
 
 		}
 
 	},
 
-	doNotice: function( from, to, text ){
+	doNotice: function( from, to, text, timestamp ){
 
 		// How do I know which channel this is in?!?!
 		if( !from && !this.channel.get('name') ){
@@ -58,69 +59,74 @@ irc.Collections.Messages = Backbone.Collection.extend({
 				notice: true,
 				from: this.connection.get('server'),
 				to: to,
-				text: text
+				text: text,
+				timestamp: timestamp
 			});
 
 		}
 
 	},
 
-	doAction: function( from, to, text ){
+	doAction: function( from, to, text, timestamp ){
 
 		if( to === this.channel.get('name') ){
 
 			this.add({
 				action: true,
 				nick: from,
-				contents: text
+				contents: text,
+				timestamp: timestamp
 			});
 
 		}
 
 	},
 
-	doJoin: function( channel, nick ){
+	doJoin: function( channel, nick, timestamp ){
 
 		if( channel === this.channel.get('name') ){
 
 			this.add({
 				join: true,
-				nick: nick
+				nick: nick,
+				timestamp: timestamp
 			});
 
 		}
 
 	},
 
-	doPart: function( channel, nick, reason ){
+	doPart: function( channel, nick, reason, timestamp ){
 
 		if( channel === this.channel.get('name') ){
 
 			this.add({
 				part: true,
 				nick: nick,
-				reason: reason
+				reason: reason,
+				timestamp: timestamp
 			});
 
 		}
 
 	},
 
-	doQuit: function( nick, reason, channels ){
+	doQuit: function( nick, reason, channels, timestamp ){
 
 		if( _( channels ).indexOf( this.channel.get('name') ) >= 0 ){
 
 			this.add({
 				part: true,
 				nick: nick,
-				reason: reason
+				reason: reason,
+				timestamp: timestamp
 			});
 
 		}
 
 	},
 
-	doTopic: function( channel, topic, nick ){
+	doTopic: function( channel, topic, nick, timestamp ){
 
 		if( channel === this.channel.get('name') ){
 
@@ -130,20 +136,22 @@ irc.Collections.Messages = Backbone.Collection.extend({
 			this.add({
 				topic: true,
 				nick: nick,
-				topic_text: topic
+				topic_text: topic,
+				timestamp: timestamp
 			});
 
 		}
 
 	},
 
-	doMOTD: function( text ){
+	doMOTD: function( text, timestamp ){
 
 		if( !this.channel.get('name') ){
 
 			this.add({
 				motd: true,
-				text: text
+				text: text,
+				timestamp: timestamp
 			});
 
 		}
