@@ -21,7 +21,7 @@ irc.Views.Channel = Backbone.View.extend({
 		this.$messages = this.$el.children('.messages');
 		this.$users = this.$el.children('.users');
 
-		this.$topic.links();
+		this.renderTopic( this.model.get('name'), this.model.get('topic') );
 
 		// Manage the subviews
 		if( this.messages ) this.messages.remove();
@@ -57,7 +57,15 @@ irc.Views.Channel = Backbone.View.extend({
 
 	renderTopic: function( channel, topic ){
 
-		this.$topic.text( topic ).links();
+		this.$topic
+		.text( topic )
+		.links()
+		.emojify({
+			url: '/images/vendor/emoji',
+			attr: {
+				'class': 'emoji'
+			}
+		});
 
 	}
 

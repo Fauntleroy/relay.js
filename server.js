@@ -68,6 +68,7 @@ var igneous_middleware = igneous({
 				'/vendor/jquery.sparkartTags',
 				'/bootstrap_overrides.styl',
 				'/sparkartTags_overrides.styl',
+				'/emoji.styl',
 				'/irc.styl',
 				'/channels.styl',
 				'/channel.styl',
@@ -82,6 +83,7 @@ var igneous_middleware = igneous({
 			paths: [
 				'/vendor/jquery',
 				'/vendor/jquery.links',
+				'/vendor/jquery.emojify',
 				'/vendor/jquery.serializeObject',
 				'/vendor/jquery.sparkartTags',
 				'/vendor/bootstrap',

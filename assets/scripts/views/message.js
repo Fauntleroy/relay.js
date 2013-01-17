@@ -13,7 +13,14 @@ irc.Views.Message = Backbone.View.extend({
 		var html = this.template( this.model.toJSON() );
 		this.setElement( html );
 
-		this.$el.links();
+		this.$el
+		.links()
+		.emojify({
+			url: '/images/vendor/emoji',
+			attr: {
+				'class': 'emoji'
+			}
+		});
 
 		return this;
 
