@@ -30,12 +30,25 @@ irc.Views.Messages = Backbone.View.extend({
 
 	renderMessage: function( message ){
 
-		var message_view = new irc.Views.Message({ model: message });
-		var $message = message_view.render().$el;
+		var $last_message = this.$messages.find('.message:last-child');
+
+		if( message.get('message') && message.get('nick') === $last_message.find('strong.nick').text() ){
+			
+			var append_message = new irc.Views.Message({ model: message });
+			var $append_message = append_message.render().$el;
+			var $append_message_content = $append_message.find('ul.contents > li');
+			$last_message.find('ul.contents').append( $append_message_content );
+
+		}
+		else {
+
+			var message_view = new irc.Views.Message({ model: message });
+			var $message = message_view.render().$el;
+			this.$messages.append( $message );
+
+		}
+
 		var force_scroll = ( message.get('nick') === this.collection.connection.get('nick') );
-
-		this.$messages.append( $message );
-
 		this.scrollBottom( force_scroll );
 
 	},

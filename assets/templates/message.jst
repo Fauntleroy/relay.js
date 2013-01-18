@@ -1,5 +1,12 @@
 {{#message}}
-<li class="message"><strong>{{nick}}</strong> <span>{{contents}}</span> <var class="timestamp">{{time timestamp}}</var></li>
+<li class="message">
+	<strong class="nick">{{nick}}</strong> 
+	<ul class="contents">
+		<li>
+			<span>{{contents}}</span> <var class="timestamp">{{time timestamp}}</var>
+		</li>
+	</ul>
+</li>
 {{/message}}
 
 {{#action}}
