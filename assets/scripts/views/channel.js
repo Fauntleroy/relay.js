@@ -31,6 +31,8 @@ irc.Views.Channel = Backbone.View.extend({
 		this.messages.render();
 		this.users.render();
 
+		this.messages.$new_message.focus();
+
 		return this;
 
 	},

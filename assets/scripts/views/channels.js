@@ -13,10 +13,7 @@ irc.Views.Channels = Backbone.View.extend({
 	render: function(){
 
 		var html = this.template();
-		this.$el.html( html );
-
-		this.$channels = this.$el.find('ul.list');
-
+		this.setElement( html );
 		this.collection.each( this.renderChannel );
 
 		return this;
@@ -27,7 +24,7 @@ irc.Views.Channels = Backbone.View.extend({
 
 		var channel_listing_view = new irc.Views.ChannelListing({ model: channel });
 		var $channel_listing = channel_listing_view.render().$el;
-		this.$channels.append( $channel_listing );
+		this.$el.append( $channel_listing );
 
 	}
 
