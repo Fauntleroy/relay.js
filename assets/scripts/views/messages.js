@@ -3,12 +3,15 @@ irc.Views.Messages = Backbone.View.extend({
 	template: templates.messages,
 
 	events: {
-		'submit form.new': 'submitNew'
+		'submit form.new': 'submitNew',
+		'keypress :input[name="message"]': 'keyTextarea',
+		'keydown :input[name="message"]': 'keydownTextarea',
+		'keyup :input[name="message"]': 'keyupTextarea'
 	},
 
 	initialize: function(){
 
-		_( this ).bindAll( 'render', 'renderMessage', 'scrollBottom', 'submitNew' );
+		_( this ).bindAll( 'render', 'renderMessage', 'scrollBottom', 'submitNew', 'keyTextarea', 'keydownTextarea', 'keyupTextarea' );
 
 		this.listenTo( this.collection, 'add', this.renderMessage );
 		$(window).on( 'resize', this.scrollBottom );
@@ -21,7 +24,7 @@ irc.Views.Messages = Backbone.View.extend({
 		this.$el.html( html );
 
 		this.$form = this.$el.find('form.new');
-		this.$new_message = this.$form.find('input[name="message"]');
+		this.$new_message = this.$form.find(':input[name="message"]');
 		this.$messages = this.$el.find('ul.list');
 
 		this.collection.each( this.renderMessage );
@@ -129,6 +132,29 @@ irc.Views.Messages = Backbone.View.extend({
 			this.$new_message.val('');
 
 		}
+
+	},
+
+	keyTextarea: function( e ){
+
+		if( e.which === 13 && !this.shift ){
+
+			e.preventDefault();
+			this.$form.trigger('submit');
+
+		}
+
+	},
+
+	keydownTextarea: function( e ){
+
+		if( e.which === 16 ) this.shift = true;
+
+	},
+
+	keyupTextarea: function( e ){
+
+		if( e.which === 16 ) this.shift = false;
 
 	}
 

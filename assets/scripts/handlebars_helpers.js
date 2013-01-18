@@ -11,3 +11,12 @@ Handlebars.registerHelper( 'time', function( timestamp ){
 	return new Handlebars.SafeString( hour_12 +':'+ minute +' '+ am_pm );
 
 });
+
+Handlebars.registerHelper( 'breaklines', function( text ){
+
+    text = Handlebars.Utils.escapeExpression( text );
+    text = text.toString();
+    text = text.replace( /(\r\n|\n|\r)/gm, '<br />' );
+    return new Handlebars.SafeString( text );
+
+});
