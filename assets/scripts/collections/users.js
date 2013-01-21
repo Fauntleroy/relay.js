@@ -17,14 +17,35 @@ irc.Collections.Users = Backbone.Collection.extend({
 
 	},
 
+	// Sort by name and rank
+	comparator: function( a, b ){
+
+		var ranks = [ '~', '&', '@', '%', '+', '' ];
+		var a_rank_index = _( ranks ).indexOf( a.get('rank') );
+		var b_rank_index = _( ranks ).indexOf( b.get('rank') );
+		var a_nick = a.get('nick').toLowerCase();
+		var b_nick = b.get('nick').toLowerCase();
+
+		if( a_rank_index > b_rank_index ) return 1;
+		else if( b_rank_index > a_rank_index ) return -1;
+		else if( a_nick > b_nick ) return 1;
+		else if( b_nick > a_nick ) return -1;
+		else return 0;
+
+	},
+
 	doNames: function( channel, nicks ){
 
 		if( channel === this.channel.get('name') ){
 
-			var nicks_array = [];
-			for( var nick in nicks ) nicks_array.push({ nick: nick });
+			for( var nick in nicks ){
+				this.push({
+					nick: nick,
+					rank: nicks[nick]
+				});
+			}
 
-			this.add( nicks_array );
+			this.sort();
 
 		}
 
