@@ -20,7 +20,7 @@ irc.Collections.Users = Backbone.Collection.extend({
 	// Sort by name and rank
 	comparator: function( a, b ){
 
-		var ranks = [ '~', '&', '@', '%', '+', '' ];
+		var ranks = [ '~', '&', '@', '%', '+', null ];
 		var a_rank_index = _( ranks ).indexOf( a.get('rank') );
 		var b_rank_index = _( ranks ).indexOf( b.get('rank') );
 		var a_nick = a.get('nick').toLowerCase();
@@ -42,7 +42,7 @@ irc.Collections.Users = Backbone.Collection.extend({
 			for( var nick in nicks ){
 				users.push({
 					nick: nick,
-					rank: nicks[nick]
+					rank: nicks[nick] || null
 				});
 			}
 
