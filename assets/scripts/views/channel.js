@@ -63,7 +63,7 @@ irc.Views.Channel = Backbone.View.extend({
 		.text( topic )
 		.links()
 		.emojify({
-			url: '/images/vendor/emoji',
+			url: CDN_URL +'emoji',
 			attr: {
 				'class': 'emoji'
 			}
