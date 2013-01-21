@@ -13,6 +13,10 @@
 <li class="action">* <strong>{{nick}}</strong> <span>{{contents}}</span> <var class="timestamp">{{time timestamp}}</var></li>
 {{/action}}
 
+{{#nick_change}}
+<li class="nick"><i class="icon-user"></i> <strong class="nick">{{old_nick}}</strong> is now known as <strong class="nick">{{new_nick}}</strong> <var class="timestamp">{{time timestamp}}</var></li>
+{{/nick_change}}
+
 {{#notice}}
 <li class="notice">{{#from}}-<strong>{{.}}</strong>-{{/from}} <span>{{text}}</span> <var class="timestamp">{{time timestamp}}</var></li>
 {{/notice}}

@@ -118,6 +118,11 @@ irc.Views.Messages = Backbone.View.extend({
 				this.collection.socket.emit( 'quit', message_bits.join(' ') );
 
 			}
+			else if( command.match( /^\/nick/i ) ){
+
+				this.collection.socket.emit( 'nick', message_bits[0] );
+
+			}
 			else if( this.collection.get('private') ){
 
 				this.collection.say( this.collection.get('name'), message );

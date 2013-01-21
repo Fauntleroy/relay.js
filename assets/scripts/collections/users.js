@@ -8,12 +8,13 @@ irc.Collections.Users = Backbone.Collection.extend({
 		this.connection = parameters.connection;
 		this.socket = this.connection.socket;
 
-		_( this ).bindAll( 'doNames', 'doPart', 'doQuit', 'doJoin' );
+		_( this ).bindAll( 'doNames', 'doPart', 'doQuit', 'doJoin', 'doNick' );
 
 		this.socket.on( 'names', this.doNames );
 		this.socket.on( 'part', this.doPart );
 		this.socket.on( 'quit', this.doQuit );
 		this.socket.on( 'join', this.doJoin );
+		this.socket.on( 'nick', this.doNick );
 
 	},
 
@@ -82,6 +83,19 @@ irc.Collections.Users = Backbone.Collection.extend({
 				nick: nick
 			});
 			
+		}
+
+	},
+
+	doNick: function( old_nick, new_nick, channels ){
+
+		if( _( channels ).indexOf( this.channel.get('name') ) >= 0 ){
+
+			var changing_user = this.where({ nick: old_nick })[0];
+			changing_user.set( 'nick', new_nick );
+
+			this.sort();
+
 		}
 
 	}

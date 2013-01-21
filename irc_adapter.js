@@ -85,8 +85,10 @@ module.exports = function( io ){
 			});
 
 			irc_client.addListener( 'nick', function( old_nick, new_nick, channels, message ){
-				console.log( '>>> NICK', old_nick, new_nick, channels );
-				client.emit( 'nick', old_nick, new_nick, channels );
+				if( old_nick === irchub_client.nick ) irchub_client.nick = new_nick;
+				var timestamp = Date.now();
+				console.log( '>>> NICK', old_nick, new_nick, channels, timestamp );
+				client.emit( 'nick', old_nick, new_nick, channels, timestamp );
 			});
 
 			irc_client.addListener( 'invite', function( channel, from, message ){
@@ -149,6 +151,10 @@ module.exports = function( io ){
 				// IRC doesn't send us our own actions
 				var timestamp = Date.now();
 				client.emit( 'action', irchub_client.nick, target, message, timestamp );
+			});
+
+			client.on( 'nick', function( nick ){
+				irc_client.send( 'NICK', nick );
 			});
 
 			client.on( 'topic', function( channel, topic ){

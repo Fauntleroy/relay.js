@@ -7,13 +7,16 @@ irc.Views.User = Backbone.View.extend({
 		_( this ).bindAll( 'render', 'destroy' );
 
 		this.listenTo( this.model, 'remove', this.destroy );
+		this.listenTo( this.model, 'change', this.render );
 
 	},
 
 	render: function(){
 
 		var html = this.template( this.model.toJSON() );
-		this.setElement( html );
+		var $user = $( html );
+		this.$el.replaceWith( $user );
+		this.setElement( $user );
 
 		return this;
 

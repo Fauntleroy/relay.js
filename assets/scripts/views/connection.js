@@ -8,9 +8,10 @@ irc.Views.Connection = Backbone.View.extend({
 
 	initialize: function(){
 
-		_( this ).bindAll( 'render', 'clickQuit', 'destroy' );
+		_( this ).bindAll( 'render', 'clickQuit', 'renderNick', 'destroy' );
 
 		this.listenTo( this.model, 'remove', this.destroy );
+		this.listenTo( this.model, 'change:nick', this.renderNick );
 
 	},
 
@@ -20,6 +21,7 @@ irc.Views.Connection = Backbone.View.extend({
 		this.setElement( html );
 
 		this.$info = this.$el.children('.info');
+		this.$nick = this.$info.find('.nick');
 		this.$channels = this.$el.children('.channels');
 
 		this.channels = new irc.Views.Channels({ collection: this.model.channels, $el: this.$channels });
@@ -27,6 +29,12 @@ irc.Views.Connection = Backbone.View.extend({
 		this.$channels.html( $channels );
 
 		return this;
+
+	},
+
+	renderNick: function( connection, nick ){
+
+		this.$nick.text( nick );
 
 	},
 

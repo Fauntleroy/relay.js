@@ -8,11 +8,12 @@ irc.Collections.Messages = Backbone.Collection.extend({
 		this.connection = parameters.connection;
 		this.socket = this.connection.socket;
 
-		_( this ).bindAll( 'say', 'doMessage', 'doNotice', 'doAction', 'doJoin', 'doPart', 'doQuit', 'doTopic', 'doMOTD', 'doError' );
+		_( this ).bindAll( 'say', 'doMessage', 'doNotice', 'doAction', 'doNick', 'doJoin', 'doPart', 'doQuit', 'doTopic', 'doMOTD', 'doError' );
 
 		this.socket.on( 'message', this.doMessage );
 		this.socket.on( 'notice', this.doNotice );
 		this.socket.on( 'action', this.doAction );
+		this.socket.on( 'nick', this.doNick );
 		this.socket.on( 'join', this.doJoin );
 		this.socket.on( 'part', this.doPart );
 		this.socket.on( 'quit', this.doQuit );
@@ -76,6 +77,21 @@ irc.Collections.Messages = Backbone.Collection.extend({
 				action: true,
 				nick: from,
 				contents: text,
+				timestamp: timestamp
+			});
+
+		}
+
+	},
+
+	doNick: function( old_nick, new_nick, channels, timestamp ){
+
+		if( _( channels ).indexOf( this.channel.get('name') ) >= 0 ){
+
+			this.add({
+				nick_change: true,
+				old_nick: old_nick,
+				new_nick: new_nick,
 				timestamp: timestamp
 			});
 
