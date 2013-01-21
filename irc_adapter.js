@@ -122,8 +122,11 @@ module.exports = function( io ){
 				console.log( ' >>> PM', nick, text );
 			});
 
-			irc_client.addListener( 'error', function( message ){
-				console.log( '>>> ERROR', message );
+			irc_client.addListener( 'error', function( error ){
+				var timestamp = Date.now();
+				var message = error.args.pop();
+				console.log( '>>> ERROR', error, message, timestamp );
+				client.emit( 'error', message, timestamp );
 			});
 
 			// Listen for commands by our client-side script

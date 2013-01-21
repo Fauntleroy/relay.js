@@ -32,3 +32,7 @@
 {{#motd}}
 <li class="motd"><pre>{{text}}</pre> <var class="timestamp">{{time timestamp}}</var></li>
 {{/motd}}
+
+{{#error}}
+<li class="error"><i class="icon-warning-sign"></i> {{text}} <var class="timestamp">{{time timestamp}}</var></li>
+{{/error}}

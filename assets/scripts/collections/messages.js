@@ -8,7 +8,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 		this.connection = parameters.connection;
 		this.socket = this.connection.socket;
 
-		_( this ).bindAll( 'say', 'doMessage', 'doNotice', 'doAction', 'doJoin', 'doPart', 'doQuit', 'doTopic', 'doMOTD' );
+		_( this ).bindAll( 'say', 'doMessage', 'doNotice', 'doAction', 'doJoin', 'doPart', 'doQuit', 'doTopic', 'doMOTD', 'doError' );
 
 		this.socket.on( 'message', this.doMessage );
 		this.socket.on( 'notice', this.doNotice );
@@ -18,6 +18,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 		this.socket.on( 'quit', this.doQuit );
 		this.socket.on( 'topic', this.doTopic );
 		this.socket.on( 'motd', this.doMOTD );
+		this.socket.on( 'error', this.doError );
 
 	},
 
@@ -150,6 +151,20 @@ irc.Collections.Messages = Backbone.Collection.extend({
 
 			this.add({
 				motd: true,
+				text: text,
+				timestamp: timestamp
+			});
+
+		}
+
+	},
+
+	doError: function( text, timestamp ){
+
+		if( this.channel.get('active') ){
+
+			this.add({
+				error: true,
 				text: text,
 				timestamp: timestamp
 			});
