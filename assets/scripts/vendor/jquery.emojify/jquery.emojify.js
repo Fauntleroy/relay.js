@@ -21,6 +21,8 @@
 			// we just add the src after we transform it back into a string
 			img_string = img_string.replace( '<img ', '<img src="'+ parameters.url +'/$1.png" ' );
 			html = html.replace( emoji_reg, img_string );
+			// some servers don't like having '+' in the URL
+			html = html.replace( '+1.png', '%2B1.png' );
 
 			$this.html( html );
 
