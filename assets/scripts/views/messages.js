@@ -63,8 +63,8 @@ irc.Views.Messages = Backbone.View.extend({
 		var frame_scrollheight = this.$messages[0].scrollHeight;
 		var frame_scrolltop = this.$messages.scrollTop();
 		var frame_scrollbottom = frame_scrolltop + frame_height;
-		var last_message_height = this.$messages.find('li:last-child').height();
-		var is_near_bottom = frame_scrollbottom + 15 > frame_scrollheight - last_message_height;
+		var last_message_height = this.$messages.children('li:last-child').height();
+		var is_near_bottom = frame_scrollbottom + 30 > frame_scrollheight - last_message_height;
 
 		if( is_near_bottom || force ){
 			this.$messages.scrollTop( frame_scrollheight - frame_height );
@@ -80,52 +80,71 @@ irc.Views.Messages = Backbone.View.extend({
 
 		if( message !== '' ){
 
+			var socket = this.collection.socket;
+			var channel = this.collection.channel.get('name');
 			var message_bits = message.split(' ');
 			var command = message_bits.shift();
 
 			if( command.match( /^\/msg/i ) ){
 
-				this.collection.socket.emit( 'say', message_bits.shift(), message_bits.join(' ') );
+				socket.emit( 'say', message_bits.shift(), message_bits.join(' ') );
 
 			}
 			else if( command.match( /^\/notice/i ) ){
 
-				this.collection.socket.emit( 'notice', message_bits.shift(), message_bits.join(' ') );
+				socket.emit( 'notice', message_bits.shift(), message_bits.join(' ') );
 
 			}
 			else if( command.match( /^\/(?:me|action)/i ) ){
 
-				this.collection.socket.emit( 'action', this.collection.channel.get('name'), message_bits.join(' ') );
+				socket.emit( 'action', channel, message_bits.join(' ') );
 
 			}
 			else if( command.match( /^\/topic/i ) ){
 
-				this.collection.socket.emit( 'topic', this.collection.channel.get('name'), message_bits.join(' ') );
+				socket.emit( 'topic', channel, message_bits.join(' ') );
 
 			}
 			else if( command.match( /^\/join/i ) ){
 
-				this.collection.socket.emit( 'join', message_bits[0] );
+				socket.emit( 'join', message_bits[0] );
 
 			}
 			else if( command.match( /^\/part/i ) ){
 
-				this.collection.socket.emit( 'part', this.collection.channel.get('name') );
+				socket.emit( 'part', channel );
 
 			}
 			else if( command.match( /^\/quit/i ) ){
 
-				this.collection.socket.emit( 'quit', message_bits.join(' ') );
+				socket.emit( 'quit', message_bits.join(' ') );
 
 			}
 			else if( command.match( /^\/nick/i ) ){
 
-				this.collection.socket.emit( 'nick', message_bits[0] );
+				socket.emit( 'nick', message_bits[0] );
 
 			}
+
+			// Channel Ops commands
+
+			else if( command.match( /^\/kick/i ) ){
+
+				socket.emit( 'kick', channel, message_bits[0] );
+
+			}
+
+			// IRC Ops commands
+
+			else if( command.match( /^\/kill/i ) ){
+
+				socket.emit( 'kill', message_bits.shift(), message_bits.join(' ') );
+
+			}
+
 			else if( this.collection.get('private') ){
 
-				this.collection.say( this.collection.get('name'), message );
+				this.collection.say( channel, message );
 
 			}
 			else {

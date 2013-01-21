@@ -176,6 +176,14 @@ module.exports = function( io ){
 				client.emit( 'quit', irchub_client.nick, message, _(irc_client.chans).keys() );
 			});
 
+			client.on( 'kick', function( channel, nick ){
+				irc_client.send( 'KICK', channel, nick );
+			});
+
+			client.on( 'kill', function( nick ){
+				irc_client.send( 'KILL', nick );
+			});
+
 			client.emit( 'chans', _(irc_client.chans).keys() );
 			
 			client.on( 'disconnect', function(){
