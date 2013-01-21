@@ -38,12 +38,15 @@ irc.Collections.Users = Backbone.Collection.extend({
 
 		if( channel === this.channel.get('name') ){
 
+			var users = [];
 			for( var nick in nicks ){
-				this.add({
+				users.push({
 					nick: nick,
 					rank: nicks[nick]
 				});
 			}
+
+			this.reset( users );
 
 		}
 

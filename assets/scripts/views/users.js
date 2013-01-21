@@ -6,8 +6,7 @@ irc.Views.Users = Backbone.View.extend({
 
 		_( this ).bindAll( 'render', 'renderUser' );
 
-		this.listenTo( this.collection, 'add', this.renderUser );
-		this.listenTo( this.collection, 'sort add remove', this.render );
+		this.listenTo( this.collection, 'reset sort add remove', this.render );
 
 	},
 
