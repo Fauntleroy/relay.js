@@ -37,7 +37,7 @@ irc.Views.Messages = Backbone.View.extend({
 
 		if( message.get('message') && message.get('nick') === $last_message.find('.nick').text() ){
 			
-			var append_message = new irc.Views.Message({ model: message });
+			var append_message = new irc.Views.Message({ model: message, partial: true });
 			var $append_message = append_message.render().$el;
 			var $append_message_content = $append_message.find('ul.contents > li');
 			$last_message.find('ul.contents').append( $append_message_content );

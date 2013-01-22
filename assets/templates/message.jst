@@ -1,4 +1,10 @@
 {{#message}}
+{{#partial}}
+<li>
+	<span>{{breaklines contents}}</span> <var class="timestamp">{{time timestamp}}</var>
+</li>
+{{/partial}}
+{{^partial}}
 <li class="message">
 	<h5 class="nick">{{nick}}</h5> 
 	<ul class="contents">
@@ -7,6 +13,7 @@
 		</li>
 	</ul>
 </li>
+{{/partial}}
 {{/message}}
 
 {{#action}}
