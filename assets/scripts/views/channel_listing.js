@@ -24,7 +24,7 @@ irc.Views.ChannelListing = Backbone.View.extend({
 		this.updateActive();
 
 		this.$name = this.$el.children('.name');
-		this.$unread = this.$el.children('.unread');
+		this.$unread = this.$el.find('.unread');
 
 		return this;
 
