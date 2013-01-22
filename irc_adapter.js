@@ -131,58 +131,94 @@ module.exports = function( io ){
 				client.emit( 'error', message, timestamp );
 			});
 
-			// Listen for commands by our client-side script
-			client.on( 'say', function( target, message ){
-				irc_client.say( target, message );
-				// IRC doesn't send us our own messages
-				var timestamp = Date.now();
-				client.emit( 'message', irchub_client.nick, target, message, timestamp );
-			});
 
-			client.on( 'notice', function( target, message ){
-				irc_client.send( 'NOTICE', target, message );
-				// IRC doesn't send us our own notices
-				var timestamp = Date.now();
-				client.emit( 'notice', irchub_client.nick, target, message, timestamp );
-			});
+// Client Commands
+////////////////////////////////////////////////////////////////////////////////
 
-			client.on( 'action', function( target, message ){
-				irc_client.action( target, message );
-				// IRC doesn't send us our own actions
-				var timestamp = Date.now();
-				client.emit( 'action', irchub_client.nick, target, message, timestamp );
-			});
+			var interpretCommand = function( command_string, channel ){
 
-			client.on( 'nick', function( nick ){
-				irc_client.send( 'NICK', nick );
-			});
+				var command_regex = /^\/([A-Za-z]*)/;
+				var bits = command_string.split(' ').splice(1);
+				var command = command_regex.exec( command_string );
+				command = ( command )? command[1].toLowerCase(): null;
 
-			client.on( 'topic', function( channel, topic ){
-				irc_client.send( 'TOPIC', channel, topic );
-			});
+				switch( command ){
 
-			client.on( 'join', function( channel ){
-				if( channel.charAt(0) !== '#' ) channel = '#'+ channel;
-				irc_client.join( channel );
-			});
+				case 'notice':
+					var target = bits.shift();
+					var message = bits.join(' ');
+					irc_client.send( 'notice', target, message );
+					// IRC doesn't send us our own notices
+					var timestamp = Date.now();
+					client.emit( 'notice', irchub_client.nick, target, message, timestamp );
+					break;
 
-			client.on( 'part', function( channel ){
-				irc_client.part( channel );
-			});
+				case 'me':
+				case 'action':
+					var message = bits.join(' ');
+					irc_client.action( channel, message );
+					// IRC doesn't send us our own actions
+					var timestamp = Date.now();
+					client.emit( 'action', irchub_client.nick, channel, message, timestamp );
+					break;
 
-			client.on( 'quit', function( message ){
-				irc_client.disconnect( message );
-				// IRC doesn't send us our own quits
-				client.emit( 'quit', irchub_client.nick, message, _(irc_client.chans).keys() );
-			});
+				case 'topic':
+					irc_client.send( 'topic', channel, bits.join(' ') );
+					break;
 
-			client.on( 'kick', function( channel, nick ){
-				irc_client.send( 'KICK', channel, nick );
-			});
+				case 'join':
+					var channel_to_join = bits[0];
+					if( channel_to_join.charAt(0) !== '#' ) channel_to_join = '#'+ channel_to_join;
+					irc_client.send( 'join', channel_to_join );
+					break;
 
-			client.on( 'kill', function( nick ){
-				irc_client.send( 'KILL', nick );
-			});
+				case 'part':
+					irc_client.send( 'part', channel, bits.join(' ') );
+					break;
+
+				case 'quit':
+					var message = bits.join(' ');
+					irc_client.send( 'quit', message );
+					// IRC doesn't send us our own quits
+					client.emit( 'quit', irchub_client.nick, message, _(irc_client.chans).keys() );
+					break;
+
+				case 'nick':
+					irc_client.send( 'nick', bits[0] );
+					break;
+
+// Channel Ops Commands
+////////////////////////////////////////////////////////////////////////////////
+
+				case 'kick':
+					irc_client.send( 'kick', channel, bits[0] );
+					break;
+
+// Server Ops Commands
+////////////////////////////////////////////////////////////////////////////////
+
+				case 'kill':
+					irc_client.send( 'kill', bits.shift(), bits.join(' ') );
+					break;
+
+// Say
+////////////////////////////////////////////////////////////////////////////////
+
+				case 'msg':
+				default:
+					var target = ( command )? bits.shift(): channel;
+					var message = ( command )? bits.join(' '): command_string;
+					irc_client.say( target, message );
+					// IRC doesn't send us our own messages
+					var timestamp = Date.now();
+					client.emit( 'message', irchub_client.nick, target, message, timestamp );
+					break;
+
+				}
+
+			};
+
+			client.on( 'command', interpretCommand );
 
 			client.emit( 'chans', _(irc_client.chans).keys() );
 			
