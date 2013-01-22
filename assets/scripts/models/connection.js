@@ -31,7 +31,11 @@ irc.Models.Connection = Backbone.Model.extend({
 
 	doNick: function( old_nick, new_nick, channels ){
 
-		this.set( 'nick', new_nick );
+		if( old_nick === this.get('nick') ){
+			
+			this.set( 'nick', new_nick );
+
+		}
 
 	}
 
