@@ -8,7 +8,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 		this.connection = parameters.connection;
 		this.socket = this.connection.socket;
 
-		_( this ).bindAll( 'say', 'doMessage', 'doNotice', 'doAction', 'doNick', 'doJoin', 'doPart', 'doQuit', 'doTopic', 'doMOTD', 'doError' );
+		_( this ).bindAll( 'doMessage', 'doNotice', 'doAction', 'doNick', 'doJoin', 'doPart', 'doQuit', 'doTopic', 'doMOTD', 'doError' );
 
 		this.socket.on( 'message', this.doMessage );
 		this.socket.on( 'notice', this.doNotice );
@@ -20,17 +20,6 @@ irc.Collections.Messages = Backbone.Collection.extend({
 		this.socket.on( 'topic', this.doTopic );
 		this.socket.on( 'motd', this.doMOTD );
 		this.socket.on( 'error', this.doError );
-
-	},
-
-	say: function( target, message ){
-
-		if( arguments.length === 1 ){
-			message = target;
-			target = this.channel.get('name');
-		}
-
-		this.socket.emit( 'say', target, message );
 
 	},
 

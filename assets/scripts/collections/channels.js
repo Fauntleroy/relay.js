@@ -4,7 +4,7 @@ irc.Collections.Channels = Backbone.Collection.extend({
 
 	initialize: function( models, parameters ){
 
-		_(this).bindAll( 'join', 'part', 'doChans', 'doJoin', 'doPart', 'doMessage' );
+		_(this).bindAll( 'join', 'part', 'doChans', 'doJoin', 'doPart', 'doMessage', 'updateActive' );
 
 		this.connection = parameters.connection;
 		this.socket = this.connection.socket;
@@ -18,6 +18,7 @@ irc.Collections.Channels = Backbone.Collection.extend({
 		this.socket.on( 'join', this.doJoin );
 		this.socket.on( 'part', this.doPart );
 		this.socket.on( 'message', this.doMessage );
+		this.on( 'remove', this.updateActive );
 
 	},
 
@@ -67,24 +68,6 @@ irc.Collections.Channels = Backbone.Collection.extend({
 
 			var parted_channel = this.where({ name: channel })[0];
 
-			console.log( 'parted channel', parted_channel );
-
-			if( parted_channel.get('active') ){
-				var parted_index = this.indexOf( parted_channel );
-				var next_channel = this.at( parted_index + 1 );
-				var previous_channel = this.at( parted_index - 1 );
-				var next_active_channel = next_channel || previous_channel;
-				console.log( 'next_active_channel', next_active_channel );
-				if( next_active_channel ){
-					next_active_channel.active();
-					console.log('activate next active channel');
-				}
-				else {
-					irc.trigger( 'channels:active', null );
-					console.log('say, we have no active channels');
-				}
-			}
-
 			this.remove( parted_channel );
 
 		}
@@ -110,6 +93,26 @@ irc.Collections.Channels = Backbone.Collection.extend({
 			// pass the new channel the message event, since it missed it
 			private_channel.messages.doMessage( from, to, text );
 
+		}
+
+	},
+
+	updateActive: function( channel, channels, options ){
+
+		if( channel.get('active') ){
+			var parted_index = options.index;
+			var next_channel = this.at( parted_index );
+			var previous_channel = this.at( parted_index - 1 );
+			var next_active_channel = next_channel || previous_channel;
+			
+			if( next_active_channel ){
+				next_active_channel.active();
+				console.log('activate next active channel');
+			}
+			else {
+				irc.trigger( 'channels:active', null );
+				console.log('say, we have no active channels');
+			}
 		}
 
 	}
