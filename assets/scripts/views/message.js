@@ -50,6 +50,16 @@ irc.Views.Message = Backbone.View.extend({
 					}
 				});
 
+				// Check if it's a youtube video
+				var youtube_id = this.testYoutube( contents );
+				if( youtube_id ){
+					var youtube_html = templates['inline/youtube']({
+						id: youtube_id,
+						url: contents
+					});
+					$text.after( youtube_html );
+				}
+
 			}
 
 		}
@@ -83,6 +93,15 @@ irc.Views.Message = Backbone.View.extend({
 			timed_out = true;
 			callback( url, 'timeout' );
 		}, timeout ); 
+
+	},
+
+	// Get Youtube ID out of a URL
+	testYoutube: function( url ){
+
+		var id = url.match( /(?:youtube\.com.*[\?&]v=|youtu\.be\/)(.{11})/i )[1];
+
+		return id || null;
 
 	}
 
