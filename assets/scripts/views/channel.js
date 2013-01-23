@@ -59,6 +59,8 @@ irc.Views.Channel = Backbone.View.extend({
 
 	renderTopic: function( channel, topic ){
 
+		topic = topic || '';
+
 		this.$topic
 		.text( topic )
 		.links()

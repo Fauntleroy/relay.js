@@ -37,7 +37,7 @@
 {{/part}}
 
 {{#topic}}
-<li class="topic"><i class="icon-pencil"></i> <strong>{{nick}}</strong> set the topic to <em>{{topic_text}}</em> <var class="timestamp">{{time timestamp}}</var></li>
+<li class="topic"><i class="icon-pencil"></i> <strong>{{nick}}</strong> {{#topic_text}}set the topic to <em>{{.}}</em>{{/topic_text}}{{^topic_text}}cleared the topic{{/topic_text}} <var class="timestamp">{{time timestamp}}</var></li>
 {{/topic}}
 
 {{#motd}}
