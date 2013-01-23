@@ -2,7 +2,7 @@
   "name": "irchub",
   "description": "A web application that makes IRC painless",
   "author": "Timothy Kempf",
-  "version": "0.0.1-5",
+  "version": "0.0.1-6",
   "dependencies": {
     "lodash": "0.9.x",
     "express": "3.x",

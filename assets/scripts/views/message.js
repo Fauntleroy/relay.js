@@ -15,9 +15,6 @@ irc.Views.Message = Backbone.View.extend({
 		var json = this.model.toJSON();
 		var html = this.template( json );
 		this.setElement( html );
-
-		this.$content = this.$el.find('ul.contents > li');
-
 		this.postprocess();
 
 		return this;
@@ -26,9 +23,19 @@ irc.Views.Message = Backbone.View.extend({
 
 	postprocess: function(){
 
-		/*if( this.model.get('message') ){
+		var $text = this.$el.find('.text');
 
-			var message_view = this;
+		$text
+		.links()
+		.emojify({
+			url: CDN_URL +'emoji',
+			attr: {
+				'class': 'emoji'
+			}
+		});
+
+		if( this.model.get('message') ){
+
 			var contents = this.model.get('contents');
 			var url_regex = /^(\b((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’])))$/ig;
 			var is_url = url_regex.test( contents );
@@ -39,26 +46,13 @@ irc.Views.Message = Backbone.View.extend({
 				this.testImage( contents, function( url, result ){
 					if( result === 'success' ){
 						var image_html = templates['inline/image']({ url: contents });
-						var $message_contents = ( message_view.$el.is('li') )
-							? message_view.$el
-							: message_view.$el.find('li');
-						$message_contents.append( image_html );
-						message_view.$content.css('background','#ff0000').append( image_html );
+						$text.after( image_html );
 					}
 				});
 
 			}
 
-		}*/
-
-		this.$el
-		.links()
-		.emojify({
-			url: CDN_URL +'emoji',
-			attr: {
-				'class': 'emoji'
-			}
-		});
+		}
 
 	},
 

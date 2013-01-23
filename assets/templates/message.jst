@@ -1,7 +1,7 @@
 {{#message}}
 {{#partial}}
 <li>
-	<span>{{breaklines contents}}</span> <var class="timestamp">{{time timestamp}}</var>
+	<span class="text">{{breaklines contents}}</span> <var class="timestamp">{{time timestamp}}</var>
 </li>
 {{/partial}}
 {{^partial}}
@@ -9,7 +9,7 @@
 	<h5 class="nick">{{nick}}</h5> 
 	<ul class="contents">
 		<li>
-			<span>{{breaklines contents}}</span> <var class="timestamp">{{time timestamp}}</var>
+			<span class="text">{{breaklines contents}}</span> <var class="timestamp">{{time timestamp}}</var>
 		</li>
 	</ul>
 </li>
@@ -17,7 +17,7 @@
 {{/message}}
 
 {{#action}}
-<li class="action">* <strong>{{nick}}</strong> <span>{{contents}}</span> <var class="timestamp">{{time timestamp}}</var></li>
+<li class="action">* <strong>{{nick}}</strong> <span class="text">{{contents}}</span> <var class="timestamp">{{time timestamp}}</var></li>
 {{/action}}
 
 {{#nick_change}}
@@ -25,25 +25,25 @@
 {{/nick_change}}
 
 {{#notice}}
-<li class="notice">{{#from}}-<strong>{{.}}</strong>-{{/from}} <span>{{text}}</span> <var class="timestamp">{{time timestamp}}</var></li>
+<li class="notice">{{#from}}-<strong>{{.}}</strong>-{{/from}} <span class="text">{{text}}</span> <var class="timestamp">{{time timestamp}}</var></li>
 {{/notice}}
 
 {{#join}}
-<li class="join"><i class="icon-chevron-right"></i> <strong>{{nick}}</strong> joined the channel. <var class="timestamp">{{time timestamp}}</var></li>
+<li class="join"><i class="icon-chevron-right"></i> <strong>{{nick}}</strong> joined the channel <var class="timestamp">{{time timestamp}}</var></li>
 {{/join}}
 
 {{#part}}
-<li class="part"><i class="icon-chevron-left"></i> <strong>{{nick}}</strong> left the channel{{#reason}} ( {{.}} ){{/reason}}. <var class="timestamp">{{time timestamp}}</var></li>
+<li class="part"><i class="icon-chevron-left"></i> <strong>{{nick}}</strong> left the channel{{#reason}} ( {{.}} ){{/reason}} <var class="timestamp">{{time timestamp}}</var></li>
 {{/part}}
 
 {{#topic}}
-<li class="topic"><i class="icon-pencil"></i> <strong>{{nick}}</strong> set the topic to <em>{{topic_text}}</em>. <var class="timestamp">{{time timestamp}}</var></li>
+<li class="topic"><i class="icon-pencil"></i> <strong>{{nick}}</strong> set the topic to <em>{{topic_text}}</em> <var class="timestamp">{{time timestamp}}</var></li>
 {{/topic}}
 
 {{#motd}}
-<li class="motd"><pre>{{text}}</pre> <var class="timestamp">{{time timestamp}}</var></li>
+<li class="motd"><pre class="text">{{text}}</pre> <var class="timestamp">{{time timestamp}}</var></li>
 {{/motd}}
 
 {{#error}}
-<li class="error"><i class="icon-warning-sign"></i> {{text}} <var class="timestamp">{{time timestamp}}</var></li>
+<li class="error"><i class="icon-warning-sign"></i> <span class="text">{{text}}</span> <var class="timestamp">{{time timestamp}}</var></li>
 {{/error}}
