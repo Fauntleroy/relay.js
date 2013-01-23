@@ -79,9 +79,13 @@ irc.Collections.Users = Backbone.Collection.extend({
 
 		if( channel === this.channel.get('name') && nick !== this.connection.get('nick') ){
 
-			this.add({
-				nick: nick
-			});
+			var existing = this.where({ nick: nick });
+
+			if( !existing.length ){
+				this.add({
+					nick: nick
+				});
+			}
 			
 		}
 
