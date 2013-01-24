@@ -46,6 +46,35 @@ div.messages {
 
 				}
 
+				div.inline.youtube {
+
+					a {
+
+						position: relative;
+
+						&:before {
+
+							content: '▶';
+							position: absolute;
+							top: 50%;
+							left: 50%;
+							width: 40px;
+							height: 40px;
+							margin: -20px 0 0 -20px;
+							border-radius: 50%;
+							font-family: 'arial', sans-serif;
+							font-size: 26px;
+							line-height: 36px;
+							text-align: center;
+							vertical-align: middle;
+							background: rgb( 0, 0, 0 );
+
+						}
+
+					}
+
+				}
+
 			}
 
 			&.error {

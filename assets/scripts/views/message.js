@@ -99,9 +99,10 @@ irc.Views.Message = Backbone.View.extend({
 	// Get Youtube ID out of a URL
 	testYoutube: function( url ){
 
-		var id = url.match( /(?:youtube\.com.*[\?&]v=|youtu\.be\/)(.{11})/i )[1];
+		var id = url.match( /(?:youtube\.com.*[\?&]v=|youtu\.be\/)(.{11})/i );
+		id = ( id )? id[1]: id;
 
-		return id || null;
+		return id;
 
 	}
 
