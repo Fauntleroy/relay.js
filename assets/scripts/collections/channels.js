@@ -4,7 +4,7 @@ irc.Collections.Channels = Backbone.Collection.extend({
 
 	initialize: function( models, parameters ){
 
-		_(this).bindAll( 'join', 'part', 'doChans', 'doJoin', 'doPart', 'doMessage', 'updateActive' );
+		_(this).bindAll( 'join', 'part', 'doChans', 'doJoin', 'doPart', 'doKick', 'doMessage', 'updateActive' );
 
 		this.connection = parameters.connection;
 		this.socket = this.connection.socket;
@@ -17,6 +17,7 @@ irc.Collections.Channels = Backbone.Collection.extend({
 		this.socket.on( 'chans', this.doChans );
 		this.socket.on( 'join', this.doJoin );
 		this.socket.on( 'part', this.doPart );
+		this.socket.on( 'kick', this.doKick );
 		this.socket.on( 'message', this.doMessage );
 		this.on( 'remove', this.updateActive );
 
@@ -69,6 +70,18 @@ irc.Collections.Channels = Backbone.Collection.extend({
 			var parted_channel = this.where({ name: channel })[0];
 
 			this.remove( parted_channel );
+
+		}
+
+	},
+
+	doKick: function( channel, nick, by, reason, timestamp ){
+
+		if( nick === this.connection.get('nick') ){
+
+			var kicked_from = this.where({ name: channel })[0];
+
+			this.remove( kicked_from );
 
 		}
 

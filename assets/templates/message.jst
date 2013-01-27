@@ -33,8 +33,12 @@
 {{/join}}
 
 {{#part}}
-<li class="part"><i class="icon-chevron-left"></i> <strong>{{nick}}</strong> <span class="text">left the channel{{#reason}} ( {{.}} ){{/reason}}</span> <var class="timestamp">{{time timestamp}}</var></li>
+<li class="part"><i class="icon-chevron-left"></i> <strong>{{nick}}</strong> left the channel{{#reason}} ( <span class="text">{{.}}</span> ){{/reason}} <var class="timestamp">{{time timestamp}}</var></li>
 {{/part}}
+
+{{#kick}}
+<li class="kick"><i class="icon-chevron-left"></i> <strong class="nick">{{nick}}</strong> was kicked by <strong class="by">{{by}}</strong>{{#reason}} ( <span class="text">{{.}}</span> ){{/reason}} <var class="timestamp">{{time timestamp}}</var></li>
+{{/kick}}
 
 {{#topic}}
 <li class="topic"><i class="icon-pencil"></i> <strong>{{nick}}</strong> <span class="text">{{#topic_text}}set the topic to <em>{{.}}</em>{{/topic_text}}{{^topic_text}}cleared the topic{{/topic_text}}</span> <var class="timestamp">{{time timestamp}}</var></li>

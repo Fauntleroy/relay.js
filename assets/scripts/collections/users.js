@@ -8,11 +8,12 @@ irc.Collections.Users = Backbone.Collection.extend({
 		this.connection = parameters.connection;
 		this.socket = this.connection.socket;
 
-		_( this ).bindAll( 'doNames', 'doPart', 'doQuit', 'doJoin', 'doNick' );
+		_( this ).bindAll( 'doNames', 'doPart', 'doQuit', 'doKick', 'doJoin', 'doNick' );
 
 		this.socket.on( 'names', this.doNames );
 		this.socket.on( 'part', this.doPart );
 		this.socket.on( 'quit', this.doQuit );
+		this.socket.on( 'kick', this.doKick );
 		this.socket.on( 'join', this.doJoin );
 		this.socket.on( 'nick', this.doNick );
 
@@ -68,8 +69,19 @@ irc.Collections.Users = Backbone.Collection.extend({
 
 		if( _( channels ).indexOf( this.channel.get('name') ) >= 0 ){
 
-			var parting_users = this.where({ nick: nick });
-			this.remove( parting_users );
+			var parting_user = this.where({ nick: nick });
+			this.remove( parting_user );
+
+		}
+
+	},
+
+	doKick: function( channel, nick, by, reason, timestamp ){
+
+		if( channel === this.channel.get('name') && nick !== this.connection.get('nick') ){
+
+			var kicked_user = this.where({ nick: nick });
+			this.remove( kicked_user );
 
 		}
 

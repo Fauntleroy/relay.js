@@ -28,7 +28,8 @@ module.exports = function( io ){
 			port: parameters.port || 6667,
 			channels: channels,
 			floodProtection: false,
-			floodProtectionDelay: 1000
+			floodProtectionDelay: 1000,
+			autoRejoin: false
 		});
 
 		if( parameters.nick_password ) irc_client.say( 'NickServ', 'IDENTIFY '+ parameters.nick_password );
@@ -60,7 +61,13 @@ module.exports = function( io ){
 				var timestamp = Date.now();
 				console.log( '>>> QUIT', nick, reason, channels, timestamp );
 				client.emit( 'quit', nick, reason, channels, timestamp );
-			})
+			});
+
+			irc_client.addListener( 'kick', function( channel, nick, by, reason, message ){
+				var timestamp = Date.now();
+				console.log( '>>> KICK', channel, nick, by, reason, timestamp );
+				client.emit( 'kick', channel, nick, by, reason, timestamp );
+			});
 
 			irc_client.addListener( 'motd', function( motd ){
 				var timestamp = Date.now();
