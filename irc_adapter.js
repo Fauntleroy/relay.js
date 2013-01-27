@@ -40,6 +40,7 @@ module.exports = function( io ){
 			// Send IRC events to our client-side script
 			irc_client.addListener( 'registered', function( message ){
 				client.emit( 'registered', message );
+				irchub_client.nick = message.args[0];
 				console.log( '>>> REGISTERED.', message );
 			});
 
