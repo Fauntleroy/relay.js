@@ -154,7 +154,7 @@ module.exports = function( io ){
 				case 'notice':
 					var target = bits.shift();
 					var message = bits.join(' ');
-					irc_client.send( 'notice', target, message );
+					irc_client.notice( target, message );
 					// IRC doesn't send us our own notices
 					var timestamp = Date.now();
 					client.emit( 'notice', irchub_client.nick, target, message, timestamp );

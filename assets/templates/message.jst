@@ -25,7 +25,7 @@
 {{/nick_change}}
 
 {{#notice}}
-<li class="notice">{{#from}}-<strong>{{.}}</strong>-{{/from}} <span class="text">{{text}}</span> <var class="timestamp">{{time timestamp}}</var></li>
+<li class="notice">{{#from}}<strong class="from">{{.}}</strong> {{/from}}&#9656; <strong class="to">{{to}}</strong> <span class="text">{{text}}</span> <var class="timestamp">{{time timestamp}}</var></li>
 {{/notice}}
 
 {{#join}}

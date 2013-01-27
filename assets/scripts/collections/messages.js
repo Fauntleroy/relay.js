@@ -43,18 +43,15 @@ irc.Collections.Messages = Backbone.Collection.extend({
 
 	doNotice: function( from, to, text, timestamp ){
 
-		// How do I know which channel this is in?!?!
-		if( !from && !this.channel.get('name') ){
+		// NOTICE messages are weird so we'll draw them all the time
 
-			this.add({
-				notice: true,
-				from: this.connection.get('server'),
-				to: to,
-				text: text,
-				timestamp: timestamp
-			});
-
-		}
+		this.add({
+			notice: true,
+			from: from,
+			to: to,
+			text: text,
+			timestamp: timestamp
+		});
 
 	},
 
