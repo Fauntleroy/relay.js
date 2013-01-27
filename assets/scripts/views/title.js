@@ -30,7 +30,7 @@ irc.Views.Title = Backbone.View.extend({
 
 	doChannelActive: function( channel ){
 
-		this.channel = channel.get('name');
+		this.channel = ( channel )? channel.get('name') || '': '';
 		this.render();
 
 	},
