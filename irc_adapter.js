@@ -1,6 +1,12 @@
 var irc = require('irc');
 var _ = require('lodash');
 var uuid = require('node-uuid');
+var winston = require('winston');
+var logger = new (winston.Logger)({
+	transports: [
+		new ( winston.transports.File )({ filename: 'irc.log' })
+	]
+});
 
 module.exports = function( io ){
 
@@ -117,7 +123,7 @@ module.exports = function( io ){
 			});
 
 			irc_client.addListener( 'raw', function( message ){
-				console.log( message );
+				logger.log( 'info', 'raw', message );
 			});
 
 			irc_client.addListener( 'pm', function( nick, text, message ){
