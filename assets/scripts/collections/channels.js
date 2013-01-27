@@ -74,7 +74,7 @@ irc.Collections.Channels = Backbone.Collection.extend({
 
 	},
 
-	doMessage: function( from, to, text ){
+	doMessage: function( from, to, text, timestamp ){
 
 		var nick = this.connection.get('nick');		
 		var channel = ( to === nick )? from: to;
@@ -91,7 +91,7 @@ irc.Collections.Channels = Backbone.Collection.extend({
 			var private_channel = this.last();
 
 			// pass the new channel the message event, since it missed it
-			private_channel.messages.doMessage( from, to, text );
+			private_channel.messages.doMessage.apply( private_channel.messages, arguments );
 
 		}
 
