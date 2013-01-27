@@ -33,11 +33,11 @@
 {{/join}}
 
 {{#part}}
-<li class="part"><i class="icon-chevron-left"></i> <strong>{{nick}}</strong> left the channel{{#reason}} ( {{.}} ){{/reason}} <var class="timestamp">{{time timestamp}}</var></li>
+<li class="part"><i class="icon-chevron-left"></i> <strong>{{nick}}</strong> <span class="text">left the channel{{#reason}} ( {{.}} ){{/reason}}</span> <var class="timestamp">{{time timestamp}}</var></li>
 {{/part}}
 
 {{#topic}}
-<li class="topic"><i class="icon-pencil"></i> <strong>{{nick}}</strong> {{#topic_text}}set the topic to <em>{{.}}</em>{{/topic_text}}{{^topic_text}}cleared the topic{{/topic_text}} <var class="timestamp">{{time timestamp}}</var></li>
+<li class="topic"><i class="icon-pencil"></i> <strong>{{nick}}</strong> <span class="text">{{#topic_text}}set the topic to <em>{{.}}</em>{{/topic_text}}{{^topic_text}}cleared the topic{{/topic_text}}</span> <var class="timestamp">{{time timestamp}}</var></li>
 {{/topic}}
 
 {{#motd}}

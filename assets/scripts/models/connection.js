@@ -42,7 +42,7 @@ irc.Models.Connection = Backbone.Model.extend({
 	},
 
 	doRegister: function( message ){
-console.log( 'doRegister', arguments );
+
 		var nick = message.args[0];
 
 		if( nick !== this.get('nick') ){
