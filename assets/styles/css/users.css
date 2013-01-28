@@ -1,0 +1,41 @@
+div.users {
+  overflow: auto;
+  margin: 0;
+  padding: 0;
+}
+div.users h2 {
+  color: #5e8ea1;
+  font-size: 16px;
+  line-height: 14px;
+  padding: 0 10%;
+}
+div.users ul.list {
+  list-style-type: none;
+  margin: 0;
+  height: 100%;
+}
+div.users ul.list:hover a {
+  color: #5e8ea1;
+}
+div.users ul.list li a {
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  color: #abc4ce;
+  display: block;
+  font-size: 13px;
+  padding: 0 10%;
+}
+div.users ul.list li a:hover {
+  background: rgba(0,0,0,0.02);
+  color: #888;
+  text-decoration: none;
+}
+div.users ul.list li a.idle {
+  opacity: 0.5;
+}
+div.users ul.list li a.away {
+  opacity: 0.25;
+}
+div.users ul.list li a.typing {
+  font-weight: bold;
+}

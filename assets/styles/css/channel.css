@@ -1,0 +1,13 @@
+#channel div.info {
+  color: #9fbbc6;
+  font-size: 13px;
+  line-height: 14px;
+  padding: 12px 0;
+}
+#channel div.info strong {
+  color: #8fb0bd;
+  font-size: 28px;
+  display: inline-block;
+  margin-right: 10px;
+  margin-top: 4px;
+}

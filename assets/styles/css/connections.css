@@ -1,0 +1,54 @@
+#connections {
+  top: 50px;
+  color: #5e8ea1;
+}
+#connections .new_connection {
+  margin: 20px 0 0 4px;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+}
+#connections .new_connection button {
+  color: #5e8ea1;
+  font-weight: 700;
+  background: #fff;
+  border: none;
+  height: 40px;
+  width: 90%;
+}
+#connections > ul.list {
+  list-style-type: none;
+  margin: 10px 0;
+  overflow: hidden;
+}
+#connections > ul.list > li div.info {
+  padding: 0 20px;
+  margin-bottom: 10px;
+}
+#connections > ul.list > li div.info .nick {
+  display: block;
+  font-size: 18px;
+  font-weight: 300;
+}
+#connections > ul.list > li div.info a {
+  color: #5e8ea1;
+}
+#connections > ul.list > li h3 {
+  margin: 0;
+  line-height: 34px;
+}
+#connections > ul.list > li a.disconnect,
+#connections > ul.list > li a.part {
+  position: absolute;
+  right: 5px;
+  font-size: 28px;
+  font-weight: bold;
+}
+#connections > ul.list > li a.disconnect:hover,
+#connections > ul.list > li a.part:hover {
+  color: #426370;
+  text-decoration: none;
+}
+#connections > ul.list > li a.disconnect {
+  right: 15px;
+}

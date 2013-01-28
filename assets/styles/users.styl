@@ -1,17 +1,57 @@
 div.users {
+	overflow: auto;
+	margin: 0;
+	padding: 0;
 
+	h2 {
+		color: hsl(197, 26%, 50%);
+		font-size: 16px;
+		line-height: 14px;
+		padding: 0 10%;
+	}
+	
 	ul.list {
 
 		list-style-type: none;
-		overflow: auto;
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
 		margin: 0;
-		padding: 7px 0 0 13px;
-		border-left: rgb( 205, 205, 205 ) 1px solid;
+		height: 100%;
+		
+
+		&:hover {
+			a {
+				color: hsl(197, 26%, 50%);
+			}
+		}
+
+		li {
+
+			a {
+				border-top: 1px solid transparent;
+				border-bottom: 1px solid transparent;
+				color: hsl(197, 26%, 74%);
+				display: block;
+				font-size: 13px;
+				padding: 0 10%;
+
+				&:hover {
+					background: rgba(0,0,0,.02);
+					color: #888;
+					text-decoration: none;
+				}
+
+				&.idle {
+					opacity: .5;
+				}
+
+				&.away {
+					opacity: .25;
+				}
+
+				&.typing {
+					font-weight: bold;
+				}
+			}
+		}
 
 	}
 

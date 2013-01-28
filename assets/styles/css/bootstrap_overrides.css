@@ -1,8 +1,7 @@
 [class^="icon-"],
 [class*=" icon-"] {
-	background-image: url('/images/vendor/bootstrap/glyphicons-halflings.png');
+  background-image: url("/images/vendor/bootstrap/glyphicons-halflings.png");
 }
-
 .icon-white,
 .nav-pills > .active > a > [class^="icon-"],
 .nav-pills > .active > a > [class*=" icon-"],
@@ -16,19 +15,8 @@
 .dropdown-menu > .active > a > [class*=" icon-"],
 .dropdown-submenu:hover > a > [class^="icon-"],
 .dropdown-submenu:hover > a > [class*=" icon-"] {
-	background-image: url('/images/vendor/bootstrap/glyphicons-halflings-white.png');
+  background-image: url("/images/vendor/bootstrap/glyphicons-halflings-white.png");
 }
-
-div.modal {
-
-	> form {
-
-		margin-bottom: 0;
-
-	}
-
-}
-
-.fadein, :focus {
-  -webkit-transition(all, 0.3s, ease-in-out);
+div.modal > form {
+  margin-bottom: 0;
 }

@@ -1,13 +1,31 @@
-$left_bar_width = 250px;
-$right_bar_width = 200px;
+$left_bar_width = 18%;
+$right_bar_width = 18%;
 $channel_title_height = 41px;
-$new_message_height = 41px;
+$new_message_height = 50px;
 
 @import url('http://fonts.googleapis.com/css?family=Roboto:400,300,100italic,100,300italic,400italic,500,500italic,700,700italic,900,900italic');
 
-body {
+.fadein, :focus, a {
+  -webkit-transition: all, 0.3s, ease-in-out;
+}
 
-	background: rgb( 250, 250, 250 );
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+body {
+background-color: #e2eaed;
+background-image: -webkit-gradient(linear, left top, left bottom, from(hsl(196, 23%, 91%)), to(hsl(197, 26%, 78%)));
+background-image: -webkit-linear-gradient(top, hsl(196, 23%, 91%), hsl(197, 26%, 78%));
+background-image: -moz-linear-gradient(top, hsl(196, 23%, 91%), hsl(197, 26%, 78%));
+background-image: linear-gradient(top, hsl(196, 23%, 91%), hsl(197, 26%, 78%));
 
 }
 
@@ -39,6 +57,11 @@ h1, h2, h3, h4, h5, h6, legend {
 	div.info {
 
 		margin-right: $right_bar_width;
+		height: $new_message_height;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 2;
 
 		h2 {
 
@@ -51,13 +74,12 @@ h1, h2, h3, h4, h5, h6, legend {
 			bottom: 0;
 
 		}
-
 	}
 
 	div.messages {
 
 		position: absolute;
-		top: $channel_title_height;
+		top: 0;
 		right: $right_bar_width;
 		bottom: 0;
 		left: 0;
@@ -67,12 +89,16 @@ h1, h2, h3, h4, h5, h6, legend {
 			list-style: none;
 			overflow: auto;
 			position: absolute
-			top: 0;
+			top: $new_message_height;
 			right: 0;
 			bottom: $new_message_height;
 			left: 0;
 			margin: 0;
-			padding: 0;
+			//padding: 0;
+
+			.topic {
+				display: none; // Show "set by" here if we can.
+			}
 
 		}
 
@@ -86,6 +112,10 @@ h1, h2, h3, h4, h5, h6, legend {
 			margin: 0;
 			padding: 0;
 
+			textarea {
+				height: $new_message_height;
+			}
+
 		}
 
 	}
@@ -93,9 +123,9 @@ h1, h2, h3, h4, h5, h6, legend {
 	div.users {
 
 		position: absolute;
-		top: 0;
+		top: $new_message_height;
 		right: 0;
-		bottom: 0;
+		bottom: 0; //$new_message_height;
 		width: $right_bar_width;
 
 	}

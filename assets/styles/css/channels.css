@@ -1,0 +1,48 @@
+div.channels h3 {
+  font-size: 14px;
+  font-weight: 500;
+}
+div.channels > ul.list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+div.channels > ul.list > li {
+  border-radius: 5px 0 0 5px;
+  float: right;
+  position: relative;
+  width: 95%;
+}
+div.channels > ul.list > li a {
+  color: #abc4ce;
+  display: block;
+  padding: 5px 10px;
+}
+div.channels > ul.list > li.active {
+  background: #fff;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 1px 2px rgba(0,0,0,0.05);
+}
+div.channels > ul.list > li.active a {
+  color: #5e8ea1;
+}
+div.channels > ul.list > li.unread span.unread {
+  background: #8fb0bd;
+  border-radius: 50px;
+  display: inline-block;
+  position: absolute;
+  top: 13px;
+  right: 45px;
+}
+div.channels > ul.list > li span.unread {
+  display: none;
+}
+div.channels > ul.list > li a:hover {
+  text-decoration: none;
+  color: #5e8ea1;
+}
+div.channels > ul.list > li a.part {
+  position: absolute;
+  top: 4px;
+  right: 10px;
+  font-size: 24px;
+}

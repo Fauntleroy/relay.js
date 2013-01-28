@@ -1,0 +1,100 @@
+@import url("http://fonts.googleapis.com/css?family=Roboto:400,300,100italic,100,300italic,400italic,500,500italic,700,700italic,900,900italic");
+.fadein,
+:focus,
+a {
+  -webkit-transition: all, 0.3s, ease-in-out;
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+body {
+  background-color: #e2eaed;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#e3ebed), to(#b8cdd5));
+  background-image: -webkit-linear-gradient(top, #e3ebed, #b8cdd5);
+  background-image: -moz-linear-gradient(top, #e3ebed, #b8cdd5);
+  background-image: linear-gradient(top, #e3ebed, #b8cdd5);
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+legend {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+}
+#connections {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 18%;
+}
+#channel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 18%;
+}
+#channel div.info {
+  margin-right: 18%;
+  height: 50px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+}
+#channel div.info h2 {
+  display: inline-block;
+}
+#channel div.info sub.topic {
+  bottom: 0;
+}
+#channel div.messages {
+  position: absolute;
+  top: 0;
+  right: 18%;
+  bottom: 0;
+  left: 0;
+}
+#channel div.messages ul.list {
+  list-style: none;
+  overflow: auto;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  bottom: 50px;
+  left: 0;
+  margin: 0;
+}
+#channel div.messages ul.list .topic {
+  display: none;
+}
+#channel div.messages form.new {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 50px;
+  margin: 0;
+  padding: 0;
+}
+#channel div.messages form.new textarea {
+  height: 50px;
+}
+#channel div.users {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  bottom: 0;
+  width: 18%;
+}

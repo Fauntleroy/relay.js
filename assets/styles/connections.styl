@@ -1,18 +1,47 @@
 #connections {
+	top: 50px;
 
-	background: rgb( 30, 35, 40 );
-	color: rgb(215, 230, 241);
+	.new_connection {
+		margin: 20px 0 0 4px;
+		padding: 0;
+		text-align: center;
+		width: 100%;
+
+		button {
+			color: hsl(197, 26%, 50%);
+			font-weight: 700;
+			background: #FFF;
+			border: none;
+			height: 40px;
+			width: 90%;
+		}
+	}
+
+	color: hsl(197, 26%, 50%);
 
 	> ul.list {
 
 		list-style-type: none;
-		margin: 10px 0 0 0;
+		margin: 10px 0;
+		overflow: hidden;
 
 		> li {
 
 			div.info {
 
-				padding: 0 10px;
+				padding: 0 20px;
+				margin-bottom: 10px;
+
+				.nick {
+					display: block;
+					font-size: 18px;
+					font-weight: 300;
+				}
+
+				a {
+					color: hsl(197, 26%, 50%);
+
+				}
 
 			}
 
@@ -23,11 +52,22 @@
 
 			}
 
-			a.disconnect {
+			a.disconnect, a.part {
 
 				position: absolute;
-				right: 10px;
-				font-size: 20px;
+				right: 5px;
+				font-size: 28px;
+				font-weight: bold;
+
+				&:hover {
+					color: hsl(197, 26%, 35%);
+					text-decoration: none;
+				}
+
+			}
+
+			a.disconnect {
+				right: 15px;
 
 			}
 
