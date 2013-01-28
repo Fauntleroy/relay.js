@@ -1,6 +1,7 @@
-<li>
+<li class="{{#active}}active{{/active}}{{^active}}inactive{{/active}}">
 	<a href="#{{nick}}">
 		{{#rank}}<strong class="rank">{{.}}</strong>{{/rank}}
 		<span class="nick">{{nick}}</span>
 	</a>
+	{{^active}}<var class="idle">{{idle}}m</var>{{/active}}
 </li>
