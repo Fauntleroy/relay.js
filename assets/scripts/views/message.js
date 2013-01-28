@@ -60,6 +60,13 @@ irc.Views.Message = Backbone.View.extend({
 					$text.after( youtube_html );
 				}
 
+				// Check for Gists
+				var gist_id = this.testGist( contents, function( err, result ){
+					if( err ) return err;
+					var gist_html = templates['inline/gist']( result );
+					$text.after( gist_html );
+				});
+
 			}
 
 		}
@@ -103,6 +110,26 @@ irc.Views.Message = Backbone.View.extend({
 		id = ( id )? id[1]: id;
 
 		return id;
+
+	},
+
+	// Get Gist ID out of a URL
+	testGist: function( url, callback ){
+
+		var gist_url = url.match( /(gist\.github\.com\/[a-z0-9]*)/i );
+		gist_url = ( gist_url )? 'http://'+ gist_url[1] +'.json': gist_url;
+		if( gist_url ){
+
+			$.getJSON( gist_url +'?callback=?', function( data ){
+				if( callback ) callback( null, data );
+			});
+
+		}
+		else {
+
+			if( callback ) callback( 'No Gist found' );
+
+		}
 
 	}
 
