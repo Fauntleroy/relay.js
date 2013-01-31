@@ -6,7 +6,7 @@
 {{/partial}}
 {{^partial}}
 <li class="message{{#self}} self{{/self}}">
-	<h5 class="nick">{{nick}}</h5> 
+	<a href="#{{nick}}"><h5 class="nick">{{nick}}</h5></a>
 	<ul class="contents">
 		<li>
 			<span class="text">{{breaklines contents}}</span> <var class="timestamp">{{time timestamp}}</var>

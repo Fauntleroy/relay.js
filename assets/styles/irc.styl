@@ -1,25 +1,33 @@
 $left_bar_width = 250px;
 $right_bar_width = 200px;
-$channel_title_height = 41px;
+$channel_title_height = 48px;
 $new_message_height = 41px;
 
 body {
 
-	background: rgb( 250, 250, 250 );
+	color: rgb( 75, 75, 75 );
+	background: #eee url('http://subtlepatterns.com/patterns/vintage_speckles.png');
 
 }
 
 h1, h2, h3, h4, h5, h6, legend {
 
-	font-family: 'Roboto', sans-serif;
+}
+
+#logo {
+
+	font-family: 'roboto', sans-serif;
 	font-weight: 300;
+	margin-left: 15px;
+	color: rgb( 135, 135, 135 );
+	text-shadow: 0px 1px 0px rgb( 255, 255, 255 );
 
 }
 
 #connections {
 
 	position: absolute;
-	top: 0;
+	top: 60px;
 	bottom: 0;
 	left: 0;
 	width: $left_bar_width;
@@ -67,10 +75,10 @@ h1, h2, h3, h4, h5, h6, legend {
 			position: absolute
 			top: 0;
 			right: 0;
-			bottom: $new_message_height;
+			bottom: $new_message_height + 20px;
 			left: 0;
 			margin: 0;
-			padding: 0;
+			padding: 0 8px;
 
 		}
 
@@ -82,7 +90,7 @@ h1, h2, h3, h4, h5, h6, legend {
 			left: 0;
 			height: $new_message_height;
 			margin: 0;
-			padding: 0;
+			padding: 10px;
 
 		}
 

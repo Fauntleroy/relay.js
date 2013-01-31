@@ -18,7 +18,7 @@
 	<div id="connect"></div>
 
 	<div id="application">
-		<div id="user"></div>
+		<h1 id="logo">irchub</h1>
 		<div id="connections"></div>
 		<div id="channel"></div>
 	</div>
