@@ -5,7 +5,7 @@ irc.Views.Channel = Backbone.View.extend({
 
 	initialize: function(){
 
-		_( this ).bindAll( 'render', 'clear', 'renderChannel', 'renderTopic' );
+		_( this ).bindAll( 'render', 'clear', 'renderChannel', 'renderTopic', 'resizeMessages' );
 
 		this.listenTo( irc, 'channels:active', this.renderChannel );
 
@@ -32,6 +32,9 @@ irc.Views.Channel = Backbone.View.extend({
 		this.users.render();
 
 		this.messages.$new_message.focus();
+
+		this.$info.on( 'resize', this.resizeMessages );
+		this.resizeMessages();
 
 		return this;
 
@@ -70,6 +73,13 @@ irc.Views.Channel = Backbone.View.extend({
 				'class': 'emoji'
 			}
 		});
+
+	},
+
+	resizeMessages: function( e ){
+
+		var height = this.$info.outerHeight( true );
+		this.$messages.css( 'top', height + 1 );
 
 	}
 

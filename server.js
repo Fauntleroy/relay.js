@@ -89,6 +89,7 @@ var igneous_middleware = igneous({
 				'/vendor/jquery.emojify',
 				'/vendor/jquery.serializeObject',
 				'/vendor/jquery.sparkartTags',
+				'/vendor/jquery.resize',
 				'/vendor/bootstrap',
 				'/vendor/underscore',
 				'/vendor/backbone',
