@@ -45,7 +45,10 @@
 {{/topic}}
 
 {{#motd}}
-<li class="motd"><pre class="text">{{text}}</pre> <var class="timestamp">{{time timestamp}}</var></li>
+<li class="motd">
+	<var class="timestamp">{{time timestamp}}</var>
+	<pre class="text">{{text}}</pre>
+</li>
 {{/motd}}
 
 {{#error}}
