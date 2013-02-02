@@ -32,17 +32,25 @@ module.exports = function( io ){
 			autoRejoin: false
 		});
 
-		if( parameters.nick_password ) irc_client.say( 'NickServ', 'IDENTIFY '+ parameters.nick_password );
-
 		io.of( this.namespace ).on( 'connection', function( client ){
 
 			console.log( '>>> SOCKET CONNECTED!!!' );
 
 			// Send IRC events to our client-side script
 			irc_client.addListener( 'registered', function( message ){
+
 				client.emit( 'registered', message );
-				irchub_client.nick = message.args[0];
 				console.log( '>>> REGISTERED.', message );
+
+				// Store the username we get back from the server
+				// This might be different than what we expect if it's already in use
+				irchub_client.nick = message.args[0];
+
+				// Auto-identify when possible
+				if( parameters.nick_password ){
+					irc_client.say( 'NickServ', 'IDENTIFY '+ parameters.nick_password );
+				}
+
 			});
 
 			irc_client.addListener( 'join', function( channel, nick, message ){
