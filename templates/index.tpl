@@ -18,7 +18,10 @@
 	<div id="connect"></div>
 
 	<div id="application">
-		<h1 id="logo">irchub</h1>
+		<div id="logo">
+			<h1>irchub</h1>
+			<sub title="alpha">α</sub>
+		</div>
 		<div id="connections"></div>
 		<div id="channel"></div>
 	</div>
