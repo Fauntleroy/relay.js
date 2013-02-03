@@ -2,7 +2,7 @@ irc.Models.Connection = Backbone.Model.extend({
 
 	initialize: function( attributes ){
 
-		_( this ).bindAll( 'quit', 'doQuit', 'doNick', 'doRegister', 'doDisconnect' );
+		_( this ).bindAll( 'quit', 'doQuit', 'doNick', 'doRegister' );
 
 		this.socket = io.connect( attributes.namespace );
 
@@ -11,7 +11,6 @@ irc.Models.Connection = Backbone.Model.extend({
 		this.socket.on( 'quit', this.doQuit );
 		this.socket.on( 'nick', this.doNick );
 		this.socket.on( 'registered', this.doRegister );
-		this.socket.on( 'disconnect', this.doDisconnect );
 
 	},
 
@@ -50,12 +49,6 @@ irc.Models.Connection = Backbone.Model.extend({
 			this.set( 'nick', nick );
 
 		}
-
-	},
-
-	doDisconnect: function(){
-
-		this.collection.remove( this );
 
 	}
 

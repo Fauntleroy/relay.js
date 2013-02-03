@@ -202,8 +202,10 @@ module.exports = function( io ){
 					var message = bits.join(' ');
 					irc_client.send( 'quit', message );
 					// IRC doesn't send us our own quits
-					irc_client.disconnect( message, _(irc_client.chans).keys() );
-					client.disconnect();
+					irc_client.disconnect( message, function(){
+						client.emit( 'quit', irchub_client.nick, message, _(irc_client.chans).keys() );
+						client.disconnect();
+					});
 					break;
 
 				case 'nick':
