@@ -76,7 +76,8 @@ var igneous_middleware = igneous({
 				'/channels.styl',
 				'/channel.styl',
 				'/messages.styl',
-				'/users.styl'
+				'/users.styl',
+				'/notifications.styl'
 			]
 		},
 		{

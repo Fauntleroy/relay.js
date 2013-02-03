@@ -24,6 +24,7 @@
 		</div>
 		<div id="connections"></div>
 		<div id="channel"></div>
+		<div id="notifications"></div>
 	</div>
 
 </body>

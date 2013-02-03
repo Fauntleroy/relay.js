@@ -35,6 +35,10 @@ module.exports = function( io ){
 		io.of( this.namespace ).on( 'connection', function( client ){
 
 			console.log( '>>> SOCKET CONNECTED!!!' );
+			if( irchub_client.disconnect_timeout ){
+				clearTimeout( irchub_client.disconnect_timeout );
+				irchub_client.disconnect_timeout = null;
+			}
 
 			// Send IRC events to our client-side script
 			irc_client.addListener( 'registered', function( message ){
@@ -250,9 +254,11 @@ module.exports = function( io ){
 			client.on( 'disconnect', function(){
 
 				console.log( '>>> SOCKET DISCONNECTED!!!' );
-
-				irc_client.disconnect();
-
+				irchub_client.disconnect_timeout = setTimeout( function(){
+					console.log( '>>> DISCONNECTING IRC CLIENT' );
+					irc_client.disconnect();
+				}, 60 * 1000 );
+				
 			});
 
 		});
