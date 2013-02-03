@@ -43,12 +43,12 @@ irc.Views.Message = Backbone.View.extend({
 			if( is_url ){
 
 				// Check if it's an image
-				this.testImage( contents, function( url, result ){
+				/*this.testImage( contents, function( url, result ){
 					if( result === 'success' ){
 						var image_html = templates['inline/image']({ url: contents });
 						$text.after( image_html );
 					}
-				});
+				});*/
 
 				// Check if it's a youtube video
 				var youtube_id = this.testYoutube( contents );
