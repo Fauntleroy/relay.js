@@ -44,6 +44,18 @@
 <li class="topic"><i class="icon-pencil"></i> <strong>{{nick}}</strong> <span class="text">{{#topic_text}}set the topic to <em>{{.}}</em>{{/topic_text}}{{^topic_text}}cleared the topic{{/topic_text}}</span> <var class="timestamp">{{time timestamp}}</var></li>
 {{/topic}}
 
+{{#mode_add}}
+<li class="mode add">
+	<i class="icon-plus"></i>
+	<span class="text"><strong>{{by}}</strong> added the mode &ldquo;{{mode}}&rdquo; to {{channel}}{{#argument}} with the argument <code>{{.}}</code>{{/argument}}</span>
+{{/mode_add}}
+
+{{#mode_remove}}
+<li class="mode remove">
+	<i class="icon-minus"></i>
+	<span class="text"><strong>{{by}}</strong> removed the mode &ldquo;{{mode}}&rdquo; from {{channel}}{{#argument}} with the argument <code>{{.}}</code>{{/argument}}</span>
+{{/mode_remove}}
+
 {{#motd}}
 <li class="motd">
 	<var class="timestamp">{{time timestamp}}</var>

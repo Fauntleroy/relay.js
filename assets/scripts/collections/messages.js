@@ -8,7 +8,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 		this.connection = parameters.connection;
 		this.socket = this.connection.socket;
 
-		_( this ).bindAll( 'doMessage', 'doNotice', 'doAction', 'doNick', 'doJoin', 'doPart', 'doQuit', 'doKick', 'doTopic', 'doMOTD', 'doError' );
+		_( this ).bindAll( 'doMessage', 'doNotice', 'doAction', 'doNick', 'doJoin', 'doPart', 'doQuit', 'doKick', 'doTopic', 'doModeAdd', 'doModeRemove', 'doMOTD', 'doError' );
 
 		this.socket.on( 'message', this.doMessage );
 		this.socket.on( 'notice', this.doNotice );
@@ -19,6 +19,8 @@ irc.Collections.Messages = Backbone.Collection.extend({
 		this.socket.on( 'quit', this.doQuit );
 		this.socket.on( 'kick', this.doKick );
 		this.socket.on( 'topic', this.doTopic );
+		this.socket.on( '+mode', this.doModeAdd );
+		this.socket.on( '-mode', this.doModeRemove );
 		this.socket.on( 'motd', this.doMOTD );
 		this.socket.on( 'error', this.doError );
 
@@ -156,7 +158,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 
 		if( channel === this.channel.get('name') ){
 
-			// Raw names look like 'ptard!uid6724@gateway/web/irccloud.com/x-gipmkavsanmekmde'
+			// Split nick off raw name
 			nick = nick.split('!')[0];
 
 			this.add({
@@ -164,6 +166,38 @@ irc.Collections.Messages = Backbone.Collection.extend({
 				nick: nick,
 				topic_text: topic,
 				timestamp: timestamp
+			});
+
+		}
+
+	},
+
+	doModeAdd: function( channel, by, mode, argument ){
+
+		if( channel === this.channel.get('name') ){
+
+			this.add({
+				mode_add: true,
+				channel: channel,
+				by: by,
+				mode: mode,
+				argument: argument
+			});
+
+		}
+
+	},
+
+	doModeRemove: function( channel, by, mode, argument ){
+
+		if( channel === this.channel.get('name') ){
+
+			this.add({
+				mode_remove: true,
+				channel: channel,
+				by: by,
+				mode: mode,
+				argument: argument
 			});
 
 		}

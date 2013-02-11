@@ -3,7 +3,8 @@ irc.Models.User = Backbone.Model.extend({
 	defaults: {
 		rank: null,
 		idle: 0,
-		active: true
+		active: true,
+		modes: []
 	},
 
 	initialize: function(){
@@ -16,6 +17,7 @@ irc.Models.User = Backbone.Model.extend({
 
 	},
 
+	// Reset user inactivity
 	active: function(){
 
 		this.set({
@@ -25,6 +27,7 @@ irc.Models.User = Backbone.Model.extend({
 
 	},
 
+	// Update the user's idle time and status
 	idle: function(){
 
 		var idle = this.get('idle');
@@ -37,6 +40,7 @@ irc.Models.User = Backbone.Model.extend({
 
 	},
 
+	// Unset the idle timer
 	clearTimer: function(){
 
 		clearInterval( this.idle_timer );

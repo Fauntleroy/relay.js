@@ -192,6 +192,13 @@ module.exports = function( io ){
 					irc_client.send( 'topic', channel, bits.join(' ') );
 					break;
 
+				case 'mode':
+					var user_channel = bits.shift();
+					var modes = bits.shift();
+					var mode_args = bits.shift();
+					irc_client.send( 'mode', user_channel, modes, mode_args );
+					break;
+
 				case 'join':
 					var channel_to_join = bits[0];
 					if( channel_to_join.charAt(0) !== '#' ) channel_to_join = '#'+ channel_to_join;

@@ -8,10 +8,12 @@ irc.Collections.Users = Backbone.Collection.extend({
 		this.connection = parameters.connection;
 		this.socket = this.connection.socket;
 
-		_( this ).bindAll( 'doNames', 'doMessage', 'doAction', 'doPart', 'doQuit', 'doKick', 'doJoin', 'doNick', 'doChangeActive' );
+		_( this ).bindAll( 'doNames', 'doMessage', 'doModeAdd', 'doModeRemove', 'doAction', 'doPart', 'doQuit', 'doKick', 'doJoin', 'doNick', 'doChangeActive' );
 
 		this.socket.on( 'names', this.doNames );
 		this.socket.on( 'message', this.doMessage );
+		this.socket.on( '+mode', this.doModeAdd );
+		this.socket.on( '-mode', this.doModeRemove );
 		this.socket.on( 'action', this.doAction );
 		this.socket.on( 'part', this.doPart );
 		this.socket.on( 'quit', this.doQuit );
@@ -68,9 +70,34 @@ irc.Collections.Users = Backbone.Collection.extend({
 
 	},
 
+	doModeAdd: function( channel, by, mode, argument ){
+
+		if( channel === this.channel.get('name') ){
+			var user = this.findWhere({ nick: argument });
+			if( user ){
+				if( mode === 'o' ) user.set( 'rank', '@' );
+				else if( mode === 'v' ) user.set( 'rank', '+' );
+			}
+		}
+
+	},
+
+	doModeRemove: function( channel, by, mode, argument ){
+
+		if( channel === this.channel.get('name') ){
+			var user = this.findWhere({ nick: argument });
+			if( user ){
+				var rank = user.get('rank');
+				if( mode === 'o' && rank === '@' ) user.set( 'rank', null );
+				if( mode === 'v' && rank === '+' ) user.set( 'rank', null );
+			}
+		}
+
+	},
+
 	doAction: function( nick ){
 
-		var user = this.where({ nick: nick })[0];
+		var user = this.findWhere({ nick: nick });
 		if( user ) user.active();
 
 	},
@@ -106,7 +133,7 @@ irc.Collections.Users = Backbone.Collection.extend({
 
 		}
 
-		var by_user = this.where({ nick: nick })[0];
+		var by_user = this.findWhere({ nick: nick });
 		if( by_user ) by_user.active();
 
 	},
@@ -131,14 +158,14 @@ irc.Collections.Users = Backbone.Collection.extend({
 
 		if( _( channels ).indexOf( this.channel.get('name') ) >= 0 ){
 
-			var changing_user = this.where({ nick: old_nick })[0];
+			var changing_user = this.findWhere({ nick: old_nick });
 			changing_user.set( 'nick', new_nick );
 
 			this.sort();
 
 		}
 
-		var user = this.where({ nick: new_nick })[0];
+		var user = this.findWhere({ nick: new_nick });
 		if( user ) user.active();
 
 	},
