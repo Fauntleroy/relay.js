@@ -1,5 +1,6 @@
 irc.Collections.Messages = Backbone.Collection.extend({
 
+	limit: 500,
 	model: irc.Models.Message,
 
 	initialize: function( models, parameters ){
@@ -8,7 +9,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 		this.connection = parameters.connection;
 		this.socket = this.connection.socket;
 
-		_( this ).bindAll( 'doMessage', 'doNotice', 'doAction', 'doNick', 'doJoin', 'doPart', 'doQuit', 'doKick', 'doTopic', 'doModeAdd', 'doModeRemove', 'doMOTD', 'doError' );
+		_( this ).bindAll( 'doMessage', 'doNotice', 'doAction', 'doNick', 'doJoin', 'doPart', 'doQuit', 'doKick', 'doTopic', 'doModeAdd', 'doModeRemove', 'doMOTD', 'doError', 'trim' );
 
 		this.socket.on( 'message', this.doMessage );
 		this.socket.on( 'notice', this.doNotice );
@@ -23,6 +24,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 		this.socket.on( '-mode', this.doModeRemove );
 		this.socket.on( 'motd', this.doMOTD );
 		this.socket.on( 'error', this.doError );
+		this.on( 'add', this.trim );
 
 	},
 
@@ -228,6 +230,18 @@ irc.Collections.Messages = Backbone.Collection.extend({
 				timestamp: timestamp
 			});
 
+		}
+
+	},
+
+	// Ensure we never get *too* many messages
+	trim: function(){
+
+		if( this.length > this.limit ){
+			var messages = this.last( this.limit - parseInt( this.limit * 0.25 ) );
+			this.reset( messages, {
+				silent: true
+			});
 		}
 
 	}
