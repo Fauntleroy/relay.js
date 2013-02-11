@@ -242,12 +242,14 @@ module.exports = function( io ){
 
 				case 'msg':
 				default:
-					var target = ( command )? bits.shift(): channel;
-					var message = ( command )? bits.join(' '): command_string;
-					irc_client.say( target, message );
-					// IRC doesn't send us our own messages
-					var timestamp = Date.now();
-					client.emit( 'message', irchub_client.nick, target, message, timestamp );
+					if( command === 'msg' || !command ){
+						var target = ( command )? bits.shift(): channel;
+						var message = ( command )? bits.join(' '): command_string;
+						irc_client.say( target, message );
+						// IRC doesn't send us our own messages
+						var timestamp = Date.now();
+						client.emit( 'message', irchub_client.nick, target, message, timestamp );
+					}
 					break;
 
 				}
