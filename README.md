@@ -1,11 +1,25 @@
-# irchub
+# relay.js
 
-A web application that makes IRC:
+### Kinder, Simpler IRC.
 
-- Painless
-- Fast
-- Stylish
-- Easy
+Relay.js is a web-based IRC client that focuses on making IRC less intimidating and easier to use.
+
+## Features
+
+- Simple, usability-driven interface
+- Dynamic embedding of content ( links, images, Gists, YouTube videos )
+- Support for multiple connections
+- Emoticons ( via http://www.emoji-cheat-sheet.com/ )
+
+## Upcoming Features
+
+- Additional content embedding ( Soundcloud, Vimeo, Tweets, etc )
+- Rearrangeable, modular interface
+- Interface elements for certain IRC commands, such as banning/kicking a user
+- Tab completion for usernames, emoticons, certain commands
+- Tests
+- Persistent connections
+- Logging
 
 ## Installation
 
@@ -14,3 +28,11 @@ A web application that makes IRC:
 - Run `npm install` in the base directory
 - Run `node server.js`
 - Navigate to [http://localhost:8080](http://localhost:8080)
+
+## Contributing
+
+Contributing to Relay.js is simple: just create a fork, make a new branch, and submit a pull request when you're done. Try to keep your code style similar to the original and comment anything worth mentioning. Discussion is encouraged in issues and pull requests. Relay.js can be found in the channel #relay.js on Freenode.
+
+## License
+
+MIT License ( see LICENSE.md )
