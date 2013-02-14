@@ -24,6 +24,8 @@ module.exports = function( io ){
 		});
 
 		var irc_client = this.client = new irc.Client( parameters.server, parameters.nick, {
+			userName: parameters.nick,
+			realName: 'relay.js client',
 			password: parameters.password || null,
 			port: parameters.port || 6667,
 			channels: channels,
