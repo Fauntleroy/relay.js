@@ -36,7 +36,7 @@ module.exports = function( io ){
 
 		io.of( this.namespace ).on( 'connection', function( client ){
 
-			console.log( '>>> SOCKET CONNECTED!!!' );
+			console.log( '>>> SOCKET CONNECTED' );
 			if( adapter.disconnect_timeout ){
 				clearTimeout( adapter.disconnect_timeout );
 				adapter.disconnect_timeout = null;
@@ -275,7 +275,7 @@ module.exports = function( io ){
 			
 			client.on( 'disconnect', function(){
 
-				console.log( '>>> SOCKET DISCONNECTED!!!' );
+				console.log( '>>> SOCKET DISCONNECTED' );
 				adapter.disconnect_timeout = setTimeout( function(){
 					console.log( '>>> DISCONNECTING IRC CLIENT' );
 					irc_client.disconnect();

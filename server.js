@@ -25,11 +25,11 @@ var Adapter = require('./irc_adapter.js')( io );
 
 io.sockets.on( 'connection', function( client ){
 
-	console.log( '>> CLIENT CONNECT' );
+	console.log( '>>> CLIENT CONNECT' );
 
 	client.on( 'new_irc_connection', function( parameters ){
 
-		console.log( '>> CLIENT CONNECT TO SERVER:', parameters );
+		console.log( '>>> CLIENT CONNECT TO SERVER:', parameters );
 
 		var irc_adapter = new Adapter({
 			server: parameters.server,
@@ -47,7 +47,7 @@ io.sockets.on( 'connection', function( client ){
 			namespace: irc_adapter.namespace
 		});
 
-		console.log( '>> IRC CLIENT', irc_adapter.client );
+		console.log( '>>> IRC CLIENT', irc_adapter.client );
 
 	});
 
