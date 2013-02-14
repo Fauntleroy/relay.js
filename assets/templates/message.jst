@@ -69,24 +69,15 @@
 	<i class="icon-question-sign"></i> WHOIS for <strong>{{info.nick}}</strong>:
 	{{#info}}
 	<dl>
-		<dt>nick</dt>
-		<dd>{{nick}}</dd>
-		<dt>user</dt>
-		<dd>{{user}}</dd>
-		<dt>host</dt>
-		<dd>{{host}}</dd>
-		<dt>realname</dt>
-		<dd>{{realname}}</dd>
-		<dt>channels</dt>
-		<dd>{{#channels}}{{.}} {{/channels}}</dd>
-		<dt>server</dt>
-		<dd>{{server}}</dd>
-		<dt>server info</dt>
-		<dd>{{serverinfo}}</dd>
-		<dt>account</dt>
-		<dd>{{account}}</dd>
-		<dt>account info</dt>
-		<dd>{{accountinfo}}</dd>
+		{{#if nick}}<dt>nick</dt><dd>{{nick}}</dd>{{/if}}
+		{{#if user}}<dt>user</dt><dd>{{user}}</dd>{{/if}}
+		{{#if host}}<dt>host</dt><dd>{{host}}</dd>{{/if}}
+		{{#if realname}}<dt>realname</dt><dd>{{realname}}</dd>{{/if}}
+		{{#if channels}}<dt>channels</dt><dd>{{#channels}}{{.}} {{/channels}}</dd>{{/if}}
+		{{#if server}}<dt>server</dt><dd>{{server}}</dd>{{/if}}
+		{{#if serverinfo}}<dt>server info</dt><dd>{{serverinfo}}</dd>{{/if}}
+		{{#if account}}<dt>account</dt><dd>{{account}}</dd>{{/if}}
+		{{#if accountinfo}}<dt>account info</dt><dd>{{accountinfo}}</dd>{{/if}}
 	</dl>
 	{{/info}}
 </li>
