@@ -63,6 +63,35 @@
 </li>
 {{/motd}}
 
+{{#whois}}
+<li class="whois">
+	<var class="timestamp">{{time timestamp}}</var>
+	<i class="icon-question-sign"></i> WHOIS for <strong>{{info.nick}}</strong>:
+	{{#info}}
+	<dl>
+		<dt>nick</dt>
+		<dd>{{nick}}</dd>
+		<dt>user</dt>
+		<dd>{{user}}</dd>
+		<dt>host</dt>
+		<dd>{{host}}</dd>
+		<dt>realname</dt>
+		<dd>{{realname}}</dd>
+		<dt>channels</dt>
+		<dd>{{#channels}}{{.}} {{/channels}}</dd>
+		<dt>server</dt>
+		<dd>{{server}}</dd>
+		<dt>server info</dt>
+		<dd>{{serverinfo}}</dd>
+		<dt>account</dt>
+		<dd>{{account}}</dd>
+		<dt>account info</dt>
+		<dd>{{accountinfo}}</dd>
+	</dl>
+	{{/info}}
+</li>
+{{/whois}}
+
 {{#error}}
 <li class="error"><i class="icon-warning-sign"></i> <span class="text">{{text}}</span> <var class="timestamp">{{time timestamp}}</var></li>
 {{/error}}

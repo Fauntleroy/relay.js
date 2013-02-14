@@ -147,7 +147,13 @@ module.exports = function( io ){
 			});
 
 			irc_client.addListener( 'pm', function( nick, text, message ){
-				console.log( ' >>> PM', nick, text );
+				console.log( '>>> PM', nick, text );
+			});
+
+			irc_client.addListener( 'whois', function( info ){
+				var timestamp = Date.now();
+				console.log( '>>> WHOIS', info, timestamp );
+				client.emit( 'whois', info, timestamp );
 			});
 
 			irc_client.addListener( 'error', function( error ){
@@ -197,6 +203,11 @@ module.exports = function( io ){
 					var modes = bits.shift();
 					var mode_args = bits.shift();
 					irc_client.send( 'mode', user_channel, modes, mode_args );
+					break;
+
+				case 'whois':
+					var nick = bits.shift();
+					irc_client.whois( nick );
 					break;
 
 				case 'join':

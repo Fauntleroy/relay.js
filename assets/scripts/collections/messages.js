@@ -9,7 +9,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 		this.connection = parameters.connection;
 		this.socket = this.connection.socket;
 
-		_( this ).bindAll( 'doMessage', 'doNotice', 'doAction', 'doNick', 'doJoin', 'doPart', 'doQuit', 'doKick', 'doTopic', 'doModeAdd', 'doModeRemove', 'doMOTD', 'doError', 'trim' );
+		_( this ).bindAll( 'doMessage', 'doNotice', 'doAction', 'doNick', 'doJoin', 'doPart', 'doQuit', 'doKick', 'doTopic', 'doModeAdd', 'doModeRemove', 'doMOTD', 'doWhois', 'doError', 'trim' );
 
 		this.socket.on( 'message', this.doMessage );
 		this.socket.on( 'notice', this.doNotice );
@@ -23,6 +23,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 		this.socket.on( '+mode', this.doModeAdd );
 		this.socket.on( '-mode', this.doModeRemove );
 		this.socket.on( 'motd', this.doMOTD );
+		this.socket.on( 'whois', this.doWhois );
 		this.socket.on( 'error', this.doError );
 		this.on( 'add', this.trim );
 
@@ -213,6 +214,20 @@ irc.Collections.Messages = Backbone.Collection.extend({
 			this.add({
 				motd: true,
 				text: text,
+				timestamp: timestamp
+			});
+
+		}
+
+	},
+
+	doWhois: function( info, timestamp ){
+
+		if( this.channel.get('active') ){
+
+			this.add({
+				whois: true,
+				info: info,
 				timestamp: timestamp
 			});
 
