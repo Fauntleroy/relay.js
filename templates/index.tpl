@@ -2,7 +2,7 @@
 <html>
 <head>
 
-	<title>IRCHUB</title>
+	<title>relay.js</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -19,7 +19,7 @@
 
 	<div id="application">
 		<div id="logo">
-			<h1>irchub</h1>
+			<h1>relay.js</h1>
 			<sub title="alpha">α</sub>
 		</div>
 		<div id="connections"></div>

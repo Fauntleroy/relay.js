@@ -16,7 +16,7 @@ irc.Routers.Application = Backbone.Router.extend({
 
 			console.log( 'socket disconnected!', arguments );
 			irc.trigger( 'notifications:add', {
-				message: 'You\'ve lost your connection to the irchub server!'
+				message: 'You\'ve lost your connection to the server!'
 			});
 
 		});

@@ -12,7 +12,7 @@ module.exports = function( io ){
 
 	var Adapter = function( parameters ){
 
-		var irchub_client = this;
+		var adapter = this;
 		this.id = uuid.v1();
 		this.server = parameters.server;
 		this.nick = parameters.nick;
@@ -37,9 +37,9 @@ module.exports = function( io ){
 		io.of( this.namespace ).on( 'connection', function( client ){
 
 			console.log( '>>> SOCKET CONNECTED!!!' );
-			if( irchub_client.disconnect_timeout ){
-				clearTimeout( irchub_client.disconnect_timeout );
-				irchub_client.disconnect_timeout = null;
+			if( adapter.disconnect_timeout ){
+				clearTimeout( adapter.disconnect_timeout );
+				adapter.disconnect_timeout = null;
 			}
 
 			// Send IRC events to our client-side script
@@ -50,7 +50,7 @@ module.exports = function( io ){
 
 				// Store the username we get back from the server
 				// This might be different than what we expect if it's already in use
-				irchub_client.nick = message.args[0];
+				adapter.nick = message.args[0];
 
 				// Auto-identify when possible
 				if( parameters.nick_password ){
@@ -113,7 +113,7 @@ module.exports = function( io ){
 			});
 
 			irc_client.addListener( 'nick', function( old_nick, new_nick, channels, message ){
-				if( old_nick === irchub_client.nick ) irchub_client.nick = new_nick;
+				if( old_nick === adapter.nick ) adapter.nick = new_nick;
 				var timestamp = Date.now();
 				console.log( '>>> NICK', old_nick, new_nick, channels, timestamp );
 				client.emit( 'nick', old_nick, new_nick, channels, timestamp );
@@ -184,7 +184,7 @@ module.exports = function( io ){
 					irc_client.notice( target, message );
 					// IRC doesn't send us our own notices
 					var timestamp = Date.now();
-					client.emit( 'notice', irchub_client.nick, target, message, timestamp );
+					client.emit( 'notice', adapter.nick, target, message, timestamp );
 					break;
 
 				case 'me':
@@ -193,7 +193,7 @@ module.exports = function( io ){
 					irc_client.action( channel, message );
 					// IRC doesn't send us our own actions
 					var timestamp = Date.now();
-					client.emit( 'action', irchub_client.nick, channel, message, timestamp );
+					client.emit( 'action', adapter.nick, channel, message, timestamp );
 					break;
 
 				case 'topic':
@@ -227,7 +227,7 @@ module.exports = function( io ){
 					irc_client.send( 'quit', message );
 					// IRC doesn't send us our own quits
 					irc_client.disconnect( message, function(){
-						client.emit( 'quit', irchub_client.nick, message, _(irc_client.chans).keys() );
+						client.emit( 'quit', adapter.nick, message, _(irc_client.chans).keys() );
 						client.disconnect();
 					});
 					break;
@@ -261,7 +261,7 @@ module.exports = function( io ){
 						irc_client.say( target, message );
 						// IRC doesn't send us our own messages
 						var timestamp = Date.now();
-						client.emit( 'message', irchub_client.nick, target, message, timestamp );
+						client.emit( 'message', adapter.nick, target, message, timestamp );
 					}
 					break;
 
@@ -276,7 +276,7 @@ module.exports = function( io ){
 			client.on( 'disconnect', function(){
 
 				console.log( '>>> SOCKET DISCONNECTED!!!' );
-				irchub_client.disconnect_timeout = setTimeout( function(){
+				adapter.disconnect_timeout = setTimeout( function(){
 					console.log( '>>> DISCONNECTING IRC CLIENT' );
 					irc_client.disconnect();
 				}, 60 * 1000 );

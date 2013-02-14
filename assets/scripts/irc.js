@@ -7,4 +7,4 @@ irc.Views = irc.Views || {};
 irc.views = irc.views || {};
 irc.routers = irc.routers || {};
 
-var CDN_URL = 'https://s3-us-west-2.amazonaws.com/irchub/';
+var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';
