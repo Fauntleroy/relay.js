@@ -30,7 +30,7 @@ A simple demo is up here: https://relayjs-7136.onmodulus.net/
 - Install the latest version of [node.js](http://nodejs.org)
 - Pull this repository
 - Run `npm install` in the base directory
-- Run `node server.js`
+- Run `node relay.js`
 - Navigate to [http://localhost:8080](http://localhost:8080)
 
 ## Contributing
