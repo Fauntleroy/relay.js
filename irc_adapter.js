@@ -179,7 +179,7 @@ module.exports = function( io ){
 				switch( command ){
 
 				case 'notice':
-					var target = bits.shift();
+					var target = bits.shift() || '';
 					var message = bits.join(' ');
 					irc_client.notice( target, message );
 					// IRC doesn't send us our own notices
@@ -201,19 +201,20 @@ module.exports = function( io ){
 					break;
 
 				case 'mode':
-					var user_channel = bits.shift();
-					var modes = bits.shift();
-					var mode_args = bits.shift();
+					var user_channel = bits.shift() || '';
+					var modes = bits.shift() || '';
+					var mode_args = bits.shift() || '';
+					console.log( '*** mode death stuff', user_channel, modes, mode_args );
 					irc_client.send( 'mode', user_channel, modes, mode_args );
 					break;
 
 				case 'whois':
-					var nick = bits.shift();
+					var nick = bits.shift() || '';
 					irc_client.whois( nick );
 					break;
 
 				case 'join':
-					var channel_to_join = bits[0];
+					var channel_to_join = bits.shift() || '';
 					if( channel_to_join.charAt(0) !== '#' ) channel_to_join = '#'+ channel_to_join;
 					irc_client.send( 'join', channel_to_join );
 					break;
