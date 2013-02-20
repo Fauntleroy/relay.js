@@ -118,14 +118,8 @@ irc.Collections.Channels = Backbone.Collection.extend({
 			var previous_channel = this.at( parted_index - 1 );
 			var next_active_channel = next_channel || previous_channel;
 			
-			if( next_active_channel ){
-				next_active_channel.active();
-				console.log('activate next active channel');
-			}
-			else {
-				irc.trigger( 'channels:active', null );
-				console.log('say, we have no active channels');
-			}
+			if( next_active_channel ) next_active_channel.active();
+			else irc.trigger( 'channels:active', null );
 		}
 
 	}

@@ -7,14 +7,9 @@ irc.Routers.Application = Backbone.Router.extend({
 	default: function(){
 
 		irc.socket = io.connect('/');
-		irc.socket.on( 'connect', function(){
-
-			console.log( 'socket connected!', arguments );
-
-		});
+		
 		irc.socket.on( 'disconnect', function(){
 
-			console.log( 'socket disconnected!', arguments );
 			irc.trigger( 'notifications:add', {
 				message: 'You\'ve lost your connection to the server!'
 			});

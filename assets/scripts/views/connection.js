@@ -25,7 +25,7 @@ irc.Views.Connection = Backbone.View.extend({
 		this.$channels = this.$el.children('.channels');
 
 		this.channels = new irc.Views.Channels({ collection: this.model.channels, $el: this.$channels });
-		var $channels = this.channels.render().$el;console.log( this.$channels.length, $channels.length );
+		var $channels = this.channels.render().$el;
 		this.$channels.html( $channels );
 
 		return this;

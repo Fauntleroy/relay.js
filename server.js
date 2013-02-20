@@ -29,7 +29,7 @@ io.sockets.on( 'connection', function( client ){
 
 	client.on( 'new_irc_connection', function( parameters ){
 
-		console.log( '>>> CLIENT CONNECT TO SERVER:', parameters );
+		console.log( '>>> CLIENT REQUESTING IRC CONNECTION' );
 
 		var irc_adapter = new Adapter({
 			server: parameters.server,
@@ -47,7 +47,7 @@ io.sockets.on( 'connection', function( client ){
 			namespace: irc_adapter.namespace
 		});
 
-		console.log( '>>> IRC CLIENT', irc_adapter.client );
+		console.log( '>>> IRC CLIENT CREATED' );
 
 	});
 
