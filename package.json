@@ -11,11 +11,12 @@
     "socket.io": "git://github.com/Fauntleroy/socket.io.git#Branch_0.9.13",
     "irc": "0.3.x",
     "node-uuid": "1.4.x",
-    "winston": "0.6.x"
+    "winston": "0.6.x",
+    "optimist": "0.3.x"
   },
-  "main": "server.js",
+  "main": "relay.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node relay.js"
   },
   "engines": {
     "node": "0.8.x"
