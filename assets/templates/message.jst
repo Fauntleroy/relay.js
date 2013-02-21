@@ -25,7 +25,20 @@
 {{/nick_change}}
 
 {{#notice}}
-<li class="notice">{{#from}}<strong class="from">{{.}}</strong> {{/from}}&#9656; <strong class="to">{{to}}</strong> <span class="text">{{text}}</span> <var class="timestamp">{{time timestamp}}</var></li>
+{{#if partial}}
+<li>
+	<span class="text">{{text}}</span> <var class="timestamp">{{time timestamp}}</var>
+</li>
+{{else}}
+<li class="notice">
+	<h5>{{#from}}<span class="from">{{.}}</span> {{/from}}&#9656; <span class="to">{{to}}</span></h5>
+	<ul class="contents">
+		<li>
+			<span class="text">{{text}}</span> <var class="timestamp">{{time timestamp}}</var>
+		</li>
+	</ul>
+</li>
+{{/if}}
 {{/notice}}
 
 {{#join}}

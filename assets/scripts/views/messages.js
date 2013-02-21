@@ -33,13 +33,23 @@ irc.Views.Messages = Backbone.View.extend({
 
 	renderMessage: function( message ){
 
-		var $last_message = this.$messages.find('.message:last-child');
+		var last_message = this.collection.at( this.collection.indexOf( message ) - 1 );
 
-		if( message.get('message') && message.get('nick') === $last_message.find('.nick').text() ){
+		// Check to see if this is a continuation of previous messaging
+		if( last_message ){
+			var both_notice = ( last_message.get('notice') && message.get('notice') );
+			var both_message = ( last_message.get('message') && message.get('message') );
+			var notice_match = ( last_message.get('from') === message.get('from') && last_message.get('to') === message.get('to') );
+			var message_match = ( last_message.get('nick') === message.get('nick') );
+		}
+
+		// If this is a continuation, render the partial template and append it
+		if( ( both_notice && notice_match ) || ( both_message && message_match ) ){
 			
 			var append_message = new irc.Views.Message({ model: message, partial: true });
 			var $append_message = append_message.render().$el;
 			var $append_message_content = $append_message.find('ul.contents > li');
+			var $last_message = this.$messages.find(':last-child');
 			$last_message.find('ul.contents').append( $append_message_content );
 
 		}
