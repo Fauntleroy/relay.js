@@ -1,5 +1,6 @@
 irc.Views.Messages = Backbone.View.extend({
 
+	is_near_bottom: true,
 	template: templates.messages,
 
 	events: {
@@ -11,10 +12,9 @@ irc.Views.Messages = Backbone.View.extend({
 
 	initialize: function(){
 
-		_( this ).bindAll( 'render', 'renderMessage', 'scrollBottom', 'submitNew', 'keyTextarea', 'keydownTextarea', 'keyupTextarea' );
+		_( this ).bindAll( 'render', 'renderMessage', 'scrollBottom', 'scrollMessages', 'resizeMessages', 'submitNew', 'keyTextarea', 'keydownTextarea', 'keyupTextarea' );
 
 		this.listenTo( this.collection, 'add', this.renderMessage );
-		$(window).on( 'resize', this.scrollBottom );
 
 	},
 
@@ -26,6 +26,9 @@ irc.Views.Messages = Backbone.View.extend({
 		this.$form = this.$el.find('form.new');
 		this.$new_message = this.$form.find(':input[name="message"]');
 		this.$messages = this.$el.find('ul.list');
+
+		this.$messages.on( 'scroll', this.scrollMessages );
+		this.$messages.on( 'resize', this.resizeMessages );
 
 		this.collection.each( this.renderMessage );
 
@@ -47,10 +50,9 @@ irc.Views.Messages = Backbone.View.extend({
 		if( ( both_notice && notice_match ) || ( both_message && message_match ) ){
 			
 			var append_message = new irc.Views.Message({ model: message, partial: true });
-			var $append_message = append_message.render().$el;
-			var $append_message_content = $append_message.find('ul.contents > li');
+			var $message = append_message.render().$el.find('ul.contents > li');
 			var $last_message = this.$messages.find(':last-child');
-			$last_message.find('ul.contents').append( $append_message_content );
+			$last_message.find('ul.contents').append( $message );
 
 		}
 		else {
@@ -61,24 +63,35 @@ irc.Views.Messages = Backbone.View.extend({
 
 		}
 
+		$message.imagesLoaded( this.resizeMessages );
+
 		var force_scroll = ( message.get('nick') === this.collection.connection.get('nick') );
 		this.scrollBottom( force_scroll );
+
+	},
+
+	scrollMessages: function( e ){
+
+		var frame_height = this.$messages.height();
+		var frame_scrollheight = this.$messages[0].scrollHeight;
+		var frame_scrolltop = this.$messages.scrollTop();
+		var frame_scrollbottom = frame_scrolltop + frame_height;
+		this.is_near_bottom = ( frame_scrollbottom + 50 > frame_scrollheight );
 
 	},
 
 	// Scrolls to the bottom of the chat messages
 	scrollBottom: function( force ){
 
-		var frame_height = this.$messages.height();
-		var frame_scrollheight = this.$messages[0].scrollHeight;
-		var frame_scrolltop = this.$messages.scrollTop();
-		var frame_scrollbottom = frame_scrolltop + frame_height;
-		var last_message_height = this.$messages.children('li:last-child').height();
-		var is_near_bottom = frame_scrollbottom + 30 > frame_scrollheight - last_message_height;
-
-		if( is_near_bottom || force ){
-			this.$messages.scrollTop( frame_scrollheight - frame_height );
+		if( this.is_near_bottom || force ){
+			this.$messages.scrollTop( this.$messages[0].scrollHeight );
 		}
+
+	},
+
+	resizeMessages: function( e ){
+
+		this.scrollBottom();
 
 	},
 
