@@ -3,6 +3,14 @@ $right_bar_width = 200px;
 $channel_title_height = 48px;
 $new_message_height = 41px;
 
+@-webkit-keyframes alpha {
+	0% { color:	rgb( 0, 215, 115 ); }
+	25% { color: rgb( 0, 167, 215 ); }
+	50% { color: rgb( 100, 125, 255 ); }
+	75% { color: rgb( 210, 0, 255 ); }
+	100% { color:	rgb( 0, 215, 185 ); }
+}
+
 body {
 
 	color: rgb( 75, 75, 75 );
@@ -14,39 +22,38 @@ h1, h2, h3, h4, h5, h6, legend {
 
 }
 
-#logo > h1 {
+#logo {
 
-	display: inline-block;
-	padding: 5px;
-	margin: 10px 0 0 60px;
-	font-family: 'Roboto', sans-serif;
-	font-weight: 300;
-	text-shadow: 0px 1px 0px rgb( 255, 255, 255 );
-	color: rgb( 144, 156, 168 );
+	width: $left_bar_width;
+	text-align: center;
 
-}
+	> h1 {
 
-@-webkit-keyframes alpha {
-	0% { color:	rgb( 0, 215, 115 ); }
-	25% { color: rgb( 0, 167, 215 ); }
-	50% { color: rgb( 100, 125, 255 ); }
-	75% { color: rgb( 210, 0, 255 ); }
-	100% { color:	rgb( 0, 215, 185 ); }
-}
+		display: inline-block;
+		padding: 5px;
+		margin: 10px 0;
+		font-family: 'Roboto', sans-serif;
+		font-weight: 300;
+		text-shadow: 0px 1px 0px rgb( 255, 255, 255 );
+		color: rgb( 144, 156, 168 );
 
-#logo > sub {
+	}
 
-	opacity: 0.6;
-	margin-left: -5px;
-	font: italic 20px Georgia, serif;
-	-webkit-animation: alpha 12s linear infinite;
-	
+	> sub {
+
+		opacity: 0.6;
+		margin-left: -5px;
+		font: italic 20px Georgia, serif;
+		-webkit-animation: alpha 12s linear infinite;
+		
+	}
+
 }
 
 #connections {
 
 	position: absolute;
-	top: 65px;
+	top: 75px;
 	bottom: 0;
 	left: 0;
 	width: $left_bar_width;
