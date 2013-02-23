@@ -101,25 +101,20 @@ div.messages {
 
 			}
 
-			&.join {
+			&.join,
+			&.part,
+			&.nick,
+			&.mode {
 
-				background: rgb( 245, 255, 245 );
-
-			}
-
-			&.part {
-
-				background: rgb( 255, 245, 245 );
+				font-style: italic;
+				color: rgb( 185, 195, 205 );
 
 			}
 
 			&.error {
 
-				padding-top: 7px;
-				padding-bottom: 7px;
-				border-bottom: rgb( 235, 190, 190 ) 1px solid;
-				background: rgb( 252, 213, 213 );
-				color: rgb( 148, 63, 63 );
+				border-bottom: rgb( 255, 213, 213 ) 1px solid;
+				color: rgb( 218, 62, 62 );
 
 			}
 
