@@ -25,9 +25,11 @@ irc.Views.Messages = Backbone.View.extend({
 
 		this.$form = this.$el.find('form.new');
 		this.$new_message = this.$form.find(':input[name="message"]');
-		this.$messages = this.$el.find('ul.list');
+		this.$scroll = this.$el.find('div.scroll');
+		this.$messages = this.$scroll.children('ul.list');
 
-		this.$messages.on( 'scroll', this.scrollMessages );
+		this.$scroll.on( 'resize', this.resizeMessages );
+		this.$scroll.on( 'scroll', this.scrollMessages );
 		this.$messages.on( 'resize', this.resizeMessages );
 
 		this.collection.each( this.renderMessage );
@@ -63,8 +65,6 @@ irc.Views.Messages = Backbone.View.extend({
 
 		}
 
-		$message.imagesLoaded( this.resizeMessages );
-
 		var force_scroll = ( message.get('nick') === this.collection.connection.get('nick') );
 		this.scrollBottom( force_scroll );
 
@@ -72,9 +72,9 @@ irc.Views.Messages = Backbone.View.extend({
 
 	scrollMessages: function( e ){
 
-		var frame_height = this.$messages.height();
-		var frame_scrollheight = this.$messages[0].scrollHeight;
-		var frame_scrolltop = this.$messages.scrollTop();
+		var frame_height = this.$scroll.height();
+		var frame_scrollheight = this.$scroll[0].scrollHeight;
+		var frame_scrolltop = this.$scroll.scrollTop();
 		var frame_scrollbottom = frame_scrolltop + frame_height;
 		this.is_near_bottom = ( frame_scrollbottom + 50 > frame_scrollheight );
 
@@ -84,7 +84,7 @@ irc.Views.Messages = Backbone.View.extend({
 	scrollBottom: function( force ){
 
 		if( this.is_near_bottom || force ){
-			this.$messages.scrollTop( this.$messages[0].scrollHeight );
+			this.$scroll.scrollTop( this.$messages[0].scrollHeight );
 		}
 
 	},
