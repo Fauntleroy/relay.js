@@ -17,7 +17,8 @@ irc.Views.Notifications = Backbone.View.extend({
 	render: function(){
 
 		var html = this.template();
-		this.$el.html( html );
+		var $notifications = $.parseHTML( html );
+		this.$el.html( $notifications );
 
 		this.$notifications = this.$el.find('ul.notifications');
 

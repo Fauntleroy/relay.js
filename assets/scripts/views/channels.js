@@ -13,7 +13,8 @@ irc.Views.Channels = Backbone.View.extend({
 	render: function(){
 
 		var html = this.template();
-		this.setElement( html );
+		var $channels = $.parseHTML( html );
+		this.setElement( $channels );
 		this.collection.each( this.renderChannel );
 
 		return this;

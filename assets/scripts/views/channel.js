@@ -14,7 +14,8 @@ irc.Views.Channel = Backbone.View.extend({
 	render: function(){
 
 		var html = this.template( this.model.toJSON() );
-		this.$el.html( html );
+		var $channel = $.parseHTML( html );
+		this.$el.html( $channel );
 
 		this.$info = this.$el.children('.info');
 		this.$topic = this.$info.children('.topic');
@@ -42,7 +43,7 @@ irc.Views.Channel = Backbone.View.extend({
 
 	clear: function(){
 
-		this.$el.html('');
+		this.$el.empty();
 
 	},
 

@@ -18,7 +18,8 @@ irc.Views.Connection = Backbone.View.extend({
 	render: function(){
 
 		var html = this.template( this.model.toJSON() );
-		this.setElement( html );
+		var $connection = $.parseHTML( html );
+		this.setElement( $connection );
 
 		this.$info = this.$el.children('.info');
 		this.$nick = this.$info.find('.nick');

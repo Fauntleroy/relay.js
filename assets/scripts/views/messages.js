@@ -21,7 +21,8 @@ irc.Views.Messages = Backbone.View.extend({
 	render: function(){
 
 		var html = this.template();
-		this.$el.html( html );
+		var $messages = $.parseHTML( html );
+		this.$el.html( $messages );
 
 		this.$form = this.$el.find('form.new');
 		this.$new_message = this.$form.find(':input[name="message"]');

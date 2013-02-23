@@ -18,7 +18,8 @@ irc.Views.Connect = Backbone.View.extend({
 	render: function(){
 
 		var html = this.template();
-		this.$el.html( html );
+		var $connect = $.parseHTML( html );
+		this.$el.html( $connect );
 
 		this.$modal = this.$el.children('div.modal');
 		this.$form = this.$modal.children('form');

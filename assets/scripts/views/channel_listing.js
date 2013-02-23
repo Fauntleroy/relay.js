@@ -20,7 +20,8 @@ irc.Views.ChannelListing = Backbone.View.extend({
 	render: function(){
 
 		var html = this.template( this.model.toJSON() );
-		this.setElement( html );
+		var $channel_listing = $.parseHTML( html );
+		this.setElement( $channel_listing );
 		this.updateActive();
 
 		this.$name = this.$el.children('.name');

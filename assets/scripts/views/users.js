@@ -13,7 +13,8 @@ irc.Views.Users = Backbone.View.extend({
 	render: function(){
 
 		var html = this.template();
-		this.$el.html( html );
+		var $users = $.parseHTML( html );
+		this.$el.html( $users );
 
 		this.$users = this.$el.find('ul.list');
 

@@ -14,7 +14,7 @@ irc.Views.User = Backbone.View.extend({
 	render: function(){
 
 		var html = this.template( this.model.toJSON() );
-		var $user = $( html );
+		var $user = $.parseHTML( html );
 		this.$el.replaceWith( $user );
 		this.setElement( $user );
 

@@ -20,7 +20,8 @@ irc.Views.Connections = Backbone.View.extend({
 	render: function(){
 
 		var html = this.template();
-		this.$el.html( html );
+		var $connections = $.parseHTML( html );
+		this.$el.html( $connections );
 
 		this.$connections = this.$el.children('ul.list');
 

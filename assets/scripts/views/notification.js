@@ -18,7 +18,8 @@ irc.Views.Notification = Backbone.View.extend({
 
 		var json = this.model.toJSON();
 		var html = this.template( json );
-		this.setElement( html );
+		var $notification = $.parseHTML( html );
+		this.setElement( $notification );
 
 		return this;
 
