@@ -4,7 +4,8 @@ irc.Views.Connect = Backbone.View.extend({
 	template: templates.connect,
 
 	events: {
-		'submit form': 'submitForm'
+		'submit form': 'submitForm',
+		'click a[href="#advanced"]': 'clickAdvanced'
 	},
 
 	initialize: function(){
@@ -24,12 +25,14 @@ irc.Views.Connect = Backbone.View.extend({
 		this.$modal = this.$el.children('div.modal');
 		this.$form = this.$modal.children('form');
 		this.$channels = this.$form.find('input[name="channels"]');
+		this.$advanced = this.$form.find('div.advanced');
 
 		this.$modal.modal({
+			backdrop: false,
 			show: true
 		});
-
 		this.$channels.sparkartTags();
+		this.$advanced.toggle();
 
 		return this;
 
@@ -62,6 +65,14 @@ irc.Views.Connect = Backbone.View.extend({
 
 		this.connect( parameters );
 		this.hide();		
+
+	},
+
+	clickAdvanced: function( e ){
+
+		e.preventDefault();
+
+		this.$advanced.toggle( 100 );
 
 	}
 

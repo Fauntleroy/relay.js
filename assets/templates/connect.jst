@@ -1,31 +1,65 @@
 <div class="modal">
-	<form>
+	<form class="form-horizontal">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			<h3>Connect</h3>
 		</div>
 		<div class="modal-body">
 			<fieldset>
-				<label for="connect_server">Server</label>
-				<input id="connect_server" name="server" placeholder="ex: irc.freenode.net" type="text" />
-				<label for="connect_port">Server Port</label>
-				<input id="connect_port" name="port" type="text" /><span class="help-inline">Optional</span>
-				<label for="connect_password">Server Password</label>
-				<input id="connect_password" name="password" type="password" /><span class="help-inline">Optional</span>
-				<label for="connect_channels">Channels</label>
-				<input id="connect_channels" name="channels" placeholder="#relay.js" type="text" /><span class="help-inline">Optional</span>
+				<div class="control-group">
+					<label for="connect_server" class="control-label">Server</label>
+					<div class="controls">
+						<input id="connect_server" name="server" placeholder="ex: irc.freenode.net" type="text" />
+						<span class="help-inline"><a href="#advanced">Advanced Options</a></span>
+					</div>
+				</div>
+				<div class="advanced">
+					<div class="control-group">
+						<label for="connect_port" class="control-label">Server Port</label>
+						<div class="controls">
+							<input id="connect_port" name="port" type="text" />
+							<span class="help-inline">Optional</span>
+						</div>
+					</div>
+					<div class="control-group">
+						<label for="connect_password" class="control-label">Server Password</label>
+						<div class="controls">
+							<input id="connect_password" name="password" type="password" />
+							<span class="help-inline">Optional</span>
+						</div>
+					</div>
+				</div>
 			</fieldset>
 			<hr />
 			<fieldset>
-				<label for="connect_nick">Nick</label>
-				<input id="connect_nick" name="nick" type="text" />
-				<label for="connect_nick_password">Password</label>
-				<input id="connect_nick_password" name="nick_password" type="password" /><span class="help-inline">Optional</span>
+				<div class="control-group">
+					<label for="connect_nick" class="control-label">Nick</label>
+					<div class="controls">
+						<input id="connect_nick" name="nick" type="text" />
+					</div>
+				</div>
+				<div class="control-group">
+					<label for="connect_nick_password" class="control-label">Password</label>
+					<div class="controls">
+						<input id="connect_nick_password" name="nick_password" type="password" />
+						<span class="help-inline">Optional</span>
+					</div>
+				</div>
+			</fieldset>
+			<hr />
+			<fieldset>
+				<div class="control-group">
+					<label for="connect_channels" class="control-label">Channels</label>
+					<div class="controls">
+						<input id="connect_channels" name="channels" placeholder="#relay.js" type="text" />
+						<span class="help-inline">Optional</span>
+					</div>
+				</div>
 			</fieldset>
 		</div>
 		<div class="modal-footer">
 			<button class="btn" type="cancel">Cancel</button>
-			<button class="btn btn-primary" type="submit">Connect</button>
+			<button class="btn btn-primary" type="submit">Connect <i class="icon-signin"></i></button>
 		</div>
 	</form>
 </div>
