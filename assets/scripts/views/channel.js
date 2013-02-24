@@ -28,9 +28,11 @@ irc.Views.Channel = Backbone.View.extend({
 		if( this.messages ) this.messages.remove();
 		if( this.users ) this.users.remove();
 		this.messages = new irc.Views.Messages({ collection: this.model.messages, el: this.$messages });
-		this.users = new irc.Views.Users({ collection: this.model.users, el: this.$users });
 		this.messages.render();
-		this.users.render();
+		if( this.model.get('channel') ){
+			this.users = new irc.Views.Users({ collection: this.model.users, el: this.$users });
+			this.users.render();
+		}
 
 		this.messages.$new_message.focus();
 

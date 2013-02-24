@@ -16,9 +16,13 @@ irc.Views.Users = Backbone.View.extend({
 		var $users = $.parseHTML( html );
 		this.$el.html( $users );
 
+		this.$title = this.$el.children('h6');
+		this.$count = this.$title.children('var');
 		this.$users = this.$el.find('ul.list');
 
 		this.collection.each( this.renderUser );
+
+		this.$count.text( this.collection.length );
 
 		return this;
 
