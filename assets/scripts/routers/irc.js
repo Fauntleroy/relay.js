@@ -1,10 +1,10 @@
 irc.Routers.Application = Backbone.Router.extend({
 
 	routes: {
-		'': 'default'
+		'': 'home'
 	},
 
-	default: function(){
+	home: function(){
 
 		irc.socket = io.connect('/');
 		
