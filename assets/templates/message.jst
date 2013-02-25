@@ -1,7 +1,8 @@
 {{#message}}
 {{#partial}}
 <li {{#mention}}class="mention"{{/mention}}>
-	<span class="text">{{breaklines contents}}</span> <var class="timestamp">{{time timestamp}}</var>
+	<var class="timestamp">{{time timestamp}}</var>
+	<span class="text">{{breaklines contents}}</span>
 </li>
 {{/partial}}
 {{^partial}}
@@ -9,7 +10,8 @@
 	<h5 class="nick"><a href="#{{nick}}" {{^self}}class="user{{presence_id}}"{{/self}}>{{nick}}</a></h5>
 	<ul class="contents">
 		<li {{#mention}}class="mention"{{/mention}}>
-			<span class="text">{{breaklines contents}}</span> <var class="timestamp">{{time timestamp}}</var>
+			<var class="timestamp">{{time timestamp}}</var>
+			<span class="text">{{breaklines contents}}</span>
 		</li>
 	</ul>
 </li>
