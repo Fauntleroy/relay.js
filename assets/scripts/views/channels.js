@@ -16,6 +16,10 @@ irc.Views.Channels = Backbone.View.extend({
 		var $channels = $.parseHTML( html );
 		this.setElement( $channels );
 		this.collection.each( this.renderChannel );
+		this.$el.sortable({
+			axis: 'y',
+			revert: 100
+		});
 
 		return this;
 
