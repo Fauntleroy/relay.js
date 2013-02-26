@@ -9,8 +9,13 @@
 				<div class="control-group">
 					<label for="connect_server" class="control-label">Server</label>
 					<div class="controls">
+						{{#preset_server}}
+						<h4>{{host}}</h4>
+						{{/preset_server}}
+						{{^preset_server}}
 						<input id="connect_server" name="server" placeholder="ex: irc.freenode.net" type="text" />
 						<span class="help-inline"><a href="#advanced">Advanced Options</a></span>
+						{{/preset_server}}
 					</div>
 				</div>
 				<div class="advanced">

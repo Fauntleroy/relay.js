@@ -18,7 +18,9 @@ irc.Views.Connect = Backbone.View.extend({
 
 	render: function(){
 
-		var html = this.template();
+		var html = this.template({
+			preset_server: irc.config.preset_server
+		});
 		var $connect = $.parseHTML( html );
 		this.$el.html( $connect );
 
