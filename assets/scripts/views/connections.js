@@ -12,8 +12,10 @@ irc.Views.Connections = Backbone.View.extend({
 		_( this ).bindAll( 'render', 'renderConnection' );
 
 		this.listenTo( this.collection, 'add', this.renderConnection );
+		this.listenTo( this.collection, 'add remove reset', this.toggleNewConnection );
 
 		this.render();
+		this.toggleNewConnection();
 
 	},
 
@@ -24,6 +26,7 @@ irc.Views.Connections = Backbone.View.extend({
 		this.$el.html( $connections );
 
 		this.$connections = this.$el.children('ul.list');
+		this.$new_connection = this.$el.find('button[name="new_connection"]');
 
 		this.collection.each( this.renderConnection );
 
@@ -37,6 +40,13 @@ irc.Views.Connections = Backbone.View.extend({
 		var $connection = connection_view.render().$el;
 
 		this.$connections.append( $connection );
+
+	},
+
+	toggleNewConnection: function(){
+
+		var show_hide = ( this.collection.length < ( irc.config.max_connections || Infinity ) );
+		this.$new_connection.toggle( show_hide );
 
 	},
 
