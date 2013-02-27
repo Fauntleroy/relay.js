@@ -33,6 +33,23 @@ A simple demo is up here: http://relayjs.jit.su
 - Run `node relay.js`
 - Navigate to [http://localhost:8080](http://localhost:8080)
 
+## Configuration
+
+Relay.js supports simple server configuration via `config.json`. As time goes on, more configuration options will be added. Presently, the following two parameters are supported:
+
+* **max_connections** *integer* - The maximum number of connections that can be made from a single client.
+* **preset_server** *object* - An object specifying a preset server to connect to. This limits the user to a single connection to just this server. Parameters are **host**, **port**, and **password**.
+
+To set these options, just make a `config.json` in the main directory of the app. Here's a quick example:
+
+```json
+{
+	"preset_server": {
+		"host": "irc.freenode.net"
+	}
+}
+```
+
 ## Contributing
 
 Contributing to Relay.js is simple: just create a fork, make a new branch, and submit a pull request when you're done. Try to keep your code style similar to the original and comment anything worth mentioning. Discussion is encouraged in issues and pull requests. Relay.js can be found in the channel #relay.js on Freenode.
