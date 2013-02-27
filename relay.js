@@ -16,17 +16,25 @@ winston.loggers.add( 'development', {
 	}
 });
 
-var config_exists = fs.existsSync('config.json');
-var config = ( config_exists )
-	? JSON.parse( fs.readFileSync( 'config.json', DEFAULT_ENCODING ) )
-	: {};
-if( config.preset_server ) config.max_connections = config.max_connections || 1;
+// Gather configuration info from config.json
+var getConfig = function( callback ){
+	fs.readFile( 'config.json', DEFAULT_ENCODING, function( err, data ){
+		if( err ) return callback( err, {} );
+		var config = JSON.parse( data );
+		if( config.preset_server ) config.max_connections = config.max_connections || 1;
+		callback( null, config );
+	});
+};
 
-// Start webserver
-var server = require('./lib/server.js');
+getConfig( function( err, config ){
 
-server({
-	home_dir: __dirname,
-	preset_server: config.preset_server,
-	max_connections: config.max_connections
+	// Start webserver
+	var server = require('./lib/server.js');
+
+	server({
+		home_dir: __dirname,
+		preset_server: config.preset_server,
+		max_connections: config.max_connections
+	});
+
 });

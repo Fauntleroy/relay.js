@@ -45,7 +45,7 @@ irc.Views.Connections = Backbone.View.extend({
 
 	toggleNewConnection: function(){
 
-		var show_hide = ( this.collection.length < irc.config.max_connections );
+		var show_hide = ( this.collection.length < ( irc.config.max_connections || Infinity ) );
 		this.$new_connection.toggle( show_hide );
 
 	},
