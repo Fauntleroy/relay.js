@@ -105,7 +105,7 @@ irc.Views.Message = Backbone.View.extend({
 	// Get Gist ID out of a URL
 	testGist: function( url, callback ){
 
-		var gist_url = url.match( /(gist\.github\.com\/(?:[a-z0-9_-]+\/)?[0-9]+)/i );
+		var gist_url = url.match( /(gist\.github\.com\/(?:[a-z0-9_-]+\/)?[a-z0-9]+)/i );
 		gist_url = ( gist_url )? 'https://'+ gist_url[1] +'.json': gist_url;
 		if( gist_url ){
 
