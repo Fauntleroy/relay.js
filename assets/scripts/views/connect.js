@@ -13,6 +13,7 @@ irc.Views.Connect = Backbone.View.extend({
 		_( this ).bindAll( 'render', 'connect', 'show', 'hide', 'submitForm' );
 
 		this.render();
+		this.show();
 
 	},
 
@@ -29,10 +30,7 @@ irc.Views.Connect = Backbone.View.extend({
 		this.$channels = this.$form.find('input[name="channels"]');
 		this.$advanced = this.$form.find('div.advanced');
 
-		this.$modal.modal({
-			backdrop: false,
-			show: true
-		});
+		this.$modal.modal({ backdrop: false });
 		this.$channels.sparkartTags();
 		this.$advanced.toggle();
 
@@ -49,6 +47,7 @@ irc.Views.Connect = Backbone.View.extend({
 	show: function(){
 
 		this.$modal.modal('show');
+		this.$form.find('input').filter(':visible:first').focus();
 
 	},
 
