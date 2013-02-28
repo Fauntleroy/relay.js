@@ -39,6 +39,7 @@ Relay.js supports simple server configuration via `config.json`. As time goes on
 
 * **max_connections** *integer* - The maximum number of connections that can be made from a single client.
 * **preset_server** *object* - An object specifying a preset server to connect to. This limits the user to a single connection to just this server. Parameters are **host**, **port**, and **password**.
+* **suggested_channels** *array* - An array of channels that populate the 'Channels' input on the connect dialog.
 
 To set these options, just make a `config.json` in the main directory of the app. Here's a quick example:
 
@@ -46,7 +47,11 @@ To set these options, just make a `config.json` in the main directory of the app
 {
 	"preset_server": {
 		"host": "irc.freenode.net"
-	}
+	},
+
+	"suggested_channels": [
+		"#relay.js"
+	]
 }
 ```
 

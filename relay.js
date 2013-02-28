@@ -34,7 +34,8 @@ getConfig( function( err, config ){
 	server({
 		home_dir: __dirname,
 		preset_server: config.preset_server,
-		max_connections: config.max_connections
+		max_connections: config.max_connections,
+		suggested_channels: config.suggested_channels || []
 	});
 
 });
