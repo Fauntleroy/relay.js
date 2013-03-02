@@ -9,11 +9,9 @@ irc.Models.User = Backbone.Model.extend({
 
 	initialize: function(){
 
-		_( this ).bindAll( 'active', 'idle', 'clearTimer' );
+		_( this ).bindAll( 'active', 'idle' );
 
-		this.idle_timer = setInterval( this.idle, 60 * 1000 );
-
-		this.on( 'remove', this.clearTimer );
+		this.listenTo( this.collection, 'idle', this.idle );
 
 	},
 
@@ -37,13 +35,6 @@ irc.Models.User = Backbone.Model.extend({
 			this.set( 'active', false );
 		}
 		this.set( 'idle', idle + 1 );
-
-	},
-
-	// Unset the idle timer
-	clearTimer: function(){
-
-		clearInterval( this.idle_timer );
 
 	}
 

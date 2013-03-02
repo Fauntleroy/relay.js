@@ -20,3 +20,11 @@ Handlebars.registerHelper( 'breaklines', function( text ){
     return new Handlebars.SafeString( text );
 
 });
+
+Handlebars.registerHelper( 'encodeURI', function( string ){
+
+	string = encodeURI( string );
+
+	return string;
+
+});

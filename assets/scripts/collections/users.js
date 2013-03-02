@@ -9,7 +9,7 @@ irc.Collections.Users = Backbone.Collection.extend({
 		this.connection = parameters.connection;
 		this.socket = this.connection.socket;
 
-		_( this ).bindAll( 'doNames', 'doMessage', 'doModeAdd', 'doModeRemove', 'doAction', 'doPart', 'doQuit', 'doKick', 'doJoin', 'doNick', 'doChangeActive' );
+		_( this ).bindAll( 'idle', 'doNames', 'doMessage', 'doModeAdd', 'doModeRemove', 'doAction', 'doPart', 'doQuit', 'doKick', 'doJoin', 'doNick', 'doChangeActive' );
 
 		this.socket.on( 'names', this.doNames );
 		this.socket.on( 'message', this.doMessage );
@@ -22,6 +22,8 @@ irc.Collections.Users = Backbone.Collection.extend({
 		this.socket.on( 'join', this.doJoin );
 		this.socket.on( 'nick', this.doNick );
 		this.on( 'change:active', this.doChangeActive );
+
+		this.idle_timer = setInterval( this.idle, 60 * 1000 );
 
 	},
 
@@ -43,6 +45,12 @@ irc.Collections.Users = Backbone.Collection.extend({
 		else if( a_nick > b_nick ) return 1;
 		else if( b_nick > a_nick ) return -1;
 		else return 0;
+
+	},
+
+	idle: function(){
+
+		this.trigger('idle');
 
 	},
 
