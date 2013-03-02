@@ -21,7 +21,7 @@ irc.Views.Connect = Backbone.View.extend({
 
 		var html = this.template({
 			preset_server: irc.config.preset_server,
-			suggested_channels: irc.config.suggested_channels.join( ',' )
+			suggested_channels: irc.config.suggested_channels.join(',')
 		});
 		var $connect = $.parseHTML( html );
 		this.$el.html( $connect );
@@ -48,7 +48,7 @@ irc.Views.Connect = Backbone.View.extend({
 	show: function(){
 
 		this.$modal.modal('show');
-		this.$form.find('input').filter(':visible:first').focus();
+		this.$form.find('input:visible:first').focus();
 
 	},
 

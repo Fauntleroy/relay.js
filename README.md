@@ -48,7 +48,6 @@ To set these options, just make a `config.json` in the main directory of the app
 	"preset_server": {
 		"host": "irc.freenode.net"
 	},
-
 	"suggested_channels": [
 		"#relay.js"
 	]
