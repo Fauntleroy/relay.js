@@ -131,13 +131,13 @@ irc.Views.Messages = Backbone.View.extend({
 	// some things require keydown instead of keypress
 	keydownTextarea: function( e ){
 
-		// try to complete a username
-		if( e.which === 9 ){
+		// cancel out tabs
+		if( e.which === 9 ) e.preventDefault();
 
-			e.preventDefault();
+		// try to complete a username
+		if( e.which === 9 && this.$new_message.val() ){
 
 			if( !this.mention_nicks ){
-
 				var text = this.$new_message.val();
 				var nick_regex = new RegExp( '^'+ text, 'i' );
 				var nicks = this.collection.channel.users.pluck('nick'); // bad?
@@ -145,7 +145,6 @@ irc.Views.Messages = Backbone.View.extend({
 					return nick_regex.test( nick );
 				});
 				this.mention_next = this.mention_nicks[0];
-
 			}
 			else {
 				var mention_nick_id = _( this.mention_nicks ).indexOf( this.mention_next );
