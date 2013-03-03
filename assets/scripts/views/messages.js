@@ -1,5 +1,7 @@
 irc.Views.Messages = Backbone.View.extend({
 
+	mention_nicks: null,
+	mention_next: null,
 	is_near_bottom: true,
 	template: templates.messages,
 
@@ -134,14 +136,29 @@ irc.Views.Messages = Backbone.View.extend({
 
 			e.preventDefault();
 
-			var text = this.$new_message.val();
-			var nick_regex = new RegExp( '^'+ text, 'i' );
-			var nicks = this.collection.channel.users.pluck('nick'); // bad?
-			var mention = _( nicks ).find( function( nick ){
-				return nick_regex.test( nick );
-			});
+			if( !this.mention_nicks ){
 
-			if( mention ) this.$new_message.val( mention +': ' );
+				var text = this.$new_message.val();
+				var nick_regex = new RegExp( '^'+ text, 'i' );
+				var nicks = this.collection.channel.users.pluck('nick'); // bad?
+				this.mention_nicks = _( nicks ).filter( function( nick ){
+					return nick_regex.test( nick );
+				});
+				this.mention_next = this.mention_nicks[0];
+
+			}
+			else {
+				var mention_nick_id = _( this.mention_nicks ).indexOf( this.mention_next );
+				this.mention_next = this.mention_nicks[mention_nick_id+1] || this.mention_nicks[0];
+			}
+
+			if( this.mention_next )	this.$new_message.val( this.mention_next +': ' );
+
+		}
+		else {
+
+			this.mention_nicks = null;
+			this.mention_next = null;
 
 		}
 
