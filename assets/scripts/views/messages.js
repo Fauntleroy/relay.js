@@ -1,18 +1,19 @@
 irc.Views.Messages = Backbone.View.extend({
 
+	mention_nicks: null,
+	mention_next: null,
 	is_near_bottom: true,
 	template: templates.messages,
 
 	events: {
 		'submit form.new': 'submitNew',
 		'keypress :input[name="message"]': 'keyTextarea',
-		'keydown :input[name="message"]': 'keydownTextarea',
-		'keyup :input[name="message"]': 'keyupTextarea'
+		'keydown :input[name="message"]': 'keydownTextarea'
 	},
 
 	initialize: function(){
 
-		_( this ).bindAll( 'render', 'renderMessage', 'scrollBottom', 'scrollMessages', 'resizeMessages', 'submitNew', 'keyTextarea', 'keydownTextarea', 'keyupTextarea' );
+		_( this ).bindAll( 'render', 'renderMessage', 'scrollBottom', 'scrollMessages', 'resizeMessages', 'submitNew', 'keyTextarea', 'keydownTextarea' );
 
 		this.listenTo( this.collection, 'add', this.renderMessage );
 
@@ -117,24 +118,48 @@ irc.Views.Messages = Backbone.View.extend({
 
 	keyTextarea: function( e ){
 
-		if( e.which === 13 && !this.shift ){
+		// send message when enter is pressed
+		if( e.which === 13 && !e.shiftKey ){
 
 			e.preventDefault();
-			this.$form.trigger('submit');
+			return this.$form.trigger('submit');
 
 		}
 
 	},
 
+	// some things require keydown instead of keypress
 	keydownTextarea: function( e ){
 
-		if( e.which === 16 ) this.shift = true;
+		// cancel out tabs
+		if( e.which === 9 ) e.preventDefault();
 
-	},
+		// try to complete a username
+		if( e.which === 9 && this.$new_message.val() ){
 
-	keyupTextarea: function( e ){
+			if( !this.mention_nicks ){
+				var text = this.$new_message.val();
+				var nick_regex = new RegExp( '^'+ text, 'i' );
+				var nicks = this.collection.channel.users.pluck('nick'); // bad?
+				this.mention_nicks = _( nicks ).filter( function( nick ){
+					return nick_regex.test( nick );
+				});
+				this.mention_next = this.mention_nicks[0];
+			}
+			else {
+				var mention_nick_id = _( this.mention_nicks ).indexOf( this.mention_next );
+				this.mention_next = this.mention_nicks[mention_nick_id+1] || this.mention_nicks[0];
+			}
 
-		if( e.which === 16 ) this.shift = false;
+			if( this.mention_next )	this.$new_message.val( this.mention_next +': ' );
+
+		}
+		else {
+
+			this.mention_nicks = null;
+			this.mention_next = null;
+
+		}
 
 	}
 
