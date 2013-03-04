@@ -33,6 +33,8 @@ A simple demo is up here: http://relayjs.jit.su
 - Run `node relay.js`
 - Navigate to [http://localhost:8080](http://localhost:8080)
 
+If you plan on doing development, you'll want to install [Grunt](http://gruntjs.com/). Running `grunt dev` will build the assets (unminified), start the server, and watch + recompile the assets on change. A full list of grunt tasks can be seen with `grunt -h`.
+
 ## Configuration
 
 Relay.js supports simple server configuration via `config.json`. As time goes on, more configuration options will be added. Presently, the following two parameters are supported:
