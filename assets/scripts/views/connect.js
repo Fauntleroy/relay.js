@@ -1,7 +1,7 @@
 irc.Views.Connect = Backbone.View.extend({
 
 	el: '#connect',
-	template: templates.connect,
+	template: irc.templates.connect,
 
 	events: {
 		'submit form': 'submitForm',

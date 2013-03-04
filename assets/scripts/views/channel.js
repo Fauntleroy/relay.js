@@ -1,7 +1,7 @@
 irc.Views.Channel = Backbone.View.extend({
 
 	el: '#channel',
-	template: templates.channel,
+	template: irc.templates.channel,
 
 	initialize: function(){
 

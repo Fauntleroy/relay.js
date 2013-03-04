@@ -3,7 +3,7 @@ irc.Views.Messages = Backbone.View.extend({
 	mention_nicks: null,
 	mention_next: null,
 	is_near_bottom: true,
-	template: templates.messages,
+	template: irc.templates.messages,
 
 	events: {
 		'submit form.new': 'submitNew',

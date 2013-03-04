@@ -2,7 +2,7 @@ irc.Views.Notifications = Backbone.View.extend({
 
 	el: '#notifications',
 
-	template: templates.notifications,
+	template: irc.templates.notifications,
 
 	initialize: function(){
 

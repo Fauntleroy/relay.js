@@ -1,6 +1,6 @@
 irc.Views.Notification = Backbone.View.extend({
 
-	template: templates.notification,
+	template: irc.templates.notification,
 
 	events: {
 		'click button.close': 'clickClose'

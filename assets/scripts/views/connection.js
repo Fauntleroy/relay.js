@@ -1,6 +1,6 @@
 irc.Views.Connection = Backbone.View.extend({
 
-	template: templates.connection,
+	template: irc.templates.connection,
 
 	events: {
 		'click div.info a[href="#quit"]': 'clickQuit'

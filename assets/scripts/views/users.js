@@ -1,7 +1,7 @@
 irc.Views.Users = Backbone.View.extend({
 
-	template: templates.users,
-	user_template: templates.user,
+	template: irc.templates.users,
+	user_template: irc.templates.user,
 
 	initialize: function(){
 

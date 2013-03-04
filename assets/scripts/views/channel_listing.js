@@ -1,6 +1,6 @@
 irc.Views.ChannelListing = Backbone.View.extend({
 
-	template: templates.channel_listing,
+	template: irc.templates.channel_listing,
 
 	events: {
 		'click a.name': 'clickName',

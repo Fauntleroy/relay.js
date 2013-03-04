@@ -1,6 +1,6 @@
 irc.Views.Message = Backbone.View.extend({
 
-	template: templates.message,
+	template: irc.templates.message,
 
 	initialize: function( parameters ){
 

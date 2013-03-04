@@ -1,7 +1,7 @@
 irc.Views.Connections = Backbone.View.extend({
 
 	el: '#connections',
-	template: templates.connections,
+	template: irc.templates.connections,
 
 	events: {
 		'click button[name="new_connection"]': 'clickNewConnection'
