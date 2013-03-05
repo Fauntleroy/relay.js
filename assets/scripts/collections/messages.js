@@ -9,10 +9,11 @@ irc.Collections.Messages = Backbone.Collection.extend({
 		this.connection = parameters.connection;
 		this.socket = this.connection.socket;
 
-		_( this ).bindAll( 'doMessage', 'doNotice', 'doAction', 'doNick', 'doJoin', 'doPart', 'doQuit', 'doKick', 'doTopic', 'doModeAdd', 'doModeRemove', 'doMOTD', 'doWhois', 'doError', 'trim' );
+		_( this ).bindAll( 'doMessage', 'doNotice', 'doAway', 'doAction', 'doNick', 'doJoin', 'doPart', 'doQuit', 'doKick', 'doTopic', 'doModeAdd', 'doModeRemove', 'doMOTD', 'doWhois', 'doError', 'trim' );
 
 		this.socket.on( 'message', this.doMessage );
 		this.socket.on( 'notice', this.doNotice );
+		this.socket.on( 'rpl_away', this.doAway );
 		this.socket.on( 'action', this.doAction );
 		this.socket.on( 'nick', this.doNick );
 		this.socket.on( 'join', this.doJoin );
@@ -60,6 +61,21 @@ irc.Collections.Messages = Backbone.Collection.extend({
 				from: from,
 				to: to,
 				text: text,
+				timestamp: timestamp
+			});
+
+		}
+
+	},
+
+	doAway: function( from, to, text, timestamp ){
+
+		if( from === this.channel.get('name') ){
+
+			this.add({
+				away: true,
+				nick: from,
+				contents: text,
 				timestamp: timestamp
 			});
 

@@ -87,7 +87,7 @@ module.exports = function(grunt) {
 			}
 		},
 		watch: {
-			files: [ 'assets/scripts/**/*.js', 'assets/styles/**/*.css' ],
+			files: [ 'assets/scripts/**/*.js', 'assets/styles/**/*.css', 'assets/templates/**/*.hbs' ],
 			tasks: ['build']
 		}
 	});
@@ -108,7 +108,7 @@ module.exports = function(grunt) {
 	});
 
 	grunt.registerTask( 'default', ['build'] );
-	grunt.registerTask( 'build', [ 'stylus', 'concat', 'clean', 'handlebars' ] );
+	grunt.registerTask( 'build', [ 'stylus', 'handlebars', 'concat', 'clean' ] );
 	grunt.registerTask( 'minify', [ 'uglify', 'cssmin' ] );
 	grunt.registerTask( 'predeploy', [ 'build', 'minify' ] );
 	grunt.registerTask( 'dev', [ 'build', 'server', 'watch' ] );

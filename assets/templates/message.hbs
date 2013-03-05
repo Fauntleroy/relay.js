@@ -18,6 +18,10 @@
 {{/partial}}
 {{/message}}
 
+{{#if away}}
+<li class="away"><i class="icon-minus-sign"></i> <strong class="nick">{{nick}}</strong> <em>(away)</em> <span class="text">{{contents}}</span> <var class="timestamp">{{time timestamp}}</var></li>
+{{/if}}
+
 {{#action}}
 <li class="action">* <strong>{{nick}}</strong> <span class="text">{{contents}}</span> <var class="timestamp">{{time timestamp}}</var></li>
 {{/action}}
