@@ -51,7 +51,7 @@ irc.Collections.Channels = Backbone.Collection.extend({
 
 	doJoin: function( channel, nick, message ){
 
-		if( nick === this.connection.get('nick') ){
+		if( nick === this.connection.get('nick') && !this.findWhere({ channel: true, name: channel }) ){
 
 			this.add({
 				channel: true,
