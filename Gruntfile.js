@@ -89,6 +89,9 @@ module.exports = function(grunt) {
 		watch: {
 			files: [ 'assets/scripts/**/*.js', 'assets/styles/**/*.css', 'assets/templates/**/*.hbs' ],
 			tasks: ['build']
+		},
+		jshint: {
+			all: [ 'assets/scripts/**/*.js', '!assets/scripts/vendor/**/*.js' ]
 		}
 	});
 
@@ -110,7 +113,7 @@ module.exports = function(grunt) {
 	grunt.registerTask( 'default', ['build'] );
 	grunt.registerTask( 'build', [ 'stylus', 'handlebars', 'concat', 'clean' ] );
 	grunt.registerTask( 'minify', [ 'uglify', 'cssmin' ] );
-	grunt.registerTask( 'predeploy', [ 'build', 'minify' ] );
+	grunt.registerTask( 'predeploy', [ 'build' ] );
 	grunt.registerTask( 'dev', [ 'build', 'server', 'watch' ] );
 
 };

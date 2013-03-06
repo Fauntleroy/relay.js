@@ -4,7 +4,7 @@ irc.Views.Application = Backbone.View.extend({
 
 	initialize: function(){
 
-		this.title = new irc.Views.Title;
+		this.title = new irc.Views.Title();
 
 	}
 

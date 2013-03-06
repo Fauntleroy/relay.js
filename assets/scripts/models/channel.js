@@ -14,7 +14,7 @@ irc.Models.Channel = Backbone.Model.extend({
 		this.socket = this.connection.socket;
 
 		this.messages = new irc.Collections.Messages( null, { channel: this, connection: this.connection });
-		this.users = new irc.Collections.Users( null, { channel: this, connection: this.connection })
+		this.users = new irc.Collections.Users( null, { channel: this, connection: this.connection });
 
 		this.messages.on( 'add', this.doAddMessage );
 		this.socket.on( 'topic', this.doTopic );

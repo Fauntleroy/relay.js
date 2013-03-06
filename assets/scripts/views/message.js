@@ -43,14 +43,22 @@ irc.Views.Message = Backbone.View.extend({
 
 			if( urls.length > 0 ){
 
+				var inlineImage = function( err, result ){
+					if( err ) return err;
+					var image_html = irc.templates['inline/image']( result );
+					$text.after( image_html );
+				};
+
+				var inlineGist = function( err, result ){
+					if( err ) return err;
+					var gist_html = irc.templates['inline/gist']( result );
+					$text.after( gist_html );
+				};
+
 				for( var i = urls.length - 1; i >= 0; i-- ){
 
 					// Check if it's an image
-					this.testImage( urls[i], function( err, result ){
-						if( err ) return err;
-						var image_html = irc.templates['inline/image']( result );
-						$text.after( image_html );
-					});
+					this.testImage( urls[i], inlineImage );
 
 					// Check if it's a youtube video
 					var youtube_id = this.testYoutube( urls[i] );
@@ -63,11 +71,7 @@ irc.Views.Message = Backbone.View.extend({
 					}
 
 					// Check for Gists
-					var gist_id = this.testGist( urls[i], function( err, result ){
-						if( err ) return err;
-						var gist_html = irc.templates['inline/gist']( result );
-						$text.after( gist_html );
-					});
+					var gist_id = this.testGist( urls[i], inlineGist );
 
 				}
 

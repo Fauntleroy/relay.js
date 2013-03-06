@@ -269,7 +269,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 	trim: function(){
 
 		if( this.length > this.limit ){
-			var messages = this.last( this.limit - parseInt( this.limit * 0.25 ) );
+			var messages = this.last( this.limit - parseInt( this.limit * 0.25, 10 ) );
 			this.reset( messages, {
 				silent: true
 			});
