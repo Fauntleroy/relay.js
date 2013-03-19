@@ -9,7 +9,7 @@ irc.Collections.Users = Backbone.Collection.extend({
 		this.connection = parameters.connection;
 		this.socket = this.connection.socket;
 
-		_( this ).bindAll( 'idle', 'doNames', 'doMessage', 'doModeAdd', 'doModeRemove', 'doAction', 'doPart', 'doQuit', 'doKick', 'doJoin', 'doNick', 'doChangeActive' );
+		_( this ).bindAll( 'idle', 'doNames', 'doMessage', 'doModeAdd', 'doModeRemove', 'doAction', 'doPart', 'doQuit', 'doKick', 'doJoin', 'doNick', 'doChange' );
 
 		this.socket.on( 'names', this.doNames );
 		this.socket.on( 'message', this.doMessage );
@@ -21,7 +21,7 @@ irc.Collections.Users = Backbone.Collection.extend({
 		this.socket.on( 'kick', this.doKick );
 		this.socket.on( 'join', this.doJoin );
 		this.socket.on( 'nick', this.doNick );
-		this.on( 'change:active', this.doChangeActive );
+		this.on( 'change:active change:rank change:nick', this.doChange );
 
 		this.idle_timer = setInterval( this.idle, 60 * 1000 );
 
@@ -174,8 +174,6 @@ irc.Collections.Users = Backbone.Collection.extend({
 			var changing_user = this.findWhere({ nick: old_nick });
 			changing_user.set( 'nick', new_nick );
 
-			this.sort();
-
 		}
 
 		var user = this.findWhere({ nick: new_nick });
@@ -183,7 +181,8 @@ irc.Collections.Users = Backbone.Collection.extend({
 
 	},
 
-	doChangeActive: function(){
+	// force sort when certain user attributes change
+	doChange: function(){
 
 		this.sort();
 
