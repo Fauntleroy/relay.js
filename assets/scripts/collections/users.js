@@ -1,6 +1,5 @@
 irc.Collections.Users = Backbone.Collection.extend({
 
-	presence_id: 1, // Used for user color
 	model: irc.Models.User,
 
 	initialize: function( models, parameters ){
@@ -62,10 +61,8 @@ irc.Collections.Users = Backbone.Collection.extend({
 			for( var nick in nicks ){
 				users.push({
 					nick: nick,
-					rank: nicks[nick] || null,
-					presence_id: this.presence_id
+					rank: nicks[nick] || null
 				});
-				this.presence_id = ( this.presence_id < 30 )? this.presence_id + 1: 1;
 			}
 
 			this.reset( users );
@@ -157,10 +154,8 @@ irc.Collections.Users = Backbone.Collection.extend({
 
 			if( !existing.length ){
 				this.add({
-					nick: nick,
-					presence_id: this.presence_id
+					nick: nick
 				});
-				this.presence_id = ( this.presence_id < 30 )? this.presence_id + 1: 1;
 			}
 			
 		}

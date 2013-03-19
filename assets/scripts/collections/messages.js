@@ -5,11 +5,15 @@ irc.Collections.Messages = Backbone.Collection.extend({
 
 	initialize: function( models, parameters ){
 
+		// keep track of who's talking for user colors
+		this.presences = {};
+		this.presence_id = 1;
+
 		this.channel = parameters.channel;
 		this.connection = parameters.connection;
 		this.socket = this.connection.socket;
 
-		_( this ).bindAll( 'doMessage', 'doNotice', 'doAway', 'doAction', 'doNick', 'doJoin', 'doPart', 'doQuit', 'doKick', 'doTopic', 'doModeAdd', 'doModeRemove', 'doMOTD', 'doWhois', 'doError', 'trim' );
+		_( this ).bindAll( 'getPresence', 'doMessage', 'doNotice', 'doAway', 'doAction', 'doNick', 'doJoin', 'doPart', 'doQuit', 'doKick', 'doTopic', 'doModeAdd', 'doModeRemove', 'doMOTD', 'doWhois', 'doError', 'trim' );
 
 		this.socket.on( 'message', this.doMessage );
 		this.socket.on( 'notice', this.doNotice );
@@ -30,6 +34,20 @@ irc.Collections.Messages = Backbone.Collection.extend({
 
 	},
 
+	// determine the presence ID to use
+	getPresence: function( nick ){
+
+		var presence_id = 0;
+		if( nick ){
+			presence_id = this.presences[nick] || this.presence_id++;
+			if( !this.presences[nick] ) this.presences[nick] = presence_id;
+			if( this.presence_id > 19 ) this.presence_id = 1;
+		}
+
+		return presence_id;
+
+	},
+
 	doMessage: function( from, to, message, timestamp ){
 
 		var from_self = ( from === this.connection.get('nick') );
@@ -42,8 +60,9 @@ irc.Collections.Messages = Backbone.Collection.extend({
 				message: true,
 				nick: from,
 				contents: message,
-				timestamp: timestamp,
-				self: from_self
+				self: from_self,
+				presence_id: this.getPresence( from ),
+				timestamp: timestamp
 			});
 
 		}
@@ -91,6 +110,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 				action: true,
 				nick: from,
 				contents: text,
+				presence_id: this.getPresence( from ),
 				timestamp: timestamp
 			});
 
@@ -108,6 +128,9 @@ irc.Collections.Messages = Backbone.Collection.extend({
 				new_nick: new_nick,
 				timestamp: timestamp
 			});
+
+			// update the presence ID on nick change
+			if( this.presences[old_nick] ) this.presences[new_nick] = this.presences[old_nick];
 
 		}
 

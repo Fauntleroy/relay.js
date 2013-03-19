@@ -1,5 +1,6 @@
 irc.Views.Messages = Backbone.View.extend({
 
+	// keep track of nicks user can tab through
 	mention_nicks: null,
 	mention_next: null,
 	is_near_bottom: true,
@@ -40,6 +41,7 @@ irc.Views.Messages = Backbone.View.extend({
 
 	renderMessage: function( message ){
 
+		var nick = message.get('nick');
 		var last_message = this.collection.at( this.collection.indexOf( message ) - 1 );
 		var both_notice, both_message, notice_match, message_match, $message;
 
@@ -48,13 +50,16 @@ irc.Views.Messages = Backbone.View.extend({
 			both_notice = ( last_message.get('notice') && message.get('notice') );
 			both_message = ( last_message.get('message') && message.get('message') );
 			notice_match = ( last_message.get('from') === message.get('from') && last_message.get('to') === message.get('to') );
-			message_match = ( last_message.get('nick') === message.get('nick') );
+			message_match = ( last_message.get('nick') === nick );
 		}
 
 		// If this is a continuation, render the partial template and append it
 		if( ( both_notice && notice_match ) || ( both_message && message_match ) ){
 			
-			var append_message = new irc.Views.Message({ model: message, partial: true });
+			var append_message = new irc.Views.Message({
+				model: message,
+				partial: true
+			});
 			$message = append_message.render().$el.find('ul.contents > li');
 			var $last_message = this.$messages.find(':last-child');
 			$last_message.find('ul.contents').append( $message );
@@ -62,13 +67,15 @@ irc.Views.Messages = Backbone.View.extend({
 		}
 		else {
 
-			var message_view = new irc.Views.Message({ model: message });
+			var message_view = new irc.Views.Message({
+				model: message
+			});
 			$message = message_view.render().$el;
 			this.$messages.append( $message );
 
 		}
 
-		var force_scroll = ( message.get('nick') === this.collection.connection.get('nick') );
+		var force_scroll = ( nick === this.collection.connection.get('nick') );
 		this.scrollBottom( force_scroll );
 
 	},

@@ -4,7 +4,7 @@ irc.Views.Message = Backbone.View.extend({
 
 	initialize: function( parameters ){
 
-		if( parameters.partial ) this.partial = parameters.partial;
+		this.partial = parameters.partial;
 
 		_( this ).bindAll( 'render', 'postprocess' );
 
