@@ -55,10 +55,19 @@ irc.Views.Message = Backbone.View.extend({
 					$text.after( gist_html );
 				};
 
+				var inlineSoundCloud = function( err, result ){
+					if( err ) return err;
+
+					$text.after( result.html );
+				};
+
 				for( var i = urls.length - 1; i >= 0; i-- ){
 
 					// Check if it's an image
 					this.testImage( urls[i], inlineImage );
+
+					// Check if it's a soundcloud song
+					this.testSoundCloud( urls[i], inlineSoundCloud );
 
 					// Check if it's a youtube video
 					var youtube_id = this.testYoutube( urls[i] );
@@ -124,6 +133,18 @@ irc.Views.Message = Backbone.View.extend({
 
 		}
 
-	}
+	},
 
+	// Get SoundCloud ID out of a URL
+	testSoundCloud: function(url, callback) {
+		var is_soundcloud = /soundcloud.com/i.test( url );
+
+		if( is_soundcloud ) {
+			$.get('http://soundcloud.com/oembed', { 'format': 'json', 'url': url }, function( data ){
+				if( callback ) callback( null, data );
+			});
+		} else {
+			if( callback ) callback( 'Not SoundCloud' );
+		}
+	}
 });
