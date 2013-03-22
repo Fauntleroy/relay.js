@@ -8,7 +8,7 @@ irc.Models.Channel = Backbone.Model.extend({
 
 	initialize: function(){
 
-		_( this ).bindAll( 'active', 'part', 'doAddMessage', 'doActive', 'doTopic' );
+		_( this ).bindAll( 'active', 'part', 'end', 'doAddMessage', 'doActive', 'doTopic' );
 
 		this.connection = this.collection.connection;
 		this.socket = this.connection.socket;
@@ -43,7 +43,7 @@ irc.Models.Channel = Backbone.Model.extend({
 	part: function(){
 
 		if( this.get('private_channel') ){
-			this.destroy();
+			this.end();
 		}
 		else {
 			this.socket.emit( 'command', '/part '+ this.get('name') );
@@ -51,9 +51,20 @@ irc.Models.Channel = Backbone.Model.extend({
 
 	},
 
+	// ensure this model never lives again
+	end: function(){
+
+		this.messages.off();
+		this.socket.removeListener( 'topic', this.doTopic );
+		irc.off( 'channels:active', this.doActive );
+
+		this.destroy();
+
+	},
+
 	doAddMessage: function( message ){
 
-		irc.trigger( 'active:messages:add', message );
+		if( this.get('active') ) irc.trigger( 'active:messages:add', message );
 
 		if( !this.get('active') && message.get('message') ){
 

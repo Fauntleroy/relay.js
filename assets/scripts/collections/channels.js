@@ -69,7 +69,7 @@ irc.Collections.Channels = Backbone.Collection.extend({
 
 			var parted_channel = this.where({ name: channel })[0];
 
-			this.remove( parted_channel );
+			parted_channel.end();
 
 		}
 
