@@ -128,23 +128,29 @@ irc.Views.Message = Backbone.View.extend({
 
 		}
 		else {
-
 			if( callback ) callback( 'No Gist found' );
-
 		}
 
 	},
 
 	// Get SoundCloud ID out of a URL
-	testSoundCloud: function(url, callback) {
-		var is_soundcloud = /soundcloud.com/i.test( url );
+	testSoundCloud: function( url, callback ){
 
+		var is_soundcloud = /soundcloud.com/i.test( url );
 		if( is_soundcloud ) {
-			$.get('http://soundcloud.com/oembed', { 'format': 'json', 'url': url }, function( data ){
+
+			$.get( 'http://soundcloud.com/oembed', {
+				format: 'json',
+				url: url,
+				show_comments: false
+			}, function( data ){
 				if( callback ) callback( null, data );
 			});
+
 		} else {
 			if( callback ) callback( 'Not SoundCloud' );
 		}
+
 	}
+
 });

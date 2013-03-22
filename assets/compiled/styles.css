@@ -7853,7 +7853,7 @@ div.messages ul.list > li.message{margin:0;padding:10px 80px 10px 13px;backgroun
 div.messages ul.list > li.message.self{background:#f5fdff}
 div.messages ul.list > li.message h5.nick{margin:5px 0 10px 0;font-size:16px;font-weight:bold}
 div.messages ul.list > li.message div.inline.image,div.messages ul.list > li.message div.inline.youtube{padding:5px 0;}
-div.messages ul.list > li.message div.inline.image img,div.messages ul.list > li.message div.inline.youtube img{max-width:360px;max-height:360px;box-shadow:0 2px 5px 0 rgba(0,0,0,0.25)}
+div.messages ul.list > li.message div.inline.image img,div.messages ul.list > li.message div.inline.youtube img{max-width:300px;max-height:220px;box-shadow:0 2px 5px 0 rgba(0,0,0,0.25)}
 div.messages ul.list > li.message div.inline.youtube a{position:relative;}
 div.messages ul.list > li.message div.inline.youtube a:before{content:'▶';position:absolute;top:50%;left:50%;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;font-family:'arial',sans-serif;font-size:26px;line-height:36px;text-align:center;vertical-align:middle;background:#000}
 div.messages ul.list > li.message div.inline.gist{padding:5px 0;}
