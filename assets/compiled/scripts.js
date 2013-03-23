@@ -20496,20 +20496,28 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 
 	},
 
+	// join all the channels our connection is in
+	// no dupes
 	doChans: function( channels ){
 
 		var channels_to_join = [];
-		for( var i in channels ) channels_to_join.push({
-			channel: true,
-			name: channels[i],
-			display_name: channels[i]
-		});
+		for( var i in channels ){
+			if( !this.findWhere({ channel: true, name: channels[i] }) ){
+				channels_to_join.push({
+					channel: true,
+					name: channels[i],
+					display_name: channels[i]
+				});
+			}
+		}
 
 		this.add( channels_to_join );
 		if( this.last() ) this.last().active();
 
 	},
 
+	// join the channel our connection demands
+	// still no dupes
 	doJoin: function( channel, nick, message ){
 
 		if( nick === this.connection.get('nick') && !this.findWhere({ channel: true, name: channel }) ){
