@@ -19481,6 +19481,24 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   return buffer;
   });
 
+this["irc"]["templates"]["inline/vimeo"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<div class=\"inline vimeo\">\r\n	<a href=\"";
+  if (stack1 = helpers.url) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.url; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" target=\"_blank\"><img src=\"";
+  if (stack1 = helpers.thumbnail) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.thumbnail; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" /></a>\r\n</div>";
+  return buffer;
+  });
+
 this["irc"]["templates"]["inline/youtube"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Handlebars.helpers; data = data || {};
@@ -21589,8 +21607,19 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 
 				var inlineSoundCloud = function( err, result ){
 					if( err ) return err;
-
 					$text.after( result.html );
+				};
+
+				var inlineYoutube = function( err, result ){
+					if( err ) return err;
+					var youtube_html = irc.templates['inline/youtube']( result );
+					$text.after( youtube_html );
+				};
+
+				var inlineVimeo = function( err, result ){
+					if( err ) return err;
+					var vimeo_html = irc.templates['inline/vimeo']( result );
+					$text.after( vimeo_html );
 				};
 
 				for( var i = urls.length - 1; i >= 0; i-- ){
@@ -21602,14 +21631,10 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 					this.testSoundCloud( urls[i], inlineSoundCloud );
 
 					// Check if it's a youtube video
-					var youtube_id = this.testYoutube( urls[i] );
-					if( youtube_id ){
-						var youtube_html = irc.templates['inline/youtube']({
-							id: youtube_id,
-							url: urls[i]
-						});
-						$text.after( youtube_html );
-					}
+					this.testYoutube( urls[i], inlineYoutube );
+
+					// Check if it's a vimeo video
+					this.testVimeo( urls[i], inlineVimeo );
 
 					// Check for Gists
 					var gist_id = this.testGist( urls[i], inlineGist );
@@ -21638,12 +21663,44 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 	},
 
 	// Get Youtube ID out of a URL
-	testYoutube: function( url ){
+	testYoutube: function( url, callback ){
 
 		var id = url.match( /(?:youtube\.com.*[\?&]v=|youtu\.be\/)(.{11})/i );
 		id = ( id )? id[1]: id;
 
-		return id;
+		if( id ){
+			var data = {
+				id: id,
+				url: url
+			};
+			if( callback ) callback( null, data );
+		}
+		else {
+			if( callback ) callback( 'Not YouTube' );
+		}
+
+	},
+
+	// Get Vimeo ID out of a URL
+	testVimeo: function( url, callback ){
+
+		var id = url.match( /vimeo\.com\/([0-9]*)/i );
+		id = ( id )? id[1]: id;
+
+		if( id ){
+			
+			$.getJSON( 'http://vimeo.com/api/v2/video/'+ id +'.json?callback=?', function( data ){
+				var return_data = {
+					url: url,
+					thumbnail: data[0].thumbnail_large
+				};
+				if( callback ) callback( null, return_data );
+			});
+
+		}
+		else {
+			if( callback ) callback( 'Not Vimeo' );
+		}
 
 	},
 

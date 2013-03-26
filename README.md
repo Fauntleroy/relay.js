@@ -19,7 +19,7 @@ Relay.js is a web-based IRC client that focuses on making IRC less intimidating 
 
 ## Upcoming Features
 
-- Additional content embedding ( Vimeo, Tweets, Open Graph, etc )
+- Additional content embedding ( Tweets, Codepen, Open Graph, etc )
 - Rearrangeable, modular interface
 - Interface elements for certain IRC commands, such as banning/kicking a user
 - Tab completion for usernames, emoticons, certain commands

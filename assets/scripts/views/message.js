@@ -57,8 +57,19 @@ irc.Views.Message = Backbone.View.extend({
 
 				var inlineSoundCloud = function( err, result ){
 					if( err ) return err;
-
 					$text.after( result.html );
+				};
+
+				var inlineYoutube = function( err, result ){
+					if( err ) return err;
+					var youtube_html = irc.templates['inline/youtube']( result );
+					$text.after( youtube_html );
+				};
+
+				var inlineVimeo = function( err, result ){
+					if( err ) return err;
+					var vimeo_html = irc.templates['inline/vimeo']( result );
+					$text.after( vimeo_html );
 				};
 
 				for( var i = urls.length - 1; i >= 0; i-- ){
@@ -70,14 +81,10 @@ irc.Views.Message = Backbone.View.extend({
 					this.testSoundCloud( urls[i], inlineSoundCloud );
 
 					// Check if it's a youtube video
-					var youtube_id = this.testYoutube( urls[i] );
-					if( youtube_id ){
-						var youtube_html = irc.templates['inline/youtube']({
-							id: youtube_id,
-							url: urls[i]
-						});
-						$text.after( youtube_html );
-					}
+					this.testYoutube( urls[i], inlineYoutube );
+
+					// Check if it's a vimeo video
+					this.testVimeo( urls[i], inlineVimeo );
 
 					// Check for Gists
 					var gist_id = this.testGist( urls[i], inlineGist );
@@ -106,12 +113,44 @@ irc.Views.Message = Backbone.View.extend({
 	},
 
 	// Get Youtube ID out of a URL
-	testYoutube: function( url ){
+	testYoutube: function( url, callback ){
 
 		var id = url.match( /(?:youtube\.com.*[\?&]v=|youtu\.be\/)(.{11})/i );
 		id = ( id )? id[1]: id;
 
-		return id;
+		if( id ){
+			var data = {
+				id: id,
+				url: url
+			};
+			if( callback ) callback( null, data );
+		}
+		else {
+			if( callback ) callback( 'Not YouTube' );
+		}
+
+	},
+
+	// Get Vimeo ID out of a URL
+	testVimeo: function( url, callback ){
+
+		var id = url.match( /vimeo\.com\/([0-9]*)/i );
+		id = ( id )? id[1]: id;
+
+		if( id ){
+			
+			$.getJSON( 'http://vimeo.com/api/v2/video/'+ id +'.json?callback=?', function( data ){
+				var return_data = {
+					url: url,
+					thumbnail: data[0].thumbnail_large
+				};
+				if( callback ) callback( null, return_data );
+			});
+
+		}
+		else {
+			if( callback ) callback( 'Not Vimeo' );
+		}
 
 	},
 
