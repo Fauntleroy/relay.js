@@ -101,12 +101,15 @@ module.exports = function(grunt) {
 	});
 
 	grunt.registerTask( 'server', 'Start the relay.js server', function(){
-		var child_process = require('child_process');
-		var spawn = child_process.spawn;
-		var server = spawn( 'node', ['relay.js'] );
-		console.log('Starting relay.js server...');
-		server.stderr.on( 'data', function( data ){
-			console.log( 'stderr:', data.toString() );
+		var port = grunt.option('port') || grunt.option('p');
+		var args = ['relay.js'];
+		if( port ) args = args.concat([ '-p', port ]);
+		grunt.util.spawn({
+			cmd: 'node',
+			args: args,
+			opts: {
+				stdio: 'inherit'
+			}
 		});
 	});
 
