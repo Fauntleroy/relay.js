@@ -20617,17 +20617,29 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 
 	initialize: function(){
 
-		_( this ).bindAll( 'doIRCConnection', 'updateActiveChannel' );
-
-		irc.socket.on( 'irc_connection', this.doIRCConnection );
+		_( this ).bindAll( 'addConnection', 'updateActiveChannel' );
 
 		this.on( 'remove', this.updateActiveChannel );
 
 	},
 
-	doIRCConnection: function( parameters ){
+	addConnection: function( data ){
 
-		this.add( parameters );
+		if( !irc.socket ){
+
+			irc.socket = io.connect('/');
+		
+			irc.socket.on( 'disconnect', function(){
+
+				irc.trigger( 'notifications:add', {
+					message: 'You\'ve lost your connection to the server!'
+				});
+
+			});
+
+		}
+
+		this.add( data );
 
 	},
 
@@ -21394,7 +21406,7 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 
 	connect: function( parameters ){
 
-		irc.socket.emit( 'new_irc_connection', parameters );
+		$.post( '/connect', parameters, irc.connections.addConnection, 'json' );
 
 	},
 
@@ -22114,16 +22126,6 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 	},
 
 	home: function(){
-
-		irc.socket = io.connect('/');
-		
-		irc.socket.on( 'disconnect', function(){
-
-			irc.trigger( 'notifications:add', {
-				message: 'You\'ve lost your connection to the server!'
-			});
-
-		});
 
 		irc.connections = new irc.Collections.Connections();
 		irc.notifications = new irc.Collections.Notifications();

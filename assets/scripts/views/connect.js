@@ -41,7 +41,7 @@ irc.Views.Connect = Backbone.View.extend({
 
 	connect: function( parameters ){
 
-		irc.socket.emit( 'new_irc_connection', parameters );
+		$.post( '/connect', parameters, irc.connections.addConnection, 'json' );
 
 	},
 
