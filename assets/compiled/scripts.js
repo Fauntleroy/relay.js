@@ -21176,6 +21176,13 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 
 		this.title = new irc.Views.Title();
 
+		// Warn the user about the consequences of closing this tab/window
+		window.onbeforeunload = function(){
+			if( irc.connections.length > 0 ){
+				return 'Are you sure you want to close relay.js? All open IRC sessions will be closed.';
+			}
+		}
+
 	}
 
 });;irc.Views.Channel = Backbone.View.extend({
