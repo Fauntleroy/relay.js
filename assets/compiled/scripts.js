@@ -19499,6 +19499,20 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   return buffer;
   });
 
+this["irc"]["templates"]["inline/vine"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<div class=\"inline vine\">\r\n	<iframe class=\"vine-embed\" src=\"https://vine.co/v/";
+  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "/embed/simple\" width=\"320\" height=\"320\" frameborder=\"0\"></iframe><script async src=\"//platform.vine.co/static/scripts/embed.js\" charset=\"utf-8\"></script>\r\n</div>";
+  return buffer;
+  });
+
 this["irc"]["templates"]["inline/youtube"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Handlebars.helpers; data = data || {};
@@ -21641,6 +21655,12 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 					$text.after( vimeo_html );
 				};
 
+				var inlineVine = function( err, result ){
+					if( err ) return err;
+					var vine_html = irc.templates['inline/vine']( result );
+					$text.after( vine_html );
+				};
+
 				for( var i = urls.length - 1; i >= 0; i-- ){
 
 					// Check if it's an image
@@ -21654,6 +21674,9 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 
 					// Check if it's a vimeo video
 					this.testVimeo( urls[i], inlineVimeo );
+
+					// Check if it's a vine
+					this.testVine( urls[i], inlineVine );
 
 					// Check for Gists
 					var gist_id = this.testGist( urls[i], inlineGist );
@@ -21757,6 +21780,24 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 
 		} else {
 			if( callback ) callback( 'Not SoundCloud' );
+		}
+
+	},
+
+	// Get Vine ID out of a URL
+	testVine: function( url, callback ){
+
+		var id = url.match( /vine\.co\/v\/([0-9a-z]*)/i );
+		id = ( id )? id[1]: id;
+
+		if( id ){
+			var return_data = {
+				id: id
+			};
+			if( callback ) callback( null, return_data );
+		}
+		else {
+			if( callback ) callback( 'Not Vine' );
 		}
 
 	}

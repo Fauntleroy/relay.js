@@ -72,6 +72,12 @@ irc.Views.Message = Backbone.View.extend({
 					$text.after( vimeo_html );
 				};
 
+				var inlineVine = function( err, result ){
+					if( err ) return err;
+					var vine_html = irc.templates['inline/vine']( result );
+					$text.after( vine_html );
+				};
+
 				for( var i = urls.length - 1; i >= 0; i-- ){
 
 					// Check if it's an image
@@ -85,6 +91,9 @@ irc.Views.Message = Backbone.View.extend({
 
 					// Check if it's a vimeo video
 					this.testVimeo( urls[i], inlineVimeo );
+
+					// Check if it's a vine
+					this.testVine( urls[i], inlineVine );
 
 					// Check for Gists
 					var gist_id = this.testGist( urls[i], inlineGist );
@@ -188,6 +197,24 @@ irc.Views.Message = Backbone.View.extend({
 
 		} else {
 			if( callback ) callback( 'Not SoundCloud' );
+		}
+
+	},
+
+	// Get Vine ID out of a URL
+	testVine: function( url, callback ){
+
+		var id = url.match( /vine\.co\/v\/([0-9a-z]*)/i );
+		id = ( id )? id[1]: id;
+
+		if( id ){
+			var return_data = {
+				id: id
+			};
+			if( callback ) callback( null, return_data );
+		}
+		else {
+			if( callback ) callback( 'Not Vine' );
 		}
 
 	}
