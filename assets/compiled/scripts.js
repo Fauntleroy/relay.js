@@ -20329,8 +20329,6 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 
 		irc.on( 'channels:active', this.doActive );
 
-		this.active();
-
 	},
 
 	active: function(){
@@ -20561,7 +20559,10 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 		}
 
 		this.add( channels_to_join );
-		if( this.last() ) this.last().active();
+
+		var last_channel = this.last();
+
+		if( last_channel ) last_channel.active();
 
 	},
 
@@ -20576,6 +20577,10 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 				name: channel,
 				display_name: channel
 			});
+
+			var new_channel = this.last();
+
+			if( new_channel ) new_channel.active();
 
 		}
 
@@ -20623,6 +20628,8 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 
 			// pass the new channel the message event, since it missed it
 			private_channel.messages.doMessage.apply( private_channel.messages, arguments );
+
+			if( from === this.connection.get('nick') ) private_channel.active();
 
 		}
 

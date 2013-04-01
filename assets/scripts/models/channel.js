@@ -21,8 +21,6 @@ irc.Models.Channel = Backbone.Model.extend({
 
 		irc.on( 'channels:active', this.doActive );
 
-		this.active();
-
 	},
 
 	active: function(){

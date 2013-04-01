@@ -51,7 +51,10 @@ irc.Collections.Channels = Backbone.Collection.extend({
 		}
 
 		this.add( channels_to_join );
-		if( this.last() ) this.last().active();
+
+		var last_channel = this.last();
+
+		if( last_channel ) last_channel.active();
 
 	},
 
@@ -66,6 +69,10 @@ irc.Collections.Channels = Backbone.Collection.extend({
 				name: channel,
 				display_name: channel
 			});
+
+			var new_channel = this.last();
+
+			if( new_channel ) new_channel.active();
 
 		}
 
@@ -113,6 +120,8 @@ irc.Collections.Channels = Backbone.Collection.extend({
 
 			// pass the new channel the message event, since it missed it
 			private_channel.messages.doMessage.apply( private_channel.messages, arguments );
+
+			if( from === this.connection.get('nick') ) private_channel.active();
 
 		}
 
