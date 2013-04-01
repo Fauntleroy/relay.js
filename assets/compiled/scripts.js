@@ -19654,6 +19654,20 @@ function program10(depth0,data) {
 function program12(depth0,data) {
   
   var buffer = "", stack1, options;
+  buffer += "\r\n<li class=\"nowaway\"><i class=\"icon-minus-sign\"></i> ";
+  if (stack1 = helpers.text) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.text; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + " <var class=\"timestamp\">";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.time),stack1 ? stack1.call(depth0, depth0.timestamp, options) : helperMissing.call(depth0, "time", depth0.timestamp, options)))
+    + "</var></li>\r\n";
+  return buffer;
+  }
+
+function program14(depth0,data) {
+  
+  var buffer = "", stack1, options;
   buffer += "\r\n<li class=\"action\">* <strong>";
   if (stack1 = helpers.nick) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.nick; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
@@ -19669,7 +19683,7 @@ function program12(depth0,data) {
   return buffer;
   }
 
-function program14(depth0,data) {
+function program16(depth0,data) {
   
   var buffer = "", stack1, options;
   buffer += "\r\n<li class=\"nick\"><i class=\"icon-user\"></i> <strong class=\"nick\">";
@@ -19687,16 +19701,16 @@ function program14(depth0,data) {
   return buffer;
   }
 
-function program16(depth0,data) {
+function program18(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "\r\n";
-  stack1 = helpers['if'].call(depth0, depth0.partial, {hash:{},inverse:self.program(19, program19, data),fn:self.program(17, program17, data),data:data});
+  stack1 = helpers['if'].call(depth0, depth0.partial, {hash:{},inverse:self.program(21, program21, data),fn:self.program(19, program19, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n";
   return buffer;
   }
-function program17(depth0,data) {
+function program19(depth0,data) {
   
   var buffer = "", stack1, options;
   buffer += "\r\n<li>\r\n	<span class=\"text\">";
@@ -19710,11 +19724,11 @@ function program17(depth0,data) {
   return buffer;
   }
 
-function program19(depth0,data) {
+function program21(depth0,data) {
   
   var buffer = "", stack1, options;
   buffer += "\r\n<li class=\"notice\">\r\n	<h5>";
-  options = {hash:{},inverse:self.noop,fn:self.program(20, program20, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(22, program22, data),data:data};
   if (stack1 = helpers.from) { stack1 = stack1.call(depth0, options); }
   else { stack1 = depth0.from; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   if (!helpers.from) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
@@ -19733,7 +19747,7 @@ function program19(depth0,data) {
     + "</var>\r\n		</li>\r\n	</ul>\r\n</li>\r\n";
   return buffer;
   }
-function program20(depth0,data) {
+function program22(depth0,data) {
   
   var buffer = "";
   buffer += "<span class=\"from\">"
@@ -19742,7 +19756,7 @@ function program20(depth0,data) {
   return buffer;
   }
 
-function program22(depth0,data) {
+function program24(depth0,data) {
   
   var buffer = "", stack1, options;
   buffer += "\r\n<li class=\"join\"><i class=\"icon-chevron-right\"></i> <strong>";
@@ -19756,7 +19770,7 @@ function program22(depth0,data) {
   return buffer;
   }
 
-function program24(depth0,data) {
+function program26(depth0,data) {
   
   var buffer = "", stack1, options;
   buffer += "\r\n<li class=\"part\"><i class=\"icon-chevron-left\"></i> <strong>";
@@ -19764,7 +19778,7 @@ function program24(depth0,data) {
   else { stack1 = depth0.nick; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
     + "</strong> left the channel";
-  options = {hash:{},inverse:self.noop,fn:self.program(25, program25, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(27, program27, data),data:data};
   if (stack1 = helpers.reason) { stack1 = stack1.call(depth0, options); }
   else { stack1 = depth0.reason; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   if (!helpers.reason) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
@@ -19775,7 +19789,7 @@ function program24(depth0,data) {
     + "</var></li>\r\n";
   return buffer;
   }
-function program25(depth0,data) {
+function program27(depth0,data) {
   
   var buffer = "";
   buffer += " ( <span class=\"text\">"
@@ -19784,7 +19798,7 @@ function program25(depth0,data) {
   return buffer;
   }
 
-function program27(depth0,data) {
+function program29(depth0,data) {
   
   var buffer = "", stack1, options;
   buffer += "\r\n<li class=\"kick\"><i class=\"icon-chevron-left\"></i> <strong class=\"nick\">";
@@ -19796,7 +19810,7 @@ function program27(depth0,data) {
   else { stack1 = depth0.by; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
     + "</strong>";
-  options = {hash:{},inverse:self.noop,fn:self.program(25, program25, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(27, program27, data),data:data};
   if (stack1 = helpers.reason) { stack1 = stack1.call(depth0, options); }
   else { stack1 = depth0.reason; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   if (!helpers.reason) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
@@ -19808,7 +19822,7 @@ function program27(depth0,data) {
   return buffer;
   }
 
-function program29(depth0,data) {
+function program31(depth0,data) {
   
   var buffer = "", stack1, options;
   buffer += "\r\n<li class=\"topic\"><i class=\"icon-pencil\"></i> <strong>";
@@ -19816,12 +19830,12 @@ function program29(depth0,data) {
   else { stack1 = depth0.nick; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
     + "</strong> <span class=\"text\">";
-  options = {hash:{},inverse:self.noop,fn:self.program(30, program30, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(32, program32, data),data:data};
   if (stack1 = helpers.topic_text) { stack1 = stack1.call(depth0, options); }
   else { stack1 = depth0.topic_text; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   if (!helpers.topic_text) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  options = {hash:{},inverse:self.program(32, program32, data),fn:self.noop,data:data};
+  options = {hash:{},inverse:self.program(34, program34, data),fn:self.noop,data:data};
   if (stack1 = helpers.topic_text) { stack1 = stack1.call(depth0, options); }
   else { stack1 = depth0.topic_text; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   if (!helpers.topic_text) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
@@ -19832,7 +19846,7 @@ function program29(depth0,data) {
     + "</var></li>\r\n";
   return buffer;
   }
-function program30(depth0,data) {
+function program32(depth0,data) {
   
   var buffer = "";
   buffer += "set the topic to <em>"
@@ -19841,13 +19855,13 @@ function program30(depth0,data) {
   return buffer;
   }
 
-function program32(depth0,data) {
+function program34(depth0,data) {
   
   
   return "cleared the topic";
   }
 
-function program34(depth0,data) {
+function program36(depth0,data) {
   
   var buffer = "", stack1, options;
   buffer += "\r\n<li class=\"mode add\">\r\n	<i class=\"icon-plus\"></i>\r\n	<span class=\"text\"><strong>";
@@ -19862,7 +19876,7 @@ function program34(depth0,data) {
   if (stack1 = helpers.channel) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.channel; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1);
-  options = {hash:{},inverse:self.noop,fn:self.program(35, program35, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(37, program37, data),data:data};
   if (stack1 = helpers.argument) { stack1 = stack1.call(depth0, options); }
   else { stack1 = depth0.argument; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   if (!helpers.argument) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
@@ -19870,7 +19884,7 @@ function program34(depth0,data) {
   buffer += "</span>\r\n";
   return buffer;
   }
-function program35(depth0,data) {
+function program37(depth0,data) {
   
   var buffer = "";
   buffer += " with the argument <code>"
@@ -19879,7 +19893,7 @@ function program35(depth0,data) {
   return buffer;
   }
 
-function program37(depth0,data) {
+function program39(depth0,data) {
   
   var buffer = "", stack1, options;
   buffer += "\r\n<li class=\"mode remove\">\r\n	<i class=\"icon-minus\"></i>\r\n	<span class=\"text\"><strong>";
@@ -19894,7 +19908,7 @@ function program37(depth0,data) {
   if (stack1 = helpers.channel) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.channel; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1);
-  options = {hash:{},inverse:self.noop,fn:self.program(35, program35, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(37, program37, data),data:data};
   if (stack1 = helpers.argument) { stack1 = stack1.call(depth0, options); }
   else { stack1 = depth0.argument; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   if (!helpers.argument) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
@@ -19903,7 +19917,7 @@ function program37(depth0,data) {
   return buffer;
   }
 
-function program39(depth0,data) {
+function program41(depth0,data) {
   
   var buffer = "", stack1, stack2, options;
   buffer += "\r\n<li class=\"motd\">\r\n	<var class=\"timestamp\">";
@@ -19917,7 +19931,7 @@ function program39(depth0,data) {
   return buffer;
   }
 
-function program41(depth0,data) {
+function program43(depth0,data) {
   
   var buffer = "", stack1, stack2, options;
   buffer += "\r\n<li class=\"whois\">\r\n	<var class=\"timestamp\">";
@@ -19926,10 +19940,10 @@ function program41(depth0,data) {
     + "</var>\r\n	<i class=\"icon-question-sign\"></i> WHOIS for <strong>"
     + escapeExpression(((stack1 = ((stack1 = depth0.info),stack1 == null || stack1 === false ? stack1 : stack1.nick)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</strong>: ";
-  stack2 = ((stack1 = ((stack1 = ((stack1 = depth0.info),stack1 == null || stack1 === false ? stack1 : stack1.server)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)),blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.program(42, program42, data),fn:self.noop,data:data}));
+  stack2 = ((stack1 = ((stack1 = ((stack1 = depth0.info),stack1 == null || stack1 === false ? stack1 : stack1.server)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)),blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.program(44, program44, data),fn:self.noop,data:data}));
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n	";
-  options = {hash:{},inverse:self.noop,fn:self.program(44, program44, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(46, program46, data),data:data};
   if (stack2 = helpers.info) { stack2 = stack2.call(depth0, options); }
   else { stack2 = depth0.info; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   if (!helpers.info) { stack2 = blockHelperMissing.call(depth0, stack2, options); }
@@ -19937,37 +19951,37 @@ function program41(depth0,data) {
   buffer += "\r\n</li>\r\n";
   return buffer;
   }
-function program42(depth0,data) {
+function program44(depth0,data) {
   
   
   return "User not found.";
   }
 
-function program44(depth0,data) {
+function program46(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "\r\n	<dl>\r\n		";
-  stack1 = helpers['if'].call(depth0, depth0.account, {hash:{},inverse:self.noop,fn:self.program(45, program45, data),data:data});
+  stack1 = helpers['if'].call(depth0, depth0.account, {hash:{},inverse:self.noop,fn:self.program(47, program47, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n		";
-  stack1 = helpers['if'].call(depth0, depth0.user, {hash:{},inverse:self.noop,fn:self.program(47, program47, data),data:data});
+  stack1 = helpers['if'].call(depth0, depth0.user, {hash:{},inverse:self.noop,fn:self.program(49, program49, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n		";
-  stack1 = helpers['if'].call(depth0, depth0.host, {hash:{},inverse:self.noop,fn:self.program(49, program49, data),data:data});
+  stack1 = helpers['if'].call(depth0, depth0.host, {hash:{},inverse:self.noop,fn:self.program(51, program51, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n		";
-  stack1 = helpers['if'].call(depth0, depth0.realname, {hash:{},inverse:self.noop,fn:self.program(51, program51, data),data:data});
+  stack1 = helpers['if'].call(depth0, depth0.realname, {hash:{},inverse:self.noop,fn:self.program(53, program53, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n		";
-  stack1 = helpers['if'].call(depth0, depth0.channels, {hash:{},inverse:self.noop,fn:self.program(53, program53, data),data:data});
+  stack1 = helpers['if'].call(depth0, depth0.channels, {hash:{},inverse:self.noop,fn:self.program(55, program55, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n		";
-  stack1 = helpers['if'].call(depth0, depth0.server, {hash:{},inverse:self.noop,fn:self.program(56, program56, data),data:data});
+  stack1 = helpers['if'].call(depth0, depth0.server, {hash:{},inverse:self.noop,fn:self.program(58, program58, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n	</dl>\r\n	";
   return buffer;
   }
-function program45(depth0,data) {
+function program47(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "<dt>account</dt><dd>";
@@ -19978,7 +19992,7 @@ function program45(depth0,data) {
   return buffer;
   }
 
-function program47(depth0,data) {
+function program49(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "<dt>user</dt><dd>";
@@ -19989,7 +20003,7 @@ function program47(depth0,data) {
   return buffer;
   }
 
-function program49(depth0,data) {
+function program51(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "<dt>host</dt><dd>";
@@ -20000,7 +20014,7 @@ function program49(depth0,data) {
   return buffer;
   }
 
-function program51(depth0,data) {
+function program53(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "<dt>realname</dt><dd>";
@@ -20011,11 +20025,11 @@ function program51(depth0,data) {
   return buffer;
   }
 
-function program53(depth0,data) {
+function program55(depth0,data) {
   
   var buffer = "", stack1, options;
   buffer += "<dt>channels</dt><dd>";
-  options = {hash:{},inverse:self.noop,fn:self.program(54, program54, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(56, program56, data),data:data};
   if (stack1 = helpers.channels) { stack1 = stack1.call(depth0, options); }
   else { stack1 = depth0.channels; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   if (!helpers.channels) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
@@ -20023,7 +20037,7 @@ function program53(depth0,data) {
   buffer += "</dd>";
   return buffer;
   }
-function program54(depth0,data) {
+function program56(depth0,data) {
   
   var buffer = "";
   buffer += escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
@@ -20031,7 +20045,7 @@ function program54(depth0,data) {
   return buffer;
   }
 
-function program56(depth0,data) {
+function program58(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "<dt>server</dt><dd>";
@@ -20039,12 +20053,12 @@ function program56(depth0,data) {
   else { stack1 = depth0.server; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
     + " ";
-  stack1 = helpers['if'].call(depth0, depth0.serverinfo, {hash:{},inverse:self.noop,fn:self.program(57, program57, data),data:data});
+  stack1 = helpers['if'].call(depth0, depth0.serverinfo, {hash:{},inverse:self.noop,fn:self.program(59, program59, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "</dd>";
   return buffer;
   }
-function program57(depth0,data) {
+function program59(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "(";
@@ -20055,7 +20069,7 @@ function program57(depth0,data) {
   return buffer;
   }
 
-function program59(depth0,data) {
+function program61(depth0,data) {
   
   var buffer = "", stack1, options;
   buffer += "\r\n<li class=\"error\"><i class=\"icon-warning-sign\"></i> <span class=\"text\">";
@@ -20078,73 +20092,76 @@ function program59(depth0,data) {
   stack1 = helpers['if'].call(depth0, depth0.away, {hash:{},inverse:self.noop,fn:self.program(10, program10, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n\r\n";
-  options = {hash:{},inverse:self.noop,fn:self.program(12, program12, data),data:data};
+  stack1 = helpers['if'].call(depth0, depth0.nowaway, {hash:{},inverse:self.noop,fn:self.program(12, program12, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\r\n\r\n";
+  options = {hash:{},inverse:self.noop,fn:self.program(14, program14, data),data:data};
   if (stack1 = helpers.action) { stack1 = stack1.call(depth0, options); }
   else { stack1 = depth0.action; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   if (!helpers.action) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n\r\n";
-  options = {hash:{},inverse:self.noop,fn:self.program(14, program14, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(16, program16, data),data:data};
   if (stack1 = helpers.nick_change) { stack1 = stack1.call(depth0, options); }
   else { stack1 = depth0.nick_change; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   if (!helpers.nick_change) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n\r\n";
-  options = {hash:{},inverse:self.noop,fn:self.program(16, program16, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(18, program18, data),data:data};
   if (stack1 = helpers.notice) { stack1 = stack1.call(depth0, options); }
   else { stack1 = depth0.notice; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   if (!helpers.notice) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n\r\n";
-  options = {hash:{},inverse:self.noop,fn:self.program(22, program22, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(24, program24, data),data:data};
   if (stack1 = helpers.join) { stack1 = stack1.call(depth0, options); }
   else { stack1 = depth0.join; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   if (!helpers.join) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n\r\n";
-  options = {hash:{},inverse:self.noop,fn:self.program(24, program24, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(26, program26, data),data:data};
   if (stack1 = helpers.part) { stack1 = stack1.call(depth0, options); }
   else { stack1 = depth0.part; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   if (!helpers.part) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n\r\n";
-  options = {hash:{},inverse:self.noop,fn:self.program(27, program27, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(29, program29, data),data:data};
   if (stack1 = helpers.kick) { stack1 = stack1.call(depth0, options); }
   else { stack1 = depth0.kick; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   if (!helpers.kick) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n\r\n";
-  options = {hash:{},inverse:self.noop,fn:self.program(29, program29, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(31, program31, data),data:data};
   if (stack1 = helpers.topic) { stack1 = stack1.call(depth0, options); }
   else { stack1 = depth0.topic; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   if (!helpers.topic) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n\r\n";
-  options = {hash:{},inverse:self.noop,fn:self.program(34, program34, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(36, program36, data),data:data};
   if (stack1 = helpers.mode_add) { stack1 = stack1.call(depth0, options); }
   else { stack1 = depth0.mode_add; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   if (!helpers.mode_add) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n\r\n";
-  options = {hash:{},inverse:self.noop,fn:self.program(37, program37, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(39, program39, data),data:data};
   if (stack1 = helpers.mode_remove) { stack1 = stack1.call(depth0, options); }
   else { stack1 = depth0.mode_remove; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   if (!helpers.mode_remove) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n\r\n";
-  options = {hash:{},inverse:self.noop,fn:self.program(39, program39, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(41, program41, data),data:data};
   if (stack1 = helpers.motd) { stack1 = stack1.call(depth0, options); }
   else { stack1 = depth0.motd; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   if (!helpers.motd) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n\r\n";
-  options = {hash:{},inverse:self.noop,fn:self.program(41, program41, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(43, program43, data),data:data};
   if (stack1 = helpers.whois) { stack1 = stack1.call(depth0, options); }
   else { stack1 = depth0.whois; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   if (!helpers.whois) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n\r\n";
-  options = {hash:{},inverse:self.noop,fn:self.program(59, program59, data),data:data};
+  options = {hash:{},inverse:self.noop,fn:self.program(61, program61, data),data:data};
   if (stack1 = helpers.error) { stack1 = stack1.call(depth0, options); }
   else { stack1 = depth0.error; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   if (!helpers.error) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
@@ -20694,11 +20711,12 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 		this.connection = parameters.connection;
 		this.socket = this.connection.socket;
 
-		_( this ).bindAll( 'getPresence', 'doMessage', 'doNotice', 'doAway', 'doAction', 'doNick', 'doJoin', 'doPart', 'doQuit', 'doKick', 'doTopic', 'doModeAdd', 'doModeRemove', 'doMOTD', 'doWhois', 'doError', 'trim' );
+		_( this ).bindAll( 'getPresence', 'doMessage', 'doNotice', 'doAway', 'doNowAway', 'doAction', 'doNick', 'doJoin', 'doPart', 'doQuit', 'doKick', 'doTopic', 'doModeAdd', 'doModeRemove', 'doMOTD', 'doWhois', 'doError', 'trim' );
 
 		this.socket.on( 'message', this.doMessage );
 		this.socket.on( 'notice', this.doNotice );
 		this.socket.on( 'rpl_away', this.doAway );
+		this.socket.on( 'rpl_nowaway', this.doNowAway );
 		this.socket.on( 'action', this.doAction );
 		this.socket.on( 'nick', this.doNick );
 		this.socket.on( 'join', this.doJoin );
@@ -20776,6 +20794,21 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 				away: true,
 				nick: from,
 				contents: text,
+				timestamp: timestamp
+			});
+
+		}
+
+	},
+
+	doNowAway: function( to, text, timestamp ){
+
+		if( to === this.connection.get('nick') && this.channel.get('active') ){
+
+			this.add({
+				nowaway: true,
+				to: to,
+				text: text,
 				timestamp: timestamp
 			});
 
