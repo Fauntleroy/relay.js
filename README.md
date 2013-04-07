@@ -39,7 +39,7 @@ If you plan on doing development, you'll want to install [Grunt](http://gruntjs.
 
 ## Configuration
 
-Relay.js supports simple server configuration via `config.json`. As time goes on, more configuration options will be added. Presently, the following two parameters are supported:
+Relay.js supports simple server configuration via `config.json`. As time goes on, more configuration options will be added. Presently, the following parameters are supported:
 
 * **max_connections** *integer* - The maximum number of connections that can be made from a single client.
 * **preset_server** *object* - An object specifying a preset server to connect to. This limits the user to a single connection to just this server. Parameters are **host**, **port**, and **password**.
