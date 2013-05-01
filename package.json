@@ -24,10 +24,10 @@
     "grunt-contrib-watch": "~0.3.1",
     "grunt-contrib-clean": "~0.4.0"
   },
-  "main": "relay.js",
+  "main": "server.js",
   "scripts": {
     "predeploy": "grunt predeploy",
-    "start": "node relay.js"
+    "start": "node server.js"
   },
   "engines": {
     "node": "0.8.x"
