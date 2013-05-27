@@ -19384,10 +19384,8 @@ helpers = helpers || Handlebars.helpers; data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\r\n						<h4>";
-  if (stack1 = helpers.host) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.host; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+  buffer += "\r\n						<h4>"
+    + escapeExpression(((stack1 = ((stack1 = ((stack1 = depth0.defaults),stack1 == null || stack1 === false ? stack1 : stack1.server)),stack1 == null || stack1 === false ? stack1 : stack1.host)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</h4>\r\n						";
   return buffer;
   }
@@ -19419,13 +19417,13 @@ function program6(depth0,data) {
   }
 
   buffer += "<div class=\"modal\">\r\n	<form class=\"form-horizontal\">\r\n		<div class=\"modal-header\">\r\n			<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\r\n			<h3>Connect</h3>\r\n		</div>\r\n		<div class=\"modal-body\">\r\n			<fieldset>\r\n				<div class=\"control-group\">\r\n					<label for=\"connect_server\" class=\"control-label\">Server</label>\r\n					<div class=\"controls\">\r\n						";
-  stack2 = ((stack1 = ((stack1 = ((stack1 = depth0.presets),stack1 == null || stack1 === false ? stack1 : stack1.server)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)),blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}));
+  stack2 = ((stack1 = ((stack1 = ((stack1 = ((stack1 = depth0.defaults),stack1 == null || stack1 === false ? stack1 : stack1.server)),stack1 == null || stack1 === false ? stack1 : stack1.locked)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)),blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}));
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n						";
-  stack2 = ((stack1 = ((stack1 = ((stack1 = depth0.presets),stack1 == null || stack1 === false ? stack1 : stack1.server)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)),blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.program(3, program3, data),fn:self.noop,data:data}));
+  stack2 = ((stack1 = ((stack1 = ((stack1 = ((stack1 = depth0.defaults),stack1 == null || stack1 === false ? stack1 : stack1.server)),stack1 == null || stack1 === false ? stack1 : stack1.locked)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)),blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.program(3, program3, data),fn:self.noop,data:data}));
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n					</div>\r\n				</div>\r\n				";
-  stack2 = ((stack1 = ((stack1 = ((stack1 = depth0.presets),stack1 == null || stack1 === false ? stack1 : stack1.server)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)),blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.program(5, program5, data),fn:self.noop,data:data}));
+  stack2 = ((stack1 = ((stack1 = ((stack1 = ((stack1 = depth0.defaults),stack1 == null || stack1 === false ? stack1 : stack1.server)),stack1 == null || stack1 === false ? stack1 : stack1.locked)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)),blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.program(5, program5, data),fn:self.noop,data:data}));
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n			</fieldset>\r\n			<hr />\r\n			<fieldset>\r\n				<div class=\"control-group\">\r\n					<label for=\"connect_nick\" class=\"control-label\">Nick</label>\r\n					<div class=\"controls\">\r\n						<input id=\"connect_nick\" name=\"nick\" value=\""
     + escapeExpression(((stack1 = ((stack1 = depth0.defaults),stack1 == null || stack1 === false ? stack1 : stack1.nick)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))

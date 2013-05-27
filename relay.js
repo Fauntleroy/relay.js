@@ -15,13 +15,12 @@ winston.loggers.add( 'development', {
 
 // Pull in configuration data
 var config = {
-	presets: {}, // mandatory options
 	defaults: {
 		server: {}
-	} // optional options
+	}
 };
 try { _( config ).extend( require('./config.js') ); } catch( err ){}
-if( config.presets.server ) config.max_connections = config.max_connections || 1;
+if( config.defaults.server.locked ) config.max_connections = config.max_connections || 1;
 
 // Start webserver
 var server = require('./lib/server.js');

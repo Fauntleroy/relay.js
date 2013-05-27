@@ -9,16 +9,16 @@
 				<div class="control-group">
 					<label for="connect_server" class="control-label">Server</label>
 					<div class="controls">
-						{{#presets.server}}
-						<h4>{{host}}</h4>
-						{{/presets.server}}
-						{{^presets.server}}
+						{{#defaults.server.locked}}
+						<h4>{{defaults.server.host}}</h4>
+						{{/defaults.server.locked}}
+						{{^defaults.server.locked}}
 						<input id="connect_server" name="server" placeholder="ex: irc.freenode.net" value="{{defaults.server.host}}" type="text" />
 						<span class="help-inline"><a href="#advanced">Advanced Options</a></span>
-						{{/presets.server}}
+						{{/defaults.server.locked}}
 					</div>
 				</div>
-				{{^presets.server}}
+				{{^defaults.server.locked}}
 				<div class="advanced">
 					<div class="control-group">
 						<label for="connect_port" class="control-label">Server Port</label>
@@ -42,7 +42,7 @@
 						</div>
 					</div>
 				</div>
-				{{/presets.server}}
+				{{/defaults.server.locked}}
 			</fieldset>
 			<hr />
 			<fieldset>
