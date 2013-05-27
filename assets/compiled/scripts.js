@@ -21273,10 +21273,10 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 		var $channel = $.parseHTML( html );
 		this.$el.html( $channel );
 
-		this.$info = this.$el.children('.info');
-		this.$topic = this.$info.children('.topic');
-		this.$messages = this.$el.children('.messages');
-		this.$users = this.$el.children('.users');
+		this.$info = this.$('> .info');
+		this.$topic = this.$('> .topic');
+		this.$messages = this.$('> .messages');
+		this.$users = this.$('> .users');
 
 		this.renderTopic( this.model.get('name'), this.model.get('topic') );
 
