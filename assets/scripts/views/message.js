@@ -96,7 +96,7 @@ irc.Views.Message = Backbone.View.extend({
 					this.testVine( urls[i], inlineVine );
 
 					// Check for Gists
-					var gist_id = this.testGist( urls[i], inlineGist );
+					this.testGist( urls[i], inlineGist );
 
 				}
 

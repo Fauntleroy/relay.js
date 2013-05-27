@@ -21732,7 +21732,7 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 					this.testVine( urls[i], inlineVine );
 
 					// Check for Gists
-					var gist_id = this.testGist( urls[i], inlineGist );
+					this.testGist( urls[i], inlineGist );
 
 				}
 
