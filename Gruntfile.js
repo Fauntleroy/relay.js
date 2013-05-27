@@ -64,7 +64,14 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		clean: [ 'assets/compiled/stylus_styles.css', 'assets/compiled/templates.js' ],
+		clean: {
+			js: {
+				src: [ 'assets/compiled/templates.js' ]
+			},
+			css: {
+				src: [ 'assets/compiled/stylus_styles.css' ]
+			}
+		},
 		uglify: {
 			options: {
 				banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
@@ -87,8 +94,17 @@ module.exports = function(grunt) {
 			}
 		},
 		watch: {
-			files: [ 'assets/scripts/**/*.js', 'assets/styles/**/*.css', 'assets/templates/**/*.hbs' ],
-			tasks: ['build']
+			css: {
+				files: [ 'assets/styles/**/*.styl', 'assets/styles/**/*.css' ],
+				tasks: [ 'buildcss' ],
+				options: {
+					livereload: true
+				}
+			},
+			js: {
+				files: [ 'assets/scripts/**/*.js', 'assets/templates/**/*.hbs' ],
+				tasks: [ 'buildjs' ]
+			}
 		},
 		jshint: {
 			all: [ 'assets/scripts/**/*.js', '!assets/scripts/vendor/**/*.js' ]
@@ -102,7 +118,7 @@ module.exports = function(grunt) {
 
 	grunt.registerTask( 'server', 'Start the relay.js server', function(){
 		var port = grunt.option('port') || grunt.option('p');
-		var args = ['relay.js'];
+		var args = ['relay.js','--livereload'];
 		if( port ) args = args.concat([ '-p', port ]);
 		grunt.util.spawn({
 			cmd: 'node',
@@ -114,7 +130,9 @@ module.exports = function(grunt) {
 	});
 
 	grunt.registerTask( 'default', ['build'] );
-	grunt.registerTask( 'build', [ 'stylus', 'handlebars', 'concat', 'clean' ] );
+	grunt.registerTask( 'build', [ 'buildcss', 'buildjs' ] );
+	grunt.registerTask( 'buildcss', [ 'stylus', 'concat:css', 'clean:css' ] );
+	grunt.registerTask( 'buildjs', [ 'handlebars', 'concat:js', 'clean:js' ] );
 	grunt.registerTask( 'minify', [ 'uglify', 'cssmin' ] );
 	grunt.registerTask( 'predeploy', [ 'build' ] );
 	grunt.registerTask( 'dev', [ 'build', 'server', 'watch' ] );
