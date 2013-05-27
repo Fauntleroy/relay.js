@@ -1,8 +1,5 @@
-var DEFAULT_ENCODING = process.env.DEFAULT_ENCODING || 'UTF8';
-
 var fs = require('fs');
-
-// Shortcut to command line options
+var _ = require('lodash');
 var optimist = require('optimist');
 var argv = optimist.argv;
 
@@ -16,26 +13,17 @@ winston.loggers.add( 'development', {
 	}
 });
 
-// Gather configuration info from config.json
-var getConfig = function( callback ){
-	fs.readFile( 'config.json', DEFAULT_ENCODING, function( err, data ){
-		if( err ) return callback( err, {} );
-		var config = JSON.parse( data );
-		if( config.preset_server ) config.max_connections = config.max_connections || 1;
-		callback( null, config );
-	});
+// Pull in configuration data
+var config = {
+	presets: {}, // mandatory options
+	defaults: {
+		server: {}
+	} // optional options
 };
+try { _( config ).extend( require('./config.js') ); } catch( err ){}
+if( config.presets.server ) config.max_connections = config.max_connections || 1;
 
-getConfig( function( err, config ){
+// Start webserver
+var server = require('./lib/server.js');
 
-	// Start webserver
-	var server = require('./lib/server.js');
-
-	server({
-		home_dir: __dirname,
-		preset_server: config.preset_server,
-		max_connections: config.max_connections,
-		suggested_channels: config.suggested_channels || []
-	});
-
-});
+server( config );

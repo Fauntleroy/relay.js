@@ -19,10 +19,9 @@ irc.Views.Connect = Backbone.View.extend({
 
 	render: function(){
 
-		var html = this.template({
-			preset_server: irc.config.preset_server,
-			suggested_channels: irc.config.suggested_channels.join(',')
-		});
+		var config = _( irc.config ).clone();
+		if( _( config.defaults.channels ).isArray() ) config.defaults.channels = config.defaults.channels.join(','); 
+		var html = this.template( irc.config );
 		var $connect = $.parseHTML( html );
 		this.$el.html( $connect );
 

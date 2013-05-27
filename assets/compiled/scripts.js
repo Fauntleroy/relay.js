@@ -19379,7 +19379,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
 this["irc"]["templates"]["connect"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Handlebars.helpers; data = data || {};
-  var buffer = "", stack1, options, functionType="function", escapeExpression=this.escapeExpression, self=this, blockHelperMissing=helpers.blockHelperMissing;
+  var buffer = "", stack1, stack2, functionType="function", escapeExpression=this.escapeExpression, self=this, blockHelperMissing=helpers.blockHelperMissing;
 
 function program1(depth0,data) {
   
@@ -19394,26 +19394,43 @@ function program1(depth0,data) {
 
 function program3(depth0,data) {
   
+  var buffer = "", stack1;
+  buffer += "\r\n						<input id=\"connect_server\" name=\"server\" placeholder=\"ex: irc.freenode.net\" value=\""
+    + escapeExpression(((stack1 = ((stack1 = ((stack1 = depth0.defaults),stack1 == null || stack1 === false ? stack1 : stack1.server)),stack1 == null || stack1 === false ? stack1 : stack1.host)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" type=\"text\" />\r\n						<span class=\"help-inline\"><a href=\"#advanced\">Advanced Options</a></span>\r\n						";
+  return buffer;
+  }
+
+function program5(depth0,data) {
   
-  return "\r\n						<input id=\"connect_server\" name=\"server\" placeholder=\"ex: irc.freenode.net\" type=\"text\" />\r\n						<span class=\"help-inline\"><a href=\"#advanced\">Advanced Options</a></span>\r\n						";
+  var buffer = "", stack1, stack2;
+  buffer += "\r\n				<div class=\"advanced\">\r\n					<div class=\"control-group\">\r\n						<label for=\"connect_port\" class=\"control-label\">Server Port</label>\r\n						<div class=\"controls\">\r\n							<input id=\"connect_port\" name=\"port\" value=\""
+    + escapeExpression(((stack1 = ((stack1 = ((stack1 = depth0.defaults),stack1 == null || stack1 === false ? stack1 : stack1.server)),stack1 == null || stack1 === false ? stack1 : stack1.port)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" type=\"text\" />\r\n							<span class=\"help-inline\">Optional</span>\r\n						</div>\r\n					</div>\r\n					<div class=\"control-group\">\r\n						<label for=\"connect_password\" class=\"control-label\">Server Password</label>\r\n						<div class=\"controls\">\r\n							<input id=\"connect_password\" name=\"password\" type=\"password\" />\r\n							<span class=\"help-inline\">Optional</span>\r\n						</div>\r\n					</div>\r\n					<div class=\"control-group\">\r\n						<div class=\"controls\">\r\n							<label class=\"checkbox\">\r\n								<input name=\"ssl\" ";
+  stack2 = ((stack1 = ((stack1 = ((stack1 = ((stack1 = depth0.defaults),stack1 == null || stack1 === false ? stack1 : stack1.server)),stack1 == null || stack1 === false ? stack1 : stack1.ssl)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)),blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data}));
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += " type=\"checkbox\"> SSL\r\n							</label>\r\n						</div>\r\n					</div>\r\n				</div>\r\n				";
+  return buffer;
+  }
+function program6(depth0,data) {
+  
+  
+  return "checked";
   }
 
   buffer += "<div class=\"modal\">\r\n	<form class=\"form-horizontal\">\r\n		<div class=\"modal-header\">\r\n			<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\r\n			<h3>Connect</h3>\r\n		</div>\r\n		<div class=\"modal-body\">\r\n			<fieldset>\r\n				<div class=\"control-group\">\r\n					<label for=\"connect_server\" class=\"control-label\">Server</label>\r\n					<div class=\"controls\">\r\n						";
-  options = {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data};
-  if (stack1 = helpers.preset_server) { stack1 = stack1.call(depth0, options); }
-  else { stack1 = depth0.preset_server; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  if (!helpers.preset_server) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
-  if(stack1 || stack1 === 0) { buffer += stack1; }
+  stack2 = ((stack1 = ((stack1 = ((stack1 = depth0.presets),stack1 == null || stack1 === false ? stack1 : stack1.server)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)),blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data}));
+  if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\r\n						";
-  options = {hash:{},inverse:self.program(3, program3, data),fn:self.noop,data:data};
-  if (stack1 = helpers.preset_server) { stack1 = stack1.call(depth0, options); }
-  else { stack1 = depth0.preset_server; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  if (!helpers.preset_server) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n					</div>\r\n				</div>\r\n				<div class=\"advanced\">\r\n					<div class=\"control-group\">\r\n						<label for=\"connect_port\" class=\"control-label\">Server Port</label>\r\n						<div class=\"controls\">\r\n							<input id=\"connect_port\" name=\"port\" type=\"text\" />\r\n							<span class=\"help-inline\">Optional</span>\r\n						</div>\r\n					</div>\r\n					<div class=\"control-group\">\r\n						<label for=\"connect_password\" class=\"control-label\">Server Password</label>\r\n						<div class=\"controls\">\r\n							<input id=\"connect_password\" name=\"password\" type=\"password\" />\r\n							<span class=\"help-inline\">Optional</span>\r\n						</div>\r\n					</div>\r\n					<div class=\"control-group\">\r\n						<div class=\"controls\">\r\n							<label class=\"checkbox\">\r\n								<input name=\"ssl\" type=\"checkbox\"> SSL\r\n							</label>\r\n						</div>\r\n					</div>\r\n				</div>\r\n			</fieldset>\r\n			<hr />\r\n			<fieldset>\r\n				<div class=\"control-group\">\r\n					<label for=\"connect_nick\" class=\"control-label\">Nick</label>\r\n					<div class=\"controls\">\r\n						<input id=\"connect_nick\" name=\"nick\" type=\"text\" />\r\n					</div>\r\n				</div>\r\n				<div class=\"control-group\">\r\n					<label for=\"connect_nick_password\" class=\"control-label\">Password</label>\r\n					<div class=\"controls\">\r\n						<input id=\"connect_nick_password\" name=\"nick_password\" type=\"password\" />\r\n						<span class=\"help-inline\">Optional</span>\r\n					</div>\r\n				</div>\r\n			</fieldset>\r\n			<hr />\r\n			<fieldset>\r\n				<div class=\"control-group\">\r\n					<label for=\"connect_channels\" class=\"control-label\">Channels</label>\r\n					<div class=\"controls\">\r\n						<input id=\"connect_channels\" name=\"channels\" value=\"";
-  if (stack1 = helpers.suggested_channels) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.suggested_channels; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+  stack2 = ((stack1 = ((stack1 = ((stack1 = depth0.presets),stack1 == null || stack1 === false ? stack1 : stack1.server)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)),blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.program(3, program3, data),fn:self.noop,data:data}));
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\r\n					</div>\r\n				</div>\r\n				";
+  stack2 = ((stack1 = ((stack1 = ((stack1 = depth0.presets),stack1 == null || stack1 === false ? stack1 : stack1.server)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1)),blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.program(5, program5, data),fn:self.noop,data:data}));
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\r\n			</fieldset>\r\n			<hr />\r\n			<fieldset>\r\n				<div class=\"control-group\">\r\n					<label for=\"connect_nick\" class=\"control-label\">Nick</label>\r\n					<div class=\"controls\">\r\n						<input id=\"connect_nick\" name=\"nick\" value=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.defaults),stack1 == null || stack1 === false ? stack1 : stack1.nick)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" type=\"text\" />\r\n					</div>\r\n				</div>\r\n				<div class=\"control-group\">\r\n					<label for=\"connect_nick_password\" class=\"control-label\">Password</label>\r\n					<div class=\"controls\">\r\n						<input id=\"connect_nick_password\" name=\"nick_password\" type=\"password\" />\r\n						<span class=\"help-inline\">Optional</span>\r\n					</div>\r\n				</div>\r\n			</fieldset>\r\n			<hr />\r\n			<fieldset>\r\n				<div class=\"control-group\">\r\n					<label for=\"connect_channels\" class=\"control-label\">Channels</label>\r\n					<div class=\"controls\">\r\n						<input id=\"connect_channels\" name=\"channels\" value=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.defaults),stack1 == null || stack1 === false ? stack1 : stack1.channels)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\" placeholder=\"#relay.js\" type=\"text\" />\r\n						<span class=\"help-inline\">Optional</span>\r\n					</div>\r\n				</div>\r\n			</fieldset>\r\n		</div>\r\n		<div class=\"modal-footer\">\r\n			<button class=\"btn\" type=\"cancel\">Cancel</button>\r\n			<button class=\"btn btn-primary\" type=\"submit\">Connect <i class=\"icon-signin\"></i></button>\r\n		</div>\r\n	</form>\r\n</div>\r\n";
   return buffer;
   });
@@ -21445,10 +21462,9 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 
 	render: function(){
 
-		var html = this.template({
-			preset_server: irc.config.preset_server,
-			suggested_channels: irc.config.suggested_channels.join(',')
-		});
+		var config = _( irc.config ).clone();
+		if( _( config.defaults.channels ).isArray() ) config.defaults.channels = config.defaults.channels.join(','); 
+		var html = this.template( irc.config );
 		var $connect = $.parseHTML( html );
 		this.$el.html( $connect );
 
