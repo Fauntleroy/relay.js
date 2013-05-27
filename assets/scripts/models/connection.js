@@ -17,6 +17,7 @@ irc.Models.Connection = Backbone.Model.extend({
 	quit: function(){
 
 		this.socket.emit( 'command', '/quit' );
+		this.collection.remove( this );
 
 	},
 
@@ -24,7 +25,7 @@ irc.Models.Connection = Backbone.Model.extend({
 
 		if( nick === this.get('nick') ){
 
-			this.collection.remove( this );
+			if( this.collection ) this.collection.remove( this );
 
 		}
 

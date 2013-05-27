@@ -20442,7 +20442,7 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 
 		if( nick === this.get('nick') ){
 
-			this.collection.remove( this );
+			if( this.collection ) this.collection.remove( this );
 
 		}
 
