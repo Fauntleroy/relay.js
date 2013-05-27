@@ -41,22 +41,35 @@ If you plan on doing development, you'll want to install [Grunt](http://gruntjs.
 
 Relay.js supports simple server configuration via `config.js` and URL parameters. The `config.js` file must simply export a javascript object with the desired properties filled in. Current configuration options are as follows:
 
-* **max_connections** *integer* - The maximum number of connections that can be made from a single client. When `presets.server` is set, this will default to **1**.
-* **preset_server** *object* - An object specifying a preset server to connect to. This limits the user to a single connection to just this server. Parameters are **host**, **port**, and **password**.
-* **suggested_channels** *array* - An array of channels that populate the 'Channels' input on the connect dialog.
+* **defaults** *object* - A set of default options to use on initial load. Includes **server** and **channels**.
+* **defaults.server** *object* - An object specifying a preset server to connect to. If **locked** is set to `true`, these settings cannot be overridden, and by default the user is limited to a single connection. Parameters are **host**, **port**, and **password**.
+* **defaults.nick** *string* - A nick that auto populates the 'Nick' input in the connect dialog.
+* **defaults.channels** *array* - An array of channels that populate the 'Channels' input on the connect dialog.
+* **max_connections** *integer* - The maximum number of connections that can be made from a single client. When `defaults.server.locked` is set, this will default to **1**.
 
-To set these options, just make a `config.json` in the main directory of the app. Here's a quick example:
+To set these options, just make a `config.js` in the main directory of the app. Here's a quick example:
 
-```json
-{
-	"preset_server": {
-		"host": "irc.freenode.net"
+```js
+module.exports = {
+	"defaults": {
+		"server": {
+			"host": "irc.freenode.net"
+		},
+		"channels": [
+			"#relay.js"
+		]
 	},
-	"suggested_channels": [
-		"#relay.js"
-	]
+	"max_connections": 3
 }
 ```
+
+Some defaults may also be set using URL parameters. Defaults specified in the URL will override those in `config.js`, except for locked parameters. The following parameters are available:
+
+* **server** - The URL of an IRC server (ex: "irc.freenode.net"). Maps to **defaults.server.host**. 
+* **port** - The port of an IRC server (ex: 9001). Maps to **defaults.server.port**.
+* **ssl** - Connect with SSL (ex: true). Maps to **defaults.server.ssl**.
+* **nick** - The default nick to connect with (ex: "Fauntleroy"). Maps to **defaults.nick**.
+* **channels** - A comma separated list of channels to join (ex: "relay.js,tksync"). Maps to **defaults.channels**.
 
 ## Contributing
 
