@@ -42,7 +42,7 @@ If you plan on doing development, you'll want to install [Grunt](http://gruntjs.
 Relay.js supports simple server configuration via `config.js` and URL parameters. The `config.js` file must simply export a javascript object with the desired properties filled in. Current configuration options are as follows:
 
 * **defaults** *object* - A set of default options to use on initial load. Includes **server** and **channels**.
-* **defaults.server** *object* - An object specifying a preset server to connect to. If **locked** is set to `true`, these settings cannot be overridden, and by default the user is limited to a single connection. Parameters are **host**, **port**, and **password**.
+* **defaults.server** *object* - An object specifying a preset server to connect to. If **locked** is set to `true`, these settings cannot be overridden, and by default the user is limited to a single connection. Parameters are **host**, **port**, **ssl**, and **password**.
 * **defaults.nick** *string* - A nick that auto populates the 'Nick' input in the connect dialog.
 * **defaults.channels** *array* - An array of channels that populate the 'Channels' input on the connect dialog.
 * **max_connections** *integer* - The maximum number of connections that can be made from a single client. When `defaults.server.locked` is set, this will default to **1**.
