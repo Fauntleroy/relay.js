@@ -20193,43 +20193,6 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   return "<div class=\"scroll\">\r\n	<ul class=\"list\"></ul>\r\n</div>\r\n<form class=\"new\">\r\n	<textarea name=\"message\"></textarea>\r\n</form>";
   });
 
-this["irc"]["templates"]["notification"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [2,'>= 1.0.0-rc.3'];
-helpers = helpers || Handlebars.helpers; data = data || {};
-  var buffer = "", stack1, options, functionType="function", escapeExpression=this.escapeExpression, self=this, blockHelperMissing=helpers.blockHelperMissing;
-
-function program1(depth0,data) {
-  
-  var buffer = "";
-  buffer += "<strong>"
-    + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
-    + "</strong>";
-  return buffer;
-  }
-
-  buffer += "<li>\r\n	<div class=\"alert\">\r\n		<button type=\"button\" class=\"close\">&times;</button>\r\n		";
-  options = {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data};
-  if (stack1 = helpers.title) { stack1 = stack1.call(depth0, options); }
-  else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  if (!helpers.title) { stack1 = blockHelperMissing.call(depth0, stack1, options); }
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += " ";
-  if (stack1 = helpers.message) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.message; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "\r\n	</div>\r\n</li>";
-  return buffer;
-  });
-
-this["irc"]["templates"]["notifications"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [2,'>= 1.0.0-rc.3'];
-helpers = helpers || Handlebars.helpers; data = data || {};
-  
-
-
-  return "<ul class=\"notifications\"></ul>";
-  });
-
 this["irc"]["templates"]["user"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Handlebars.helpers; data = data || {};
@@ -20677,20 +20640,6 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 
 	addConnection: function( data ){
 
-		if( !irc.socket ){
-
-			irc.socket = io.connect('/');
-		
-			irc.socket.on( 'disconnect', function(){
-
-				irc.trigger( 'notifications:add', {
-					message: 'You\'ve lost your connection to the server!'
-				});
-
-			});
-
-		}
-
 		this.add( data );
 
 	},
@@ -21035,22 +20984,6 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 
 	}
 
-});;irc.Collections.Notifications = Backbone.Collection.extend({
-
-	initialize: function(){
-
-		_( this ).bindAll( 'doAdd' );
-
-		irc.on( 'notifications:add', this.doAdd );
-
-	},
-
-	doAdd: function( data ){
-
-		this.add( data );
-
-	}
-
 });;irc.Collections.Users = Backbone.Collection.extend({
 
 	model: irc.Models.User,
@@ -21236,24 +21169,59 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 
 	}
 
-});;irc.Views.Application = Backbone.View.extend({
+});;(function(){
 
-	el: '#application',
+	var STATES = ['connected','connecting','disconnected','connect_failed','reconnected','reconnecting','reconnect_failed'];
 
-	initialize: function(){
+	irc.Views.Application = Backbone.View.extend({
 
-		this.title = new irc.Views.Title();
+		el: '#application',
 
-		// Warn the user about the consequences of closing this tab/window
-		window.onbeforeunload = function(){
-			if( irc.connections.length > 0 ){
-				return 'Are you sure you want to close relay.js? All open IRC sessions will be closed.';
-			}
+		initialize: function(){
+
+			_( this ).bindAll( 'bindState', 'updateState' );
+
+			this.title = new irc.Views.Title();
+
+			// Warn the user about the consequences of closing this tab/window
+			window.onbeforeunload = function(){
+				if( irc.connections.length > 0 && irc.socket.socket.connected ){
+					return 'Are you sure you want to close relay.js? All open IRC sessions will be closed.';
+				}
+			};
+
+			_( STATES ).each( this.bindState );
+			// Update connection status
+			irc.socket.on( 'connect', this.updateState );
+
+		},
+
+		bindState: function( state ){
+
+			var application_view = this;
+			var event_name = state;
+			if( event_name === 'connected' || event_name === 'disconnected' || event_name === 'reconnected' ) event_name = event_name.replace( /ed$/i, '' );
+
+			irc.socket.on( event_name, function(){
+				application_view.updateState( state );
+			});
+
+		},
+
+		// Update interface per connection state
+		updateState: function( state ){
+
+			if( !state ) return;
+			
+			this.$el
+			.removeClass( STATES.join(' ') )
+			.addClass( state );
+
 		}
 
-	}
+	});
 
-});;irc.Views.Channel = Backbone.View.extend({
+})();;irc.Views.Channel = Backbone.View.extend({
 
 	el: '#channel',
 	template: irc.templates.channel,
@@ -22029,78 +21997,6 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 
 	}
 
-});;irc.Views.Notification = Backbone.View.extend({
-
-	template: irc.templates.notification,
-
-	events: {
-		'click button.close': 'clickClose'
-	},
-
-	initialize: function(){
-
-		_( this ).bindAll( 'render', 'remove', 'clickClose' );
-
-		this.listenTo( this.model, 'remove', this.remove );
-
-	},
-
-	render: function(){
-
-		var json = this.model.toJSON();
-		var html = this.template( json );
-		var $notification = $.parseHTML( html );
-		this.setElement( $notification );
-
-		return this;
-
-	},
-
-	clickClose: function( e ){
-
-		e.preventDefault();
-
-		this.model.destroy();
-
-	}
-
-});;irc.Views.Notifications = Backbone.View.extend({
-
-	el: '#notifications',
-
-	template: irc.templates.notifications,
-
-	initialize: function(){
-
-		_( this ).bindAll( 'renderNotification' );
-
-		this.listenTo( this.collection, 'add', this.renderNotification );
-
-		this.render();
-
-	},
-
-	render: function(){
-
-		var html = this.template();
-		var $notifications = $.parseHTML( html );
-		this.$el.html( $notifications );
-
-		this.$notifications = this.$el.find('ul.notifications');
-
-		this.collection.each( this.renderNotification );
-
-	},
-
-	renderNotification: function( notification ){
-
-		var notification_view = new irc.Views.Notification({ model: notification });
-		var $notification = notification_view.render().$el;
-
-		this.$notifications.prepend( $notification );
-
-	}
-
 });;irc.Views.Title = Backbone.View.extend({
 
 	channel: '',
@@ -22228,14 +22124,14 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 
 	home: function(){
 
+		irc.socket = io.connect('/');
+
 		irc.connections = new irc.Collections.Connections();
-		irc.notifications = new irc.Collections.Notifications();
 
 		irc.views.application = new irc.Views.Application();
 		irc.views.connections = new irc.Views.Connections({ collection: irc.connections });
 		irc.views.channel = new irc.Views.Channel();
 		irc.views.connect = new irc.Views.Connect();
-		irc.views.notifications = new irc.Views.Notifications({ collection: irc.notifications });
 
 	}
 

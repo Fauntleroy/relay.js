@@ -12,20 +12,6 @@ irc.Collections.Connections = Backbone.Collection.extend({
 
 	addConnection: function( data ){
 
-		if( !irc.socket ){
-
-			irc.socket = io.connect('/');
-		
-			irc.socket.on( 'disconnect', function(){
-
-				irc.trigger( 'notifications:add', {
-					message: 'You\'ve lost your connection to the server!'
-				});
-
-			});
-
-		}
-
 		this.add( data );
 
 	},

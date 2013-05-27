@@ -1,0 +1,47 @@
+#connection_status {
+
+	position: fixed;
+	bottom: -30px;
+	right: 0;
+	z-index: 99999;
+	transition: all 125ms 2500ms;
+
+	> * {
+		display: none;
+		padding: 3px 8px;
+		color: #fff;
+		background: rgb( 175, 175, 175 );
+	}
+
+	div.connect_failed,
+	div.reconnect_failed,
+	div.disconnected {
+		background: rgb( 226, 27, 27 );
+	}
+
+	div.connecting,
+	div.reconnecting {
+		background: rgb( 226, 151, 17 );
+	}
+
+	div.connected,
+	div.reconnected {
+		background: rgb( 72, 211, 116 );
+	}
+
+}
+
+#application.connected #connection_status div.connected { display: block; }
+#application.connecting #connection_status div.connecting { display: block; }
+#application.connect_failed #connection_status div.connect_failed { display: block; }
+#application.reconnecting #connection_status div.reconnecting { display: block; }
+#application.reconnected #connection_status div.reconnected { display: block; }
+#application.reconnect_failed #connection_status div.reconnect_failed { display: block; }
+#application.disconnected #connection_status div.disconnected { display: block; }
+
+#application:not(.connected):not(.reconnected) #connection_status {
+
+	bottom: 0;
+	transition: all 125ms;
+
+}
