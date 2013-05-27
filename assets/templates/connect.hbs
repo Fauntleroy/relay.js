@@ -9,20 +9,21 @@
 				<div class="control-group">
 					<label for="connect_server" class="control-label">Server</label>
 					<div class="controls">
-						{{#preset_server}}
-						<h4>{{host}}</h4>
-						{{/preset_server}}
-						{{^preset_server}}
-						<input id="connect_server" name="server" placeholder="ex: irc.freenode.net" type="text" />
+						{{#defaults.server.locked}}
+						<h4>{{defaults.server.host}}</h4>
+						{{/defaults.server.locked}}
+						{{^defaults.server.locked}}
+						<input id="connect_server" name="server" placeholder="ex: irc.freenode.net" value="{{defaults.server.host}}" type="text" />
 						<span class="help-inline"><a href="#advanced">Advanced Options</a></span>
-						{{/preset_server}}
+						{{/defaults.server.locked}}
 					</div>
 				</div>
+				{{^defaults.server.locked}}
 				<div class="advanced">
 					<div class="control-group">
 						<label for="connect_port" class="control-label">Server Port</label>
 						<div class="controls">
-							<input id="connect_port" name="port" type="text" />
+							<input id="connect_port" name="port" value="{{defaults.server.port}}" type="text" />
 							<span class="help-inline">Optional</span>
 						</div>
 					</div>
@@ -36,18 +37,19 @@
 					<div class="control-group">
 						<div class="controls">
 							<label class="checkbox">
-								<input name="ssl" type="checkbox"> SSL
+								<input name="ssl" {{#defaults.server.ssl}}checked{{/defaults.server.ssl}} type="checkbox"> SSL
 							</label>
 						</div>
 					</div>
 				</div>
+				{{/defaults.server.locked}}
 			</fieldset>
 			<hr />
 			<fieldset>
 				<div class="control-group">
 					<label for="connect_nick" class="control-label">Nick</label>
 					<div class="controls">
-						<input id="connect_nick" name="nick" type="text" />
+						<input id="connect_nick" name="nick" value="{{defaults.nick}}" type="text" />
 					</div>
 				</div>
 				<div class="control-group">
@@ -63,7 +65,7 @@
 				<div class="control-group">
 					<label for="connect_channels" class="control-label">Channels</label>
 					<div class="controls">
-						<input id="connect_channels" name="channels" value="{{suggested_channels}}" placeholder="#relay.js" type="text" />
+						<input id="connect_channels" name="channels" value="{{defaults.channels}}" placeholder="#relay.js" type="text" />
 						<span class="help-inline">Optional</span>
 					</div>
 				</div>
