@@ -40,12 +40,11 @@ irc.Models.Channel = Backbone.Model.extend({
 
 	part: function(){
 
-		if( this.get('private_channel') ){
-			this.end();
-		}
-		else {
+		if( this.get('channel') ){
 			this.socket.emit( 'command', '/part '+ this.get('name') );
 		}
+
+		this.end();
 
 	},
 

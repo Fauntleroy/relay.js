@@ -83,8 +83,7 @@ irc.Collections.Channels = Backbone.Collection.extend({
 		if( nick === this.connection.get('nick') ){
 
 			var parted_channel = this.where({ name: channel })[0];
-
-			parted_channel.end();
+			if( parted_channel ) parted_channel.end();
 
 		}
 

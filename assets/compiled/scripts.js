@@ -20363,12 +20363,11 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 
 	part: function(){
 
-		if( this.get('private_channel') ){
-			this.end();
-		}
-		else {
+		if( this.get('channel') ){
 			this.socket.emit( 'command', '/part '+ this.get('name') );
 		}
+
+		this.end();
 
 	},
 
@@ -20435,6 +20434,7 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 	quit: function(){
 
 		this.socket.emit( 'command', '/quit' );
+		this.collection.remove( this );
 
 	},
 
@@ -20606,8 +20606,7 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 		if( nick === this.connection.get('nick') ){
 
 			var parted_channel = this.where({ name: channel })[0];
-
-			parted_channel.end();
+			if( parted_channel ) parted_channel.end();
 
 		}
 
