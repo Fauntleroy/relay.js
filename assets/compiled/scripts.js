@@ -21202,7 +21202,7 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 			var event_name = state;
 			if( event_name === 'connected' || event_name === 'disconnected' || event_name === 'reconnected' ) event_name = event_name.replace( /ed$/i, '' );
 
-			irc.socket.on( event_name, function(){
+			irc.socket.on( event_name, function(){console.log(state);
 				application_view.updateState( state );
 			});
 
@@ -22124,7 +22124,9 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 
 	home: function(){
 
-		irc.socket = io.connect('/');
+		irc.socket = io.connect( '/', {
+			'max reconnection attempts': 1
+		});
 
 		irc.connections = new irc.Collections.Connections();
 
