@@ -35,7 +35,7 @@ Relay.js is a web-based IRC client that focuses on making IRC less intimidating 
 - Run `node relay.js`
 - Navigate to [http://localhost:8080](http://localhost:8080)
 
-If you plan on doing development, you'll want to install [Grunt](http://gruntjs.com/). Running `grunt dev` will build the assets (unminified), start the server, and watch + recompile the assets on change. A full list of grunt tasks can be seen with `grunt -h`.
+If you plan on doing development, you'll want to install [Grunt](http://gruntjs.com/). Running `grunt dev` (or `npm run dev` if you don't have/want Grunt globally installed) will build the assets (unminified), start the server, and watch + recompile the assets on change. A full list of grunt tasks can be seen with `grunt -h`.
 
 ## Configuration
 
