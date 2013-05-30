@@ -22,12 +22,14 @@
     "grunt-contrib-stylus": "~0.4.1",
     "grunt-contrib-uglify": "~0.1.2",
     "grunt-contrib-watch": "~0.4.3",
-    "grunt-contrib-clean": "~0.4.0"
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-cli": "~0.1.9"
   },
   "main": "relay.js",
   "scripts": {
     "predeploy": "grunt predeploy",
-    "start": "node relay.js"
+    "start": "node relay.js",
+    "dev": "node_modules/grunt-cli/bin/grunt dev"
   },
   "engines": {
     "node": "0.8.x"
