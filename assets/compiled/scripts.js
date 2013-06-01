@@ -21831,6 +21831,7 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 	mention_next: null,
 	is_near_bottom: true,
 	template: irc.templates.messages,
+	message_template: irc.templates.message,
 
 	events: {
 		'submit form.new': 'submitNew',
@@ -21840,7 +21841,7 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 
 	initialize: function(){
 
-		_( this ).bindAll( 'render', 'renderMessage', 'scrollBottom', 'scrollMessages', 'resizeMessages', 'submitNew', 'keyTextarea', 'keydownTextarea' );
+		_( this ).bindAll( 'render', 'renderMessage', 'renderMessages', 'scrollBottom', 'scrollMessages', 'resizeMessages', 'submitNew', 'keyTextarea', 'keydownTextarea' );
 
 		this.listenTo( this.collection, 'add', this.renderMessage );
 
@@ -21852,55 +21853,41 @@ var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';;irc.Models.Channel 
 		var $messages = $.parseHTML( html );
 		this.$el.html( $messages );
 
-		this.$form = this.$el.find('form.new');
+		this.$form = this.$('form.new');
 		this.$new_message = this.$form.find(':input[name="message"]');
-		this.$scroll = this.$el.find('div.scroll');
+		this.$scroll = this.$('div.scroll');
 		this.$messages = this.$scroll.children('ul.list');
 
 		this.$scroll.on( 'resize', this.resizeMessages );
 		this.$scroll.on( 'scroll', this.scrollMessages );
 		this.$messages.on( 'resize', this.resizeMessages );
 
-		this.collection.each( this.renderMessage );
+		this.renderMessages();
+
+	},
+
+	renderMessages: function(){
+
+		var messages_view = this;
+		var html = '';
+
+		this.collection.each( function( message ){
+
+			html += messages_view.message_template( message.toJSON() );
+
+		});
+
+		this.$messages[0].innerHTML = html;
+		this.scrollBottom( true );
 
 	},
 
 	renderMessage: function( message ){
 
+		var html = this.message_template( message.toJSON() );
+		this.$messages.append( html );
+
 		var nick = message.get('nick');
-		var last_message = this.collection.at( this.collection.indexOf( message ) - 1 );
-		var both_notice, both_message, notice_match, message_match, $message;
-
-		// Check to see if this is a continuation of previous messaging
-		if( last_message ){
-			both_notice = ( last_message.get('notice') && message.get('notice') );
-			both_message = ( last_message.get('message') && message.get('message') );
-			notice_match = ( last_message.get('from') === message.get('from') && last_message.get('to') === message.get('to') );
-			message_match = ( last_message.get('nick') === nick );
-		}
-
-		// If this is a continuation, render the partial template and append it
-		if( ( both_notice && notice_match ) || ( both_message && message_match ) ){
-			
-			var append_message = new irc.Views.Message({
-				model: message,
-				partial: true
-			});
-			$message = append_message.render().$el.find('ul.contents > li');
-			var $last_message = this.$messages.find(':last-child');
-			$last_message.find('ul.contents').append( $message );
-
-		}
-		else {
-
-			var message_view = new irc.Views.Message({
-				model: message
-			});
-			$message = message_view.render().$el;
-			this.$messages.append( $message );
-
-		}
-
 		var force_scroll = ( nick === this.collection.connection.get('nick') );
 		this.scrollBottom( force_scroll );
 
