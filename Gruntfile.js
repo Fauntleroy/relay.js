@@ -41,7 +41,7 @@ module.exports = function(grunt) {
 						'assets/scripts/vendor/jquery.sparkartTags/**/*.js',
 						'assets/scripts/vendor/jquery.resize/**/*.js',
 						'assets/scripts/vendor/bootstrap/**/*.js',
-						'assets/scripts/vendor/underscore/**/*.js',
+						'assets/scripts/vendor/lodash/**/*.js',
 						'assets/scripts/vendor/backbone/**/*.js',
 						'assets/scripts/vendor/handlebars/**/*.js',
 						'assets/scripts/handlebars_helpers.js',
@@ -96,14 +96,17 @@ module.exports = function(grunt) {
 		watch: {
 			css: {
 				files: [ 'assets/styles/**/*.styl', 'assets/styles/**/*.css' ],
-				tasks: [ 'buildcss' ],
-				options: {
-					livereload: true
-				}
+				tasks: [ 'buildcss' ]
 			},
 			js: {
 				files: [ 'assets/scripts/**/*.js', 'assets/templates/**/*.hbs' ],
 				tasks: [ 'buildjs' ]
+			},
+			livereload: {
+				options: {
+					livereload: true
+				},
+				files: [ 'assets/compiled/styles.css' ]
 			}
 		},
 		jshint: {
