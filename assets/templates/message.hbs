@@ -1,18 +1,14 @@
 {{#message}}
-{{#partial}}
-<li {{#mention}}class="mention"{{/mention}}>
-	<var class="timestamp">{{time timestamp}}</var>
-	<span class="text">{{breaklines contents}}</span>
-</li>
-{{/partial}}
 {{^partial}}
 <li class="message{{#self}} self{{/self}}">
 	<h5 class="nick"><a href="#{{nick}}" {{^self}}class="user{{presence_id}}"{{/self}}>{{nick}}</a></h5>
 	<ul class="contents">
+{{/partial}}
 		<li {{#mention}}class="mention"{{/mention}}>
 			<var class="timestamp">{{time timestamp}}</var>
 			<span class="text">{{breaklines contents}}</span>
 		</li>
+{{^partial}}
 	</ul>
 </li>
 {{/partial}}
@@ -35,20 +31,18 @@
 {{/nick_change}}
 
 {{#notice}}
-{{#if partial}}
-<li>
-	<span class="text">{{text}}</span> <var class="timestamp">{{time timestamp}}</var>
-</li>
-{{else}}
+{{^partial}}
 <li class="notice">
 	<h5>{{#from}}<span class="from">{{.}}</span> {{/from}}&#9656; <span class="to">{{to}}</span></h5>
 	<ul class="contents">
+{{/partial}}
 		<li>
 			<span class="text">{{text}}</span> <var class="timestamp">{{time timestamp}}</var>
 		</li>
+{{^partial}}
 	</ul>
 </li>
-{{/if}}
+{{/partial}}
 {{/notice}}
 
 {{#join}}
