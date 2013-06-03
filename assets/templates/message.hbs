@@ -15,19 +15,31 @@
 {{/message}}
 
 {{#if away}}
-<li class="away"><i class="icon-minus-sign"></i> <strong class="nick">{{nick}}</strong> <em>(away)</em> <span class="text">{{contents}}</span> <var class="timestamp">{{time timestamp}}</var></li>
+<li class="away">
+	<var class="timestamp">{{time timestamp}}</var>
+	<i class="icon-minus-sign"></i> <strong class="nick">{{nick}}</strong> <em>(away)</em> <span class="text">{{contents}}</span>
+</li>
 {{/if}}
 
 {{#if nowaway}}
-<li class="nowaway"><i class="icon-minus-sign"></i> {{text}} <var class="timestamp">{{time timestamp}}</var></li>
+<li class="nowaway">
+	<var class="timestamp">{{time timestamp}}</var>
+	<i class="icon-minus-sign"></i> {{text}}
+</li>
 {{/if}}
 
 {{#action}}
-<li class="action">* <strong>{{nick}}</strong> <span class="text">{{contents}}</span> <var class="timestamp">{{time timestamp}}</var></li>
+<li class="action">
+	<var class="timestamp">{{time timestamp}}</var>
+	<em>* <strong>{{nick}}</strong> <span class="text">{{contents}}</span></em>
+</li>
 {{/action}}
 
 {{#nick_change}}
-<li class="nick"><i class="icon-user"></i> <strong class="nick">{{old_nick}}</strong> is now known as <strong class="nick">{{new_nick}}</strong> <var class="timestamp">{{time timestamp}}</var></li>
+<li class="nick">
+	<var class="timestamp">{{time timestamp}}</var>
+	<i class="icon-user"></i> <strong class="nick">{{old_nick}}</strong> is now known as <strong class="nick">{{new_nick}}</strong>
+</li>
 {{/nick_change}}
 
 {{#notice}}
@@ -37,7 +49,8 @@
 	<ul class="contents">
 {{/partial}}
 		<li>
-			<span class="text">{{text}}</span> <var class="timestamp">{{time timestamp}}</var>
+			<var class="timestamp">{{time timestamp}}</var>
+			<span class="text">{{text}}</span>
 		</li>
 {{^partial}}
 	</ul>
@@ -46,29 +59,43 @@
 {{/notice}}
 
 {{#join}}
-<li class="join"><i class="icon-chevron-right"></i> <strong>{{nick}}</strong> joined the channel <var class="timestamp">{{time timestamp}}</var></li>
+<li class="join">
+	<var class="timestamp">{{time timestamp}}</var>
+	<i class="icon-chevron-right"></i> <strong>{{nick}}</strong> joined the channel
+</li>
 {{/join}}
 
 {{#part}}
-<li class="part"><i class="icon-chevron-left"></i> <strong>{{nick}}</strong> left the channel{{#reason}} ( <span class="text">{{.}}</span> ){{/reason}} <var class="timestamp">{{time timestamp}}</var></li>
+<li class="part">
+	<var class="timestamp">{{time timestamp}}</var>
+	<i class="icon-chevron-left"></i> <strong>{{nick}}</strong> left the channel{{#reason}} ( <span class="text">{{.}}</span> ){{/reason}}
+</li>
 {{/part}}
 
 {{#kick}}
-<li class="kick"><i class="icon-chevron-left"></i> <strong class="nick">{{nick}}</strong> was kicked by <strong class="by">{{by}}</strong>{{#reason}} ( <span class="text">{{.}}</span> ){{/reason}} <var class="timestamp">{{time timestamp}}</var></li>
+<li class="kick">
+	<var class="timestamp">{{time timestamp}}</var>
+	<i class="icon-chevron-left"></i> <strong class="nick">{{nick}}</strong> was kicked by <strong class="by">{{by}}</strong>{{#reason}} ( <span class="text">{{.}}</span> ){{/reason}}
+</li>
 {{/kick}}
 
 {{#topic}}
-<li class="topic"><i class="icon-pencil"></i> <strong>{{nick}}</strong> <span class="text">{{#topic_text}}set the topic to <em>{{.}}</em>{{/topic_text}}{{^topic_text}}cleared the topic{{/topic_text}}</span> <var class="timestamp">{{time timestamp}}</var></li>
+<li class="topic">
+	<var class="timestamp">{{time timestamp}}</var>
+	<i class="icon-pencil"></i> <strong>{{nick}}</strong> <span class="text">{{#topic_text}}set the topic to <em>&ldquo;{{.}}&rdquo;</em>{{/topic_text}}{{^topic_text}}cleared the topic{{/topic_text}}</span>
+</li>
 {{/topic}}
 
 {{#mode_add}}
 <li class="mode add">
+	<var class="timestamp">{{time timestamp}}</var>
 	<i class="icon-plus"></i>
 	<span class="text"><strong>{{by}}</strong> added the mode &ldquo;{{mode}}&rdquo; to {{channel}}{{#argument}} with the argument <code>{{.}}</code>{{/argument}}</span>
 {{/mode_add}}
 
 {{#mode_remove}}
 <li class="mode remove">
+	<var class="timestamp">{{time timestamp}}</var>
 	<i class="icon-minus"></i>
 	<span class="text"><strong>{{by}}</strong> removed the mode &ldquo;{{mode}}&rdquo; from {{channel}}{{#argument}} with the argument <code>{{.}}</code>{{/argument}}</span>
 {{/mode_remove}}
@@ -98,5 +125,8 @@
 {{/whois}}
 
 {{#error}}
-<li class="error"><i class="icon-warning-sign"></i> <span class="text">{{text}}</span> <var class="timestamp">{{time timestamp}}</var></li>
+<li class="error">
+	<var class="timestamp">{{time timestamp}}</var>
+	<i class="icon-warning-sign"></i> <span class="text">{{text}}</span>
+</li>
 {{/error}}

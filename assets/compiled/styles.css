@@ -7866,18 +7866,18 @@ div.messages ul.list > li:first-child{margin-top:8px}
 div.messages ul.list > li.message{margin:0;padding:10px 80px 10px 13px;background:#fff;}
 div.messages ul.list > li.message.self{background:#f5fdff}
 div.messages ul.list > li.message h5.nick{margin:5px 0 10px 0;font-size:16px;font-weight:bold}
-div.messages ul.list > li.message div.inline.image,div.messages ul.list > li.message div.inline.youtube,div.messages ul.list > li.message div.inline.vimeo{padding:5px 0;}
-div.messages ul.list > li.message div.inline.image img,div.messages ul.list > li.message div.inline.youtube img,div.messages ul.list > li.message div.inline.vimeo img{max-width:300px;max-height:220px;box-shadow:0 2px 5px 0 rgba(0,0,0,0.25)}
-div.messages ul.list > li.message div.inline.youtube a,div.messages ul.list > li.message div.inline.vimeo a{position:relative;}
-div.messages ul.list > li.message div.inline.youtube a:before,div.messages ul.list > li.message div.inline.vimeo a:before{content:'▶';position:absolute;top:50%;left:50%;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;font-family:'arial',sans-serif;font-size:26px;line-height:36px;text-align:center;vertical-align:middle;background:#000}
-div.messages ul.list > li.message div.inline.gist{padding:5px 0;}
-div.messages ul.list > li.message div.inline.gist div.gist-file{box-shadow:0 2px 5px 0 rgba(0,0,0,0.25)}
-div.messages ul.list > li.message div.inline.gist div.gist-data{overflow:auto;max-height:190px}
 div.messages ul.list > li.join,div.messages ul.list > li.part,div.messages ul.list > li.nick,div.messages ul.list > li.mode{font-style:italic;color:#b9c3cd}
 div.messages ul.list > li.error{border-bottom:#ffd5d5 1px solid;color:#da3e3e}
 div.messages ul.list > li.motd pre{margin:0;padding:0;border:none;font-size:inherit;background:transparent}
 div.messages ul.list > li.whois dl{margin:0}
 div.messages ul.list > li.whois dt{float:left;margin-right:10px}
+div.messages ul.list > li div.inline.image,div.messages ul.list > li div.inline.youtube,div.messages ul.list > li div.inline.vimeo{padding:5px 0;}
+div.messages ul.list > li div.inline.image img,div.messages ul.list > li div.inline.youtube img,div.messages ul.list > li div.inline.vimeo img{max-width:300px;max-height:220px;box-shadow:0 2px 5px 0 rgba(0,0,0,0.25)}
+div.messages ul.list > li div.inline.youtube a,div.messages ul.list > li div.inline.vimeo a{position:relative;}
+div.messages ul.list > li div.inline.youtube a:before,div.messages ul.list > li div.inline.vimeo a:before{content:'▶';position:absolute;top:50%;left:50%;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;font-family:'arial',sans-serif;font-size:26px;line-height:36px;text-align:center;vertical-align:middle;background:#000}
+div.messages ul.list > li div.inline.gist{padding:5px 0;}
+div.messages ul.list > li div.inline.gist div.gist-file{box-shadow:0 2px 5px 0 rgba(0,0,0,0.25)}
+div.messages ul.list > li div.inline.gist div.gist-data{overflow:auto;max-height:190px}
 div.messages ul.list > li ul.contents{list-style-type:none;margin:0;padding:0;}
 div.messages ul.list > li ul.contents > li.mention{font-weight:bold}
 div.messages ul.list > li var.timestamp{float:right;margin-right:-67px;font-family:'Roboto',sans-serif;font-size:11px;font-style:normal;color:rgba(0,0,0,0.25)}
