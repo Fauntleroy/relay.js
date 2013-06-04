@@ -230,7 +230,7 @@ irc.Collections.Messages = Backbone.Collection.extend({
 
 	},
 
-	doModeAdd: function( channel, by, mode, argument ){
+	doModeAdd: function( channel, by, mode, argument, timestamp ){
 
 		if( channel === this.channel.get('name') ){
 
@@ -239,14 +239,15 @@ irc.Collections.Messages = Backbone.Collection.extend({
 				channel: channel,
 				by: by,
 				mode: mode,
-				argument: argument
+				argument: argument,
+				timestamp: timestamp
 			});
 
 		}
 
 	},
 
-	doModeRemove: function( channel, by, mode, argument ){
+	doModeRemove: function( channel, by, mode, argument, timestamp ){
 
 		if( channel === this.channel.get('name') ){
 
@@ -255,7 +256,8 @@ irc.Collections.Messages = Backbone.Collection.extend({
 				channel: channel,
 				by: by,
 				mode: mode,
-				argument: argument
+				argument: argument,
+				timestamp: timestamp
 			});
 
 		}
