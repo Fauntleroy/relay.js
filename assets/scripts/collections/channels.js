@@ -60,18 +60,24 @@ irc.Collections.Channels = Backbone.Collection.extend({
 
 	// join the channel our connection demands
 	// still no dupes
-	doJoin: function( channel, nick, message ){
+	doJoin: function( channel_name, nick, message ){
 
-		if( nick === this.connection.get('nick') && !this.findWhere({ channel: true, name: channel }) ){
+		// ensure we don't attempt to create a channel we're already in
+		var existing_channel = this.find( function( channel ){
+			var name = channel.get('name');
+			if( !name ) return false;
+			return name.toLowerCase() === channel_name.toLowerCase();
+		});
+
+		if( nick === this.connection.get('nick') && !existing_channel ){
 
 			this.add({
 				channel: true,
-				name: channel,
-				display_name: channel
+				name: channel_name,
+				display_name: channel_name
 			});
 
 			var new_channel = this.last();
-
 			if( new_channel ) new_channel.active();
 
 		}
