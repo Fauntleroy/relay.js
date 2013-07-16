@@ -23,7 +23,8 @@
     "grunt-contrib-uglify": "~0.1.2",
     "grunt-contrib-watch": "~0.4.3",
     "grunt-contrib-clean": "~0.4.0",
-    "grunt-cli": "~0.1.9"
+    "grunt-cli": "~0.1.9",
+    "grunt-cssjoin": "~0.2.0"
   },
   "main": "relay.js",
   "scripts": {

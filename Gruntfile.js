@@ -7,7 +7,17 @@ module.exports = function(grunt) {
 		stylus: {
 			compile: {
 				files: {
-					'assets/compiled/stylus_styles.css': ['assets/styles/**/*.styl']
+					'assets/compiled/styles.css': ['assets/styles/irc.styl']
+				}
+			}
+		},
+		cssjoin: {
+			compile: {
+				options: {
+					paths: ['assets/styles']
+				},
+				files: {
+					'assets/compiled/styles.css': ['assets/compiled/styles.css']
 				}
 			}
 		},
@@ -53,14 +63,6 @@ module.exports = function(grunt) {
 						'assets/scripts/routers/**/*.js',
 						'assets/scripts/application.js'
 					]
-				}
-			},
-			css: {
-				options: {
-					separator: '\n'
-				},
-				files: {
-					'assets/compiled/styles.css': [ 'assets/styles/**/*.css', 'assets/compiled/stylus_styles.css' ]
 				}
 			}
 		},
@@ -134,7 +136,7 @@ module.exports = function(grunt) {
 
 	grunt.registerTask( 'default', ['build'] );
 	grunt.registerTask( 'build', [ 'buildcss', 'buildjs' ] );
-	grunt.registerTask( 'buildcss', [ 'stylus', 'concat:css', 'clean:css' ] );
+	grunt.registerTask( 'buildcss', [ 'stylus', 'cssjoin', 'clean:css' ] );
 	grunt.registerTask( 'buildjs', [ 'handlebars', 'concat:js', 'clean:js' ] );
 	grunt.registerTask( 'minify', [ 'uglify', 'cssmin' ] );
 	grunt.registerTask( 'predeploy', [ 'build' ] );
