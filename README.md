@@ -7,6 +7,7 @@ Relay.js is a web-based IRC client that focuses on making IRC less intimidating 
 
 ### Demo: http://relayjs.jit.su
 
+* *This is only a demonstration server. It may break, crash, or stall at any time without warning. It's highly recommended that you host your own instance of Relay.js for prolonged use.*
 
 ![0.0.1 Interface](https://s3-us-west-2.amazonaws.com/relayjs/relayjs_2-24-13.png)
 
