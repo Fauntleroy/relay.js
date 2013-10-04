@@ -42,6 +42,10 @@ module.exports = function(grunt) {
 					jquery: {
 						path: 'assets/scripts/vendor/jquery.js',
 						exports: '$'
+					},
+					visibility: {
+						path: 'assets/scripts/vendor/visibility.js',
+						exports: 'Visibility'
 					}
 				}
 			},
