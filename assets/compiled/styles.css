@@ -7812,19 +7812,19 @@ div.channels > ul.list > li a:hover{text-decoration:none;color:#2ca3df}
 .user18:hover{color:#a64161}
 .user19:hover{color:#3745cc}
 #connect h4{margin:5px 0 0 0}
-#connection_status{position:fixed;bottom:-30px;right:0;z-index:99999;transition:all 125ms 2500ms;}
-#connection_status > *{display:none;padding:3px 8px;color:#fff;background:#afafaf}
-#connection_status div.connect_failed,#connection_status div.reconnect_failed,#connection_status div.disconnected{background:#e21b1b}
-#connection_status div.connecting,#connection_status div.reconnecting{background:#e29711}
-#connection_status div.connected,#connection_status div.reconnected{background:#48d374}
-#application.connected #connection_status div.connected{display:block}
-#application.connecting #connection_status div.connecting{display:block}
-#application.connect_failed #connection_status div.connect_failed{display:block}
-#application.reconnecting #connection_status div.reconnecting{display:block}
-#application.reconnected #connection_status div.reconnected{display:block}
-#application.reconnect_failed #connection_status div.reconnect_failed{display:block}
-#application.disconnected #connection_status div.disconnected{display:block}
-#application:not(.connected):not(.reconnected) #connection_status{bottom:0;transition:all 125ms}
+#connectivity{position:fixed;bottom:-30px;right:0;z-index:99999;transition:all 125ms 2500ms;}
+#connectivity > *{display:none;padding:3px 8px;color:#fff;background:#afafaf}
+#connectivity div.connect_failed,#connectivity div.reconnect_failed,#connectivity div.disconnected{background:#e21b1b}
+#connectivity div.connecting,#connectivity div.reconnecting{background:#e29711}
+#connectivity div.connected,#connectivity div.reconnected{background:#48d374}
+body.connected #connectivity div.connected{display:block}
+body.connecting #connectivity div.connecting{display:block}
+body.connect_failed #connectivity div.connect_failed{display:block}
+body.reconnecting #connectivity div.reconnecting{display:block}
+body.reconnected #connectivity div.reconnected{display:block}
+body.reconnect_failed #connectivity div.reconnect_failed{display:block}
+body.disconnected #connectivity div.disconnected{display:block}
+body:not(.connected):not(.reconnected) #connectivity{bottom:0;transition:all 125ms}
 #connections button[name="new_connection"]{margin-left:10px}
 #connections > ul.list{list-style-type:none;margin:7px 0 0 0;padding:0;}
 #connections > ul.list > li{position:relative;margin-bottom:10px;}

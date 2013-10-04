@@ -2,7 +2,7 @@
   "name": "relay.js",
   "description": "A web-based IRC client that focuses on making IRC less intimidating and easier to use",
   "author": "Timothy Kempf",
-  "version": "0.0.4",
+  "version": "0.0.4-3",
   "dependencies": {
     "lodash": "~0.9.2",
     "express": "3.x",
@@ -12,7 +12,8 @@
     "irc": "0.3.x",
     "node-uuid": "1.4.x",
     "winston": "0.6.x",
-    "optimist": "0.3.x"
+    "optimist": "0.3.x",
+    "handlebars": "~1.0.12"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -24,7 +25,10 @@
     "grunt-contrib-watch": "~0.4.3",
     "grunt-contrib-clean": "~0.4.0",
     "grunt-cli": "~0.1.9",
-    "grunt-cssjoin": "~0.2.0"
+    "grunt-cssjoin": "~0.2.0",
+    "grunt-browserify": "~1.2.8",
+    "socket.io-client": "~0.9.16",
+    "backbone": "~1.0.0"
   },
   "main": "relay.js",
   "scripts": {
