@@ -18,5 +18,8 @@ var mediator = _.extend( {}, Backbone.Events );
 $(function(){
 	relay.mediator = mediator;
 	relay.title = new Title( mediator );
+	relay.connections = new Connections({
+		el: '#connections'
+	});
 	relay.connectivity = new Connectivity;
 });
