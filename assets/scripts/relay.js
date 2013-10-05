@@ -11,6 +11,7 @@ var $ = require('jquery');
 var relay = window.relay = window.relay || {};
 
 var Title = require('./title');
+var Connections = require('./connections');
 var Connectivity = require('./connectivity.js');
 // transmit events across modules
 var mediator = _.extend( {}, Backbone.Events );

@@ -2,7 +2,7 @@ var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 var _ = require('lodash');
 var Handlebars = require('handlebars');
-var Channels = require('../../channels');
+var ChannelsView = require('./channels.js');
 
 module.exports = Backbone.View.extend({
 	template: Handlebars.compile('<ul class="list"></ul>\

@@ -1,4 +1,394 @@
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+var Backbone = require('backbone');
+var _ = require('lodash');
+var io = require('socket.io-client');
+var Channel = require('../models/channel.js');
+
+module.exports = Backbone.Collection.extend({
+	model: Channel,
+	initialize: function( models, config ){
+		_(this).bindAll( 'join', 'part', 'doChans', 'doJoin', 'doPart', 'doKick', 'doMessage', 'updateActive' );
+		this.mediator = config.mediator;
+		this.socket = config.socket;
+		this.add({
+			status: true,
+			display_name: 'status'
+		});
+		this.socket.on( 'chans', this.doChans );
+		this.socket.on( 'join', this.doJoin );
+		this.socket.on( 'part', this.doPart );
+		this.socket.on( 'kick', this.doKick );
+		this.socket.on( 'message', this.doMessage );
+		this.on( 'remove', this.updateActive );
+	},
+	join: function( name ){
+		this.socket.emit( 'join', name );
+	},
+	part: function( name ){
+		this.socket.emit( 'part', name );
+	},
+	// join all the channels our connection is in
+	// no dupes
+	doChans: function( channels ){
+		var channels_to_join = [];
+		for( var i in channels ){
+			if( !this.findWhere({ channel: true, name: channels[i] }) ){
+				channels_to_join.push({
+					channel: true,
+					name: channels[i],
+					display_name: channels[i]
+				});
+			}
+		}
+		this.add( channels_to_join );
+		var last_channel = this.last();
+		if( last_channel ) last_channel.active();
+	},
+	// join the channel our connection demands
+	// still no dupes
+	doJoin: function( channel_name, nick, message ){
+		// ensure we don't attempt to create a channel we're already in
+		var existing_channel = this.find( function( channel ){
+			var name = channel.get('name');
+			if( !name ) return false;
+			return name.toLowerCase() === channel_name.toLowerCase();
+		});
+		if( nick === this.connection.get('nick') && !existing_channel ){
+			this.add({
+				channel: true,
+				name: channel_name,
+				display_name: channel_name
+			});
+			var new_channel = this.last();
+			if( new_channel ) new_channel.active();
+		}
+	},
+	doPart: function( channel, nick, reason, message ){
+		if( nick === this.connection.get('nick') ){
+			var parted_channel = this.where({ name: channel })[0];
+			if( parted_channel ) parted_channel.end();
+		}
+	},
+	doKick: function( channel, nick, by, reason, timestamp ){
+		if( nick === this.connection.get('nick') ){
+			var kicked_from = this.where({ name: channel })[0];
+			this.remove( kicked_from );
+		}
+	},
+	doMessage: function( from, to, text, timestamp ){
+		var nick = this.connection.get('nick');		
+		var channel = ( to === nick )? from: to;
+		var existing_channels = this.where({ name: channel });
+		if( existing_channels.length === 0 ){
+			this.add({
+				private_channel: true,
+				name: channel,
+				display_name: channel
+			});
+			var private_channel = this.last();
+			// pass the new channel the message event, since it missed it
+			private_channel.messages.doMessage.apply( private_channel.messages, arguments );
+			if( from === this.connection.get('nick') ) private_channel.active();
+		}
+	},
+	updateActive: function( channel, channels, options ){
+		if( channel.get('active') ){
+			var parted_index = options.index;
+			var next_channel = this.at( parted_index );
+			var previous_channel = this.at( parted_index - 1 );
+			var next_active_channel = next_channel || previous_channel;
+			if( next_active_channel ) next_active_channel.active();
+			else irc.trigger( 'channels:active', null );
+		}
+	}
+});
+},{"../models/channel.js":4,"backbone":17,"lodash":31,"socket.io-client":32}],2:[function(require,module,exports){
+var Backbone = require('backbone');
+var _ = require('lodash');
+var io = require('socket.io-client');
+var Connection = require('../models/connection.js');
+
+module.exports = Backbone.Collection.extend({
+	model: Connection,
+	initialize: function(){
+		_( this ).bindAll( 'addConnection', 'updateActiveChannel' );
+		this.on( 'remove', this.updateActiveChannel );
+	},
+	addConnection: function( data ){
+		this.add( data );
+	},
+	updateActiveChannel: function( connection, connections, options ){
+		var index = options.index;
+		var active = connection.channels.where({ active: true });
+		if( active ){
+			var next_connection = this.at( index );
+			var previous_connection = this.at( index - 1 );
+			var next_active_connection = next_connection || previous_connection;
+			if( next_active_connection ){
+				next_active_connection.channels.at(0).active();
+			}
+			else {
+				irc.trigger( 'channels:active', null );
+			}
+		}
+	}
+});
+},{"../models/connection.js":5,"backbone":17,"lodash":31,"socket.io-client":32}],3:[function(require,module,exports){
+/*
+Connections module
+Displays IRC connections and exposes several management abilities
+*/
+
+var Connections = require('./collections/connections.js');
+var ConnectionsView = require('./views/connections.js');
+
+module.exports = function( config ){
+	this.connections = new Connections( null, config );
+	this.connections_view = new ConnectionsView({
+		el: config.el,
+		collection: this.connections
+	});
+	this.destroy = function(){
+		this.connections.destroy();
+		this.connections_view.destroy();
+	};
+};
+},{"./collections/connections.js":2,"./views/connections.js":7}],4:[function(require,module,exports){
+var Backbone = require('backbone');
+var _ = require('lodash');
+
+module.exports = Backbone.Model.extend({
+	defaults: {
+		type: 'channel',
+		active: false,
+		unread: 0
+	},
+	initialize: function(){
+		_( this ).bindAll( 'active', 'part', 'end', 'doAddMessage', 'doActive', 'doTopic' );
+		this.connection = this.collection.connection;
+		this.socket = this.connection.socket;
+		this.messages = new irc.Collections.Messages( null, { channel: this, connection: this.connection });
+		this.users = new irc.Collections.Users( null, { channel: this, connection: this.connection });
+		this.messages.on( 'add', this.doAddMessage );
+		this.socket.on( 'topic', this.doTopic );
+		irc.on( 'channels:active', this.doActive );
+	},
+	active: function(){
+		if( !this.get('active') ){
+			this.set({
+				active: true,
+				unread: 0
+			});
+			this.trigger( 'active', this );
+			irc.trigger( 'channels:active', this );
+		}
+	},
+	part: function(){
+		if( this.get('channel') ){
+			this.socket.emit( 'command', '/part '+ this.get('name') );
+		}
+		this.end();
+	},
+	// ensure this model never lives again
+	end: function(){
+		this.messages.off();
+		this.socket.removeListener( 'topic', this.doTopic );
+		irc.off( 'channels:active', this.doActive );
+		this.destroy();
+	},
+	doAddMessage: function( message ){
+		if( this.get('active') ) irc.trigger( 'active:messages:add', message );
+		if( !this.get('active') && message.get('message') ){
+			var unread = this.get('unread');
+			this.set( 'unread', unread + 1 );
+		}
+	},
+	doActive: function( channel ){
+		if( channel !== this ){
+			this.set( 'active', false );
+		}
+	},
+	doTopic: function( channel, topic, nick ){
+		if( channel === this.get('name') ){
+			this.set( 'topic', topic );
+		}
+	}
+});
+},{"backbone":17,"lodash":31}],5:[function(require,module,exports){
+var Backbone = require('backbone');
+var _ = require('lodash');
+var Channels = require('../collections/channels.js');
+
+module.exports = Backbone.Model.extend({
+	initialize: function( attributes, config ){
+		_( this ).bindAll( 'quit', 'doQuit', 'doNick', 'doRegister' );
+		this.socket = config.socket || io.connect( attributes.namespace );
+		this.channels = new Channels( null, config );
+		this.socket.on( 'quit', this.doQuit );
+		this.socket.on( 'nick', this.doNick );
+		this.socket.on( 'registered', this.doRegister );
+	},
+	quit: function(){
+		this.socket.emit( 'command', '/quit' );
+		this.collection.remove( this );
+	},
+	doQuit: function( nick, reason, channels ){
+		if( nick === this.get('nick') ){
+			if( this.collection ) this.collection.remove( this );
+		}
+	},
+	doNick: function( old_nick, new_nick, channels ){
+		if( old_nick === this.get('nick') ){
+			this.set( 'nick', new_nick );
+		}
+	},
+	doRegister: function( message ){
+		var nick = message.args[0];
+		if( nick !== this.get('nick') ){
+			this.set( 'nick', nick );
+		}
+	}
+
+});
+},{"../collections/channels.js":1,"backbone":17,"lodash":31}],6:[function(require,module,exports){
+var Backbone = require('backbone');
+var $ = Backbone.$ = require('jquery');
+var _ = require('lodash');
+var Handlebars = require('handlebars');
+
+module.exports = Backbone.View.extend({
+	template: Handlebars.compile('<ul class="list"></ul>'),
+	channel_template: Handlebars.compile('<li data-id="{{id}}" data-name="{{name}}">\
+		<a class="name" href="{{display_name}}">\
+			<h5>{{#private_channel}}<i class="icon-comment"></i> {{/private_channel}}{{display_name}}</h5>\
+			<span class="unread badge badge-info">0</span>\
+		</a>\
+		{{^status}}<a class="part" href="#part">&times;</a>{{/status}}\
+	</li>'),
+	events: {
+		'click a.name': 'clickName',
+		'click a.part': 'clickPart'
+	},
+	initialize: function( data, config ){
+		_(this).bindAll( 'render', 'renderChannel', 'updateUnread', 'updateActive', 'clickName', 'clickPart' );
+		this.mediator = config.mediator;
+		this.listenTo( this.collection, 'add', this.renderChannel );
+		this.listenTo( this.collection, 'remove destroy', this.remove );
+		this.listenTo( this.collection, 'change:unread', this.updateUnread );
+		this.listenTo( this.mediator, 'channels:active', this.updateActive );
+	},
+	render: function(){
+		var html = this.template();
+		var $channels = $.parseHTML( html );
+		this.setElement( $channels );
+		this.collection.each( this.renderChannel );
+		this.$el.sortable({
+			axis: 'y',
+			revert: 100
+		});
+		return this;
+	},
+	renderChannel: function( channel ){
+		var html = this.channel_template( channel.toJSON() );
+		var $channel = $.parseHTML( html );
+		this.$el.append( $channel );
+		return this;
+	},
+	updateUnread: function( channel, unread ){
+		var $channel = this.$el.children('[data-id="'+ channel.id +'"]');
+		$channel
+			.toggleClass( 'unread', ( unread > 0 ) )
+			.find('.unread').text( unread );
+	},
+	updateActive: function( name ){
+		var $channel = this.$el.children('[data-name="'+ name +'"]');
+		$channel
+			.addClass('active')
+			.siblings().removeClass('active');
+	},
+	clickName: function( e ){
+		e.preventDefault();
+		var $channel = $(e.target).closest('li');
+		var id = $channel.data('id');
+		this.collection.get( id ).active();
+	},
+	clickPart: function( e ){
+		e.preventDefault();
+		var $channel = $(e.target).closest('li');
+		var id = $channel.data('id');
+		this.collection.get( id ).part();
+	}
+});
+},{"backbone":17,"handlebars":20,"jquery":"/1pMKs","lodash":31}],7:[function(require,module,exports){
+var Backbone = require('backbone');
+var $ = Backbone.$ = require('jquery');
+var _ = require('lodash');
+var Handlebars = require('handlebars');
+var ChannelsView = require('./channels.js');
+
+module.exports = Backbone.View.extend({
+	template: Handlebars.compile('<ul class="list"></ul>\
+	<button name="new_connection" class="btn"><i class="icon-plus"></i> New Connection</button>'),
+	connection_template: Handlebars.compile('<li data-id="{{id}}">\
+		<div class="info">\
+			<strong class="server">{{server}}</strong> (<em class="nick">{{nick}}</em>)\
+			<a class="disconnect" href="#quit">&times;</a>\
+		</div>\
+		<div class="channels"></div>\
+	</li>'),
+	events: {
+		'click button[name="new_connection"]': 'clickNewConnection',
+		'click div.info a[href="#quit"]': 'clickQuit'
+	},
+	initialize: function(){
+		_( this ).bindAll( 'render', 'renderConnection' );
+		this.listenTo( this.collection, 'add', this.renderConnection );
+		this.listenTo( this.collection, 'add remove reset', this.toggleNewConnection );
+		this.listenTo( this.collection, 'remove', this.destroy );
+		this.listenTo( this.collection, 'change:nick', this.renderNick );
+		this.render();
+		this.toggleNewConnection();
+	},
+	render: function(){
+		var html = this.template();
+		var $connections = $.parseHTML( html );
+		this.$el.html( $connections );
+		this.$connections = this.$el.children('ul.list');
+		this.$new_connection = this.$el.find('button[name="new_connection"]');
+		this.collection.each( this.renderConnection );
+		return this;
+	},
+	renderConnection: function( connection ){
+		var html = this.template( connection.toJSON() );
+		var $connection = $.parseHTML( html );
+		new ChannelsView({
+			el: $connection.find('.channels'),
+			collection: connection.channels
+		});
+		this.$connections.append( $connection );
+		return this;
+	},
+	renderNick: function( connection, nick ){
+		var $connection = this.$connections.children('[data-id="'+ connection.id +'"]');
+		$connection.find('.nick').text( nick );
+	},
+	toggleNewConnection: function(){
+		var show_hide = ( this.collection.length < ( irc.config.max_connections || Infinity ) );
+		this.$new_connection.toggle( show_hide );
+	},
+	clickNewConnection: function( e ){
+		e.preventDefault();
+		irc.views.connect.show();
+	},
+	clickQuit: function( e ){
+		e.preventDefault();
+		var $connection = $(e.target).closest('li');
+		var id = $connection.data('id');
+		var connection = this.collection.get( id );
+		connection.quit();
+	},
+});
+},{"./channels.js":6,"backbone":17,"handlebars":20,"jquery":"/1pMKs","lodash":31}],8:[function(require,module,exports){
 /*
 Connectivity Module
 Keeps track of the user's socket connection and displays its status
@@ -43,7 +433,7 @@ module.exports = Backbone.View.extend({
 		this.socket.on( event_name, _.bind( this.updateState, this, state ) );
 	}
 });
-},{"backbone":10,"handlebars":13,"jquery":"/1pMKs","lodash":24,"socket.io-client":25}],2:[function(require,module,exports){
+},{"backbone":17,"handlebars":20,"jquery":"/1pMKs","lodash":31,"socket.io-client":32}],9:[function(require,module,exports){
 /*
 IRC Module
 This is the base that includes all submodules and initializes the application
@@ -57,6 +447,7 @@ var $ = require('jquery');
 var relay = window.relay = window.relay || {};
 
 var Title = require('./title');
+var Connections = require('./connections');
 var Connectivity = require('./connectivity.js');
 // transmit events across modules
 var mediator = _.extend( {}, Backbone.Events );
@@ -69,7 +460,7 @@ $(function(){
 	});
 	relay.connectivity = new Connectivity;
 });
-},{"./connectivity.js":1,"./title":3,"backbone":10,"jquery":"/1pMKs","lodash":24}],3:[function(require,module,exports){
+},{"./connections":3,"./connectivity.js":8,"./title":10,"backbone":17,"jquery":"/1pMKs","lodash":31}],10:[function(require,module,exports){
 /*
 Title Module
 Changes the page title based on chat, channel, and user activity
@@ -88,7 +479,7 @@ module.exports = function( mediator ){
 		this.title_view.remove();
 	}
 };
-},{"./models/title.js":4,"./views/title.js":5}],4:[function(require,module,exports){
+},{"./models/title.js":11,"./views/title.js":12}],11:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var Visibility = require('visibility');
@@ -131,7 +522,7 @@ module.exports = Backbone.Model.extend({
 		return title_string;
 	}
 });
-},{"backbone":10,"lodash":24,"visibility":"tj42rd"}],5:[function(require,module,exports){
+},{"backbone":17,"lodash":31,"visibility":"tj42rd"}],12:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var $ = Backbone.$ = require('jquery');
@@ -154,7 +545,7 @@ module.exports = Backbone.View.extend({
 		}, UPDATE_DELAY );
 	}
 });
-},{"backbone":10,"jquery":"/1pMKs","lodash":24}],"/1pMKs":[function(require,module,exports){
+},{"backbone":17,"jquery":"/1pMKs","lodash":31}],"/1pMKs":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
 /*!
  * jQuery JavaScript Library v1.9.1
@@ -10016,7 +10407,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 }).call(global, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
-},{}],10:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 //     Backbone.js 1.0.0
 
 //     (c) 2010-2013 Jeremy Ashkenas, DocumentCloud Inc.
@@ -11589,7 +11980,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 }).call(this);
 
-},{"underscore":11}],11:[function(require,module,exports){
+},{"underscore":18}],18:[function(require,module,exports){
 //     Underscore.js 1.5.2
 //     http://underscorejs.org
 //     (c) 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -12867,13 +13258,13 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 }).call(this);
 
-},{}],12:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 
 // not implemented
 // The reason for having an empty file and not throwing is to allow
 // untraditional implementation of this module.
 
-},{}],13:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 var handlebars = require("./handlebars/base"),
 
 // Each of these augment the Handlebars object. No need to setup here.
@@ -12918,7 +13309,7 @@ if (require.extensions) {
 // var singleton = handlebars.Handlebars,
 //  local = handlebars.create();
 
-},{"./handlebars/base":14,"./handlebars/compiler":18,"./handlebars/runtime":22,"./handlebars/utils":23,"fs":12}],14:[function(require,module,exports){
+},{"./handlebars/base":21,"./handlebars/compiler":25,"./handlebars/runtime":29,"./handlebars/utils":30,"fs":19}],21:[function(require,module,exports){
 /*jshint eqnull: true */
 
 module.exports.create = function() {
@@ -13086,7 +13477,7 @@ Handlebars.registerHelper('log', function(context, options) {
 return Handlebars;
 };
 
-},{}],15:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -13226,7 +13617,7 @@ return Handlebars;
 };
 
 
-},{}],16:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 var handlebars = require("./parser");
 
 exports.attach = function(Handlebars) {
@@ -13249,7 +13640,7 @@ Handlebars.parse = function(input) {
 return Handlebars;
 };
 
-},{"./parser":19}],17:[function(require,module,exports){
+},{"./parser":26}],24:[function(require,module,exports){
 var compilerbase = require("./base");
 
 exports.attach = function(Handlebars) {
@@ -14556,7 +14947,7 @@ return Handlebars;
 
 
 
-},{"./base":16}],18:[function(require,module,exports){
+},{"./base":23}],25:[function(require,module,exports){
 // Each of these module will augment the Handlebars object as it loads. No need to perform addition operations
 module.exports.attach = function(Handlebars) {
 
@@ -14574,7 +14965,7 @@ return Handlebars;
 
 };
 
-},{"./ast":15,"./compiler":17,"./printer":20,"./visitor":21}],19:[function(require,module,exports){
+},{"./ast":22,"./compiler":24,"./printer":27,"./visitor":28}],26:[function(require,module,exports){
 // BEGIN(BROWSER)
 /* Jison generated parser */
 var handlebars = (function(){
@@ -15059,7 +15450,7 @@ return new Parser;
 
 module.exports = handlebars;
 
-},{}],20:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -15199,7 +15590,7 @@ return Handlebars;
 };
 
 
-},{}],21:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -15219,7 +15610,7 @@ return Handlebars;
 
 
 
-},{}],22:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -15327,7 +15718,7 @@ return Handlebars;
 
 };
 
-},{}],23:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 var toString = Object.prototype.toString;
@@ -15412,7 +15803,7 @@ Handlebars.Utils = {
 return Handlebars;
 };
 
-},{}],24:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};/*!
  * Lo-Dash v0.9.2 <http://lodash.com>
  * (c) 2012 John-David Dalton <http://allyoucanleet.com/>
@@ -19672,7 +20063,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
   }
 }(this));
 
-},{}],25:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 /*! Socket.IO.js build:0.9.16, development. Copyright(c) 2011 LearnBoost <dev@learnboost.com> MIT Licensed */
 
 var io = ('undefined' === typeof module ? {} : module.exports);
@@ -23546,5 +23937,5 @@ if (typeof define === "function" && define.amd) {
   define([], function () { return io; });
 }
 })();
-},{}]},{},[2])
+},{}]},{},[9])
 ;

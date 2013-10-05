@@ -48,7 +48,7 @@ module.exports = Backbone.View.extend({
 			.find('.unread').text( unread );
 	},
 	updateActive: function( name ){
-		var $channel = this.$el.children('[data-name="'+ name '"]');
+		var $channel = this.$el.children('[data-name="'+ name +'"]');
 		$channel
 			.addClass('active')
 			.siblings().removeClass('active');
