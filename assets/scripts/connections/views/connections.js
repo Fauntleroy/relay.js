@@ -39,6 +39,10 @@ module.exports = Backbone.View.extend({
 	renderConnection: function( connection ){
 		var html = this.template( connection.toJSON() );
 		var $connection = $.parseHTML( html );
+		new ChannelsView({
+			el: $connection.find('.channels'),
+			collection: connection.channels
+		});
 		this.$connections.append( $connection );
 		return this;
 	},

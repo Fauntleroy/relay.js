@@ -1,11 +1,12 @@
 var Backbone = require('backbone');
 var _ = require('lodash');
+var Channels = require('../collections/channels.js');
 
 module.exports = Backbone.Model.extend({
-	initialize: function( attributes ){
+	initialize: function( attributes, config ){
 		_( this ).bindAll( 'quit', 'doQuit', 'doNick', 'doRegister' );
-		this.socket = io.connect( attributes.namespace );
-		this.channels = new irc.Collections.Channels( null, { connection: this });
+		this.socket = config.socket || io.connect( attributes.namespace );
+		this.channels = new Channels( null, config );
 		this.socket.on( 'quit', this.doQuit );
 		this.socket.on( 'nick', this.doNick );
 		this.socket.on( 'registered', this.doRegister );
