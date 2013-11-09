@@ -9,7 +9,7 @@ module.exports = Backbone.Collection.extend({
 	initialize: function( models, config ){
 		_(this).bindAll( 'join', 'part', 'doChans', 'doJoin', 'doPart', 'doKick', 'doMessage', 'updateActive' );
 		this.mediator = config.mediator;
-		this.socket = config.socket;
+		this.socket = config.socket || io.connect( config.namespace );
 		this.add({
 			status: true,
 			display_name: 'status'
@@ -110,7 +110,7 @@ var Connection = require('../models/connection.js');
 
 module.exports = Backbone.Collection.extend({
 	model: Connection,
-	initialize: function(){
+	initialize: function( data, config ){
 		_( this ).bindAll( 'addConnection', 'updateActiveChannel' );
 		this.on( 'remove', this.updateActiveChannel );
 	},
@@ -220,9 +220,11 @@ var _ = require('lodash');
 var Channels = require('../collections/channels.js');
 
 module.exports = Backbone.Model.extend({
-	initialize: function( attributes, config ){
+	initialize: function( data, config ){
+		config = config || {};
+		config.namespace = data.namespace; // attach this new connection to the config data
 		_( this ).bindAll( 'quit', 'doQuit', 'doNick', 'doRegister' );
-		this.socket = config.socket || io.connect( attributes.namespace );
+		this.socket = config.socket || io.connect( data.namespace );
 		this.channels = new Channels( null, config );
 		this.socket.on( 'quit', this.doQuit );
 		this.socket.on( 'nick', this.doNick );
@@ -319,7 +321,7 @@ module.exports = Backbone.View.extend({
 		this.collection.get( id ).part();
 	}
 });
-},{"backbone":17,"handlebars":20,"jquery":"/1pMKs","lodash":31}],7:[function(require,module,exports){
+},{"backbone":17,"handlebars":20,"jquery":"O/eGLK","lodash":31}],7:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 var _ = require('lodash');
@@ -388,7 +390,7 @@ module.exports = Backbone.View.extend({
 		connection.quit();
 	},
 });
-},{"./channels.js":6,"backbone":17,"handlebars":20,"jquery":"/1pMKs","lodash":31}],8:[function(require,module,exports){
+},{"./channels.js":6,"backbone":17,"handlebars":20,"jquery":"O/eGLK","lodash":31}],8:[function(require,module,exports){
 /*
 Connectivity Module
 Keeps track of the user's socket connection and displays its status
@@ -433,7 +435,7 @@ module.exports = Backbone.View.extend({
 		this.socket.on( event_name, _.bind( this.updateState, this, state ) );
 	}
 });
-},{"backbone":17,"handlebars":20,"jquery":"/1pMKs","lodash":31,"socket.io-client":32}],9:[function(require,module,exports){
+},{"backbone":17,"handlebars":20,"jquery":"O/eGLK","lodash":31,"socket.io-client":32}],9:[function(require,module,exports){
 /*
 IRC Module
 This is the base that includes all submodules and initializes the application
@@ -460,7 +462,7 @@ $(function(){
 	});
 	relay.connectivity = new Connectivity;
 });
-},{"./connections":3,"./connectivity.js":8,"./title":10,"backbone":17,"jquery":"/1pMKs","lodash":31}],10:[function(require,module,exports){
+},{"./connections":3,"./connectivity.js":8,"./title":10,"backbone":17,"jquery":"O/eGLK","lodash":31}],10:[function(require,module,exports){
 /*
 Title Module
 Changes the page title based on chat, channel, and user activity
@@ -522,7 +524,7 @@ module.exports = Backbone.Model.extend({
 		return title_string;
 	}
 });
-},{"backbone":17,"lodash":31,"visibility":"tj42rd"}],12:[function(require,module,exports){
+},{"backbone":17,"lodash":31,"visibility":"STq6cz"}],12:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var $ = Backbone.$ = require('jquery');
@@ -545,7 +547,7 @@ module.exports = Backbone.View.extend({
 		}, UPDATE_DELAY );
 	}
 });
-},{"backbone":17,"jquery":"/1pMKs","lodash":31}],"/1pMKs":[function(require,module,exports){
+},{"backbone":17,"jquery":"O/eGLK","lodash":31}],"O/eGLK":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
 /*!
  * jQuery JavaScript Library v1.9.1
@@ -10149,10 +10151,10 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 }).call(global, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 },{}],"jquery":[function(require,module,exports){
-module.exports=require('/1pMKs');
+module.exports=require('O/eGLK');
 },{}],"visibility":[function(require,module,exports){
-module.exports=require('tj42rd');
-},{}],"tj42rd":[function(require,module,exports){
+module.exports=require('STq6cz');
+},{}],"STq6cz":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
 /*
  * Copyright 2011 Andrey “A.I.” Sitnik <andrey@sitnik.ru>,

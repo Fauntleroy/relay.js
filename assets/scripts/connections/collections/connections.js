@@ -5,7 +5,7 @@ var Connection = require('../models/connection.js');
 
 module.exports = Backbone.Collection.extend({
 	model: Connection,
-	initialize: function(){
+	initialize: function( data, config ){
 		_( this ).bindAll( 'addConnection', 'updateActiveChannel' );
 		this.on( 'remove', this.updateActiveChannel );
 	},

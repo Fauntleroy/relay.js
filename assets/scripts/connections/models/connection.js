@@ -3,9 +3,11 @@ var _ = require('lodash');
 var Channels = require('../collections/channels.js');
 
 module.exports = Backbone.Model.extend({
-	initialize: function( attributes, config ){
+	initialize: function( data, config ){
+		config = config || {};
+		config.namespace = data.namespace; // attach this new connection to the config data
 		_( this ).bindAll( 'quit', 'doQuit', 'doNick', 'doRegister' );
-		this.socket = config.socket || io.connect( attributes.namespace );
+		this.socket = config.socket || io.connect( data.namespace );
 		this.channels = new Channels( null, config );
 		this.socket.on( 'quit', this.doQuit );
 		this.socket.on( 'nick', this.doNick );

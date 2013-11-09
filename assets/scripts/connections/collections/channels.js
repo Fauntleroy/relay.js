@@ -8,7 +8,7 @@ module.exports = Backbone.Collection.extend({
 	initialize: function( models, config ){
 		_(this).bindAll( 'join', 'part', 'doChans', 'doJoin', 'doPart', 'doKick', 'doMessage', 'updateActive' );
 		this.mediator = config.mediator;
-		this.socket = config.socket;
+		this.socket = config.socket || io.connect( config.namespace );
 		this.add({
 			status: true,
 			display_name: 'status'
