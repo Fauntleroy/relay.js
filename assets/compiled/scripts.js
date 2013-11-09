@@ -113,6 +113,8 @@ module.exports = Backbone.Collection.extend({
 	initialize: function( data, config ){
 		_( this ).bindAll( 'addConnection', 'updateActiveChannel' );
 		this.on( 'remove', this.updateActiveChannel );
+		this.mediator = config.mediator;
+		this.max = config.max;
 	},
 	addConnection: function( data ){
 		this.add( data );
@@ -128,7 +130,7 @@ module.exports = Backbone.Collection.extend({
 				next_active_connection.channels.at(0).active();
 			}
 			else {
-				irc.trigger( 'channels:active', null );
+				this.mediator.trigger( 'channels:active', null );
 			}
 		}
 	}
@@ -375,12 +377,12 @@ module.exports = Backbone.View.extend({
 		$connection.find('.nick').text( nick );
 	},
 	toggleNewConnection: function(){
-		var show_hide = ( this.collection.length < ( irc.config.max_connections || Infinity ) );
+		var show_hide = ( this.collection.length < this.collection.max );
 		this.$new_connection.toggle( show_hide );
 	},
 	clickNewConnection: function( e ){
 		e.preventDefault();
-		irc.views.connect.show();
+		this.collection.mediator.trigger('connect:show');
 	},
 	clickQuit: function( e ){
 		e.preventDefault();
@@ -458,7 +460,9 @@ $(function(){
 	relay.mediator = mediator;
 	relay.title = new Title( mediator );
 	relay.connections = new Connections({
-		el: '#connections'
+		el: '#connections',
+		mediator: mediator,
+		max: irc.config.max_connections || Infinity
 	});
 	relay.connectivity = new Connectivity;
 });

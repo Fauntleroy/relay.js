@@ -51,12 +51,12 @@ module.exports = Backbone.View.extend({
 		$connection.find('.nick').text( nick );
 	},
 	toggleNewConnection: function(){
-		var show_hide = ( this.collection.length < ( irc.config.max_connections || Infinity ) );
+		var show_hide = ( this.collection.length < this.collection.max );
 		this.$new_connection.toggle( show_hide );
 	},
 	clickNewConnection: function( e ){
 		e.preventDefault();
-		irc.views.connect.show();
+		this.collection.mediator.trigger('connect:show');
 	},
 	clickQuit: function( e ){
 		e.preventDefault();

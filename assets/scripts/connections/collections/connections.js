@@ -8,6 +8,8 @@ module.exports = Backbone.Collection.extend({
 	initialize: function( data, config ){
 		_( this ).bindAll( 'addConnection', 'updateActiveChannel' );
 		this.on( 'remove', this.updateActiveChannel );
+		this.mediator = config.mediator;
+		this.max = config.max;
 	},
 	addConnection: function( data ){
 		this.add( data );
@@ -23,7 +25,7 @@ module.exports = Backbone.Collection.extend({
 				next_active_connection.channels.at(0).active();
 			}
 			else {
-				irc.trigger( 'channels:active', null );
+				this.mediator.trigger( 'channels:active', null );
 			}
 		}
 	}

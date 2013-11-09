@@ -20,7 +20,9 @@ $(function(){
 	relay.mediator = mediator;
 	relay.title = new Title( mediator );
 	relay.connections = new Connections({
-		el: '#connections'
+		el: '#connections',
+		mediator: mediator,
+		max: irc.config.max_connections || Infinity
 	});
 	relay.connectivity = new Connectivity;
 });
