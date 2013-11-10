@@ -11,13 +11,13 @@ var $ = require('jquery');
 var relay = window.relay = window.relay || {};
 
 // Models and Collections
-var Title = require('./title/models/title.js');
-var Connections = require('./connections/collections/connections.js');
+var Title = require('./models/title.js');
+var Connections = require('./collections/connections.js');
 // Views
-var TitleView = require('./title/views/title.js');
-var ConnectView = require('./connect.js');
-var ConnectionsView = require('./connections/views/connections.js');
-var ConnectivityView = require('./connectivity.js'); 
+var TitleView = require('./views/title.js');
+var ConnectView = require('./views/connect.js');
+var ConnectionsView = require('./views/connections.js');
+var ConnectivityView = require('./views/connectivity.js'); 
 
 $(function(){
 	// start mediator for event transmission

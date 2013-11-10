@@ -43,6 +43,55 @@ module.exports = function(grunt) {
 						path: 'assets/scripts/vendor/jquery.js',
 						exports: '$'
 					},
+					'jquery-ui': {
+						path: 'assets/scripts/vendor/jquery-ui.custom.js',
+						exports: null,
+						depends: {
+							jquery: '$'
+						}
+					},
+					'jquery.emojify': {
+						path: 'assets/scripts/vendor/jquery.emojify.js',
+						exports: null,
+						depends: {
+							jquery: '$'
+						}
+					},
+					'jquery.links': {
+						path: 'assets/scripts/vendor/jquery.links.js',
+						exports: null,
+						depends: {
+							jquery: '$'
+						}
+					},
+					'jquery.resize': {
+						path: 'assets/scripts/vendor/jquery.resize.js',
+						exports: null,
+						depends: {
+							jquery: '$'
+						}
+					},
+					'jquery.serializeObject': {
+						path: 'assets/scripts/vendor/jquery.serializeObject.js',
+						exports: null,
+						depends: {
+							jquery: '$'
+						}
+					},
+					'jquery.sparkartTags': {
+						path: 'assets/scripts/vendor/jquery.sparkartTags.js',
+						exports: null,
+						depends: {
+							jquery: '$'
+						}
+					},
+					bootstrap: {
+						path: 'assets/scripts/vendor/bootstrap.js',
+						exports: null,
+						depends: {
+							jquery: '$'
+						}
+					},
 					visibility: {
 						path: 'assets/scripts/vendor/visibility.js',
 						exports: 'Visibility'

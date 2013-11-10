@@ -1,8 +1,8 @@
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
-require('./vendor/bootstrap/bootstrap.js');
-require('./vendor/jquery.sparkartTags/jquery.sparkartTags.js');
-require('./vendor/jquery.serializeObject/jquery.serializeObject.js');
+require('bootstrap');
+require('jquery.sparkartTags');
+require('jquery.serializeObject');
 var _ = require('lodash');
 var Handlebars = require('handlebars');
 var handlebars_helper = require('handlebars-helper');
