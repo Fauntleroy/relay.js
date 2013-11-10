@@ -9,10 +9,9 @@ module.exports = Backbone.Model.extend({
 	},
 	initialize: function(){
 		_( this ).bindAll( 'active', 'part', 'end', 'doAddMessage', 'doActive', 'doTopic' );
-		this.connection = this.collection.connection;
-		this.socket = this.connection.socket;
-		this.messages = new irc.Collections.Messages( null, { channel: this, connection: this.connection });
-		this.users = new irc.Collections.Users( null, { channel: this, connection: this.connection });
+		this.socket = this.collection.socket;
+		this.messages = new irc.Collections.Messages( null, { channel: this });
+		this.users = new irc.Collections.Users( null, { channel: this });
 		this.messages.on( 'add', this.doAddMessage );
 		this.socket.on( 'topic', this.doTopic );
 		irc.on( 'channels:active', this.doActive );

@@ -314,10 +314,9 @@ module.exports = Backbone.Model.extend({
 	},
 	initialize: function(){
 		_( this ).bindAll( 'active', 'part', 'end', 'doAddMessage', 'doActive', 'doTopic' );
-		this.connection = this.collection.connection;
-		this.socket = this.connection.socket;
-		this.messages = new irc.Collections.Messages( null, { channel: this, connection: this.connection });
-		this.users = new irc.Collections.Users( null, { channel: this, connection: this.connection });
+		this.socket = this.collection.socket;
+		this.messages = new irc.Collections.Messages( null, { channel: this });
+		this.users = new irc.Collections.Users( null, { channel: this });
 		this.messages.on( 'add', this.doAddMessage );
 		this.socket.on( 'topic', this.doTopic );
 		irc.on( 'channels:active', this.doActive );
@@ -12803,6 +12802,8 @@ Sparkart Tags
 	};
 
 })( jQuery );
+},{}],"visibility":[function(require,module,exports){
+module.exports=require('STq6cz');
 },{}],"STq6cz":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
 /*
@@ -13058,8 +13059,6 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 }).call(global, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
-},{}],"visibility":[function(require,module,exports){
-module.exports=require('STq6cz');
 },{}],21:[function(require,module,exports){
 //     Backbone.js 1.0.0
 
