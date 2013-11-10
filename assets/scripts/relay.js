@@ -11,6 +11,7 @@ var $ = require('jquery');
 var relay = window.relay = window.relay || {};
 
 var Title = require('./title');
+var Connect = require('./connect.js');
 var Connections = require('./connections');
 var Connectivity = require('./connectivity.js');
 // transmit events across modules
@@ -19,10 +20,15 @@ var mediator = _.extend( {}, Backbone.Events );
 $(function(){
 	relay.mediator = mediator;
 	relay.title = new Title( mediator );
+	relay.connect = new Connect({
+		el: '#connect',
+		mediator: mediator,
+		config: relay.config
+	});
 	relay.connections = new Connections({
 		el: '#connections',
 		mediator: mediator,
-		max: irc.config.max_connections || Infinity
+		max: relay.config.max_connections || Infinity
 	});
 	relay.connectivity = new Connectivity;
 });

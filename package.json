@@ -13,7 +13,8 @@
     "node-uuid": "1.4.x",
     "winston": "0.6.x",
     "optimist": "0.3.x",
-    "handlebars": "~1.0.12"
+    "handlebars": "~1.0.12",
+    "handlebars-helper": "0.0.5"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
