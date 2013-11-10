@@ -144,7 +144,7 @@ module.exports = Backbone.View.extend({
 	}
 });
 
-},{"./vendor/bootstrap/bootstrap.js":14,"./vendor/jquery.serializeObject/jquery.serializeObject.js":17,"./vendor/jquery.sparkartTags/jquery.sparkartTags.js":18,"backbone":21,"handlebars":47,"handlebars-helper":24,"jquery":"O/eGLK","lodash":58}],2:[function(require,module,exports){
+},{"./vendor/bootstrap/bootstrap.js":12,"./vendor/jquery.serializeObject/jquery.serializeObject.js":15,"./vendor/jquery.sparkartTags/jquery.sparkartTags.js":16,"backbone":19,"handlebars":45,"handlebars-helper":22,"jquery":"O/eGLK","lodash":56}],2:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var io = require('socket.io-client');
@@ -248,7 +248,7 @@ module.exports = Backbone.Collection.extend({
 		}
 	}
 });
-},{"../models/channel.js":5,"backbone":21,"lodash":58,"socket.io-client":59}],3:[function(require,module,exports){
+},{"../models/channel.js":4,"backbone":19,"lodash":56,"socket.io-client":57}],3:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var io = require('socket.io-client');
@@ -282,27 +282,7 @@ module.exports = Backbone.Collection.extend({
 		}
 	}
 });
-},{"../models/connection.js":6,"backbone":21,"lodash":58,"socket.io-client":59}],4:[function(require,module,exports){
-/*
-Connections module
-Displays IRC connections and exposes several management abilities
-*/
-
-var Connections = require('./collections/connections.js');
-var ConnectionsView = require('./views/connections.js');
-
-module.exports = function( config ){
-	this.connections = new Connections( null, config );
-	this.connections_view = new ConnectionsView({
-		el: config.el,
-		collection: this.connections
-	});
-	this.destroy = function(){
-		this.connections.destroy();
-		this.connections_view.destroy();
-	};
-};
-},{"./collections/connections.js":3,"./views/connections.js":8}],5:[function(require,module,exports){
+},{"../models/connection.js":5,"backbone":19,"lodash":56,"socket.io-client":57}],4:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 
@@ -363,7 +343,7 @@ module.exports = Backbone.Model.extend({
 		}
 	}
 });
-},{"backbone":21,"lodash":58}],6:[function(require,module,exports){
+},{"backbone":19,"lodash":56}],5:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var Channels = require('../collections/channels.js');
@@ -401,7 +381,7 @@ module.exports = Backbone.Model.extend({
 	}
 
 });
-},{"../collections/channels.js":2,"backbone":21,"lodash":58}],7:[function(require,module,exports){
+},{"../collections/channels.js":2,"backbone":19,"lodash":56}],6:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 var _ = require('lodash');
@@ -470,7 +450,7 @@ module.exports = Backbone.View.extend({
 		this.collection.get( id ).part();
 	}
 });
-},{"backbone":21,"handlebars":47,"jquery":"O/eGLK","lodash":58}],8:[function(require,module,exports){
+},{"backbone":19,"handlebars":45,"jquery":"O/eGLK","lodash":56}],7:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 var _ = require('lodash');
@@ -539,7 +519,7 @@ module.exports = Backbone.View.extend({
 		connection.quit();
 	},
 });
-},{"./channels.js":7,"backbone":21,"handlebars":47,"jquery":"O/eGLK","lodash":58}],9:[function(require,module,exports){
+},{"./channels.js":6,"backbone":19,"handlebars":45,"jquery":"O/eGLK","lodash":56}],8:[function(require,module,exports){
 /*
 Connectivity Module
 Keeps track of the user's socket connection and displays its status
@@ -584,7 +564,7 @@ module.exports = Backbone.View.extend({
 		this.socket.on( event_name, _.bind( this.updateState, this, state ) );
 	}
 });
-},{"backbone":21,"handlebars":47,"jquery":"O/eGLK","lodash":58,"socket.io-client":59}],10:[function(require,module,exports){
+},{"backbone":19,"handlebars":45,"jquery":"O/eGLK","lodash":56,"socket.io-client":57}],9:[function(require,module,exports){
 /*
 IRC Module
 This is the base that includes all submodules and initializes the application
@@ -597,48 +577,40 @@ var $ = require('jquery');
 // set up namespace
 var relay = window.relay = window.relay || {};
 
-var Title = require('./title');
-var Connect = require('./connect.js');
-var Connections = require('./connections');
-var Connectivity = require('./connectivity.js');
-// transmit events across modules
-var mediator = _.extend( {}, Backbone.Events );
+var Title = require('./title/models/title.js');
+var TitleView = require('./title/views/title.js');
+var ConnectView = require('./connect.js');
+var Connections = require('./connections/collections/connections.js');
+var ConnectionsView = require('./connections/views/connections.js');
+var ConnectivityView = require('./connectivity.js'); 
 
 $(function(){
-	relay.mediator = mediator;
-	relay.title = new Title( mediator );
-	relay.connect = new Connect({
-		el: '#connect',
-		mediator: mediator,
-		config: relay.config
-	});
-	relay.connections = new Connections({
-		el: '#connections',
+	// start mediator for event transmission
+	var mediator = relay.mediator = _.extend( {}, Backbone.Events );
+	// initialize models and collections
+	relay.title = new Title( null, mediator );
+	relay.connections = new Connections( null, {
 		mediator: mediator,
 		max: relay.config.max_connections || Infinity
 	});
-	relay.connectivity = new Connectivity;
+	// initialize views
+	relay.views = {
+		title: new TitleView({
+			model: relay.title
+		}),
+		connect: new ConnectView({
+			el: '#connect',
+			mediator: mediator,
+			config: relay.config
+		}),
+		connections: new ConnectionsView({
+			el: '#connections',
+			collection: relay.connections
+		}),
+		connectivity: new Connectivity
+	};
 });
-},{"./connect.js":1,"./connections":4,"./connectivity.js":9,"./title":11,"backbone":21,"jquery":"O/eGLK","lodash":58}],11:[function(require,module,exports){
-/*
-Title Module
-Changes the page title based on chat, channel, and user activity
-*/
-
-var Title = require('./models/title.js');
-var TitleView = require('./views/title.js');
-
-module.exports = function( mediator ){
-	this.title = new Title( null, mediator );
-	this.title_view = new TitleView({
-		model: this.title
-	});
-	this.destroy = function(){
-		this.title.destroy();
-		this.title_view.remove();
-	}
-};
-},{"./models/title.js":12,"./views/title.js":13}],12:[function(require,module,exports){
+},{"./connect.js":1,"./connections/collections/connections.js":3,"./connections/views/connections.js":7,"./connectivity.js":8,"./title/models/title.js":10,"./title/views/title.js":11,"backbone":19,"jquery":"O/eGLK","lodash":56}],10:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var Visibility = require('visibility');
@@ -681,7 +653,7 @@ module.exports = Backbone.Model.extend({
 		return title_string;
 	}
 });
-},{"backbone":21,"lodash":58,"visibility":"STq6cz"}],13:[function(require,module,exports){
+},{"backbone":19,"lodash":56,"visibility":"STq6cz"}],11:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var $ = Backbone.$ = require('jquery');
@@ -704,7 +676,7 @@ module.exports = Backbone.View.extend({
 		}, UPDATE_DELAY );
 	}
 });
-},{"backbone":21,"jquery":"O/eGLK","lodash":58}],14:[function(require,module,exports){
+},{"backbone":19,"jquery":"O/eGLK","lodash":56}],12:[function(require,module,exports){
 /* ===================================================
  * bootstrap-transition.js v2.2.2
  * http://twitter.github.com/bootstrap/javascript.html#transitions
@@ -12469,7 +12441,7 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
 }).call(global, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
-},{}],17:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /*!
  * jQuery serializeObject - v0.2 - 1/20/2010
  * http://benalman.com/projects/jquery-misc-plugins/
@@ -12501,7 +12473,7 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
   };
   
 })(jQuery);
-},{}],18:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /*
 
 Sparkart Tags
@@ -13060,7 +13032,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 }).call(global, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
-},{}],21:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 //     Backbone.js 1.0.0
 
 //     (c) 2010-2013 Jeremy Ashkenas, DocumentCloud Inc.
@@ -14633,7 +14605,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 }).call(this);
 
-},{"underscore":22}],22:[function(require,module,exports){
+},{"underscore":20}],20:[function(require,module,exports){
 //     Underscore.js 1.5.2
 //     http://underscorejs.org
 //     (c) 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -15911,15 +15883,15 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 }).call(this);
 
-},{}],23:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 
 // not implemented
 // The reason for having an empty file and not throwing is to allow
 // untraditional implementation of this module.
 
-},{}],24:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 module.exports = require('./lib');
-},{"./lib":45}],25:[function(require,module,exports){
+},{"./lib":43}],23:[function(require,module,exports){
 // Modified form of `timeago` helper from https://github.com/assemble/handlebars-helpers
 var YEAR = 60 * 60 * 24 * 365;
 var MONTH = 60 * 60 * 24 * 30;
@@ -15942,7 +15914,7 @@ module.exports = function( date ){
 	if( Math.floor( seconds ) <= 1 ) return 'Just now';
 	else return Math.floor( seconds ) +' seconds ago';
 };
-},{}],26:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 module.exports = function( collection, start, end, options ){
 	options = options || end;
 	if( typeof start !== 'number' ) return;
@@ -15954,7 +15926,7 @@ module.exports = function( collection, start, end, options ){
 	}
 	return result;
 };
-},{}],27:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 module.exports = function( collection, item, options ){
 	// string check
 	if( typeof collection === 'string' ){
@@ -15973,11 +15945,11 @@ module.exports = function( collection, item, options ){
 	}
 	return options.inverse();
 };
-},{}],28:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 module.exports = function( string ){
 	return encodeURIComponent( string );	
 };
-},{}],29:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 module.exports = function( left, right, exact, options ){
 	options = options || exact;
 	exact = ( exact === 'exact' ) ? true : false;
@@ -15985,7 +15957,7 @@ module.exports = function( left, right, exact, options ){
 	if( is_equal ) return options.fn();
 	return options.inverse();
 };
-},{}],30:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 module.exports = function( collection, count, options ){
 	options = options || count;
 	count = ( typeof count === 'number' ) ? count : 1;
@@ -15995,7 +15967,7 @@ module.exports = function( collection, count, options ){
 		if( i + 1 == count ) return result;
 	}
 };
-},{}],31:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 var strftimeTZ = require('strftime').strftimeTZ;
 	
 module.exports = function( date_string, format, offset ){
@@ -16003,7 +15975,7 @@ module.exports = function( date_string, format, offset ){
 	var date = new Date( date_string );
 	return strftimeTZ( format, date, offset );
 };
-},{"strftime":46}],32:[function(require,module,exports){
+},{"strftime":44}],30:[function(require,module,exports){
 module.exports = function( left, right, equal, options ){
 	options = options || equal;
 	equal = ( equal === 'equal' ) ? true : false;
@@ -16011,7 +15983,7 @@ module.exports = function( left, right, equal, options ){
 	if( is_greater ) return options.fn();
 	return options.inverse();
 };
-},{}],33:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 module.exports = function( collection, separator ){
 	separator = ( typeof separator === 'string' ) ? separator : '';
 	// if the collectoin is an array this is easy
@@ -16025,7 +15997,7 @@ module.exports = function( collection, separator ){
 	}
 	return result.slice( 0, -separator.length );
 };
-},{}],34:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 module.exports = function( collection, count, options ){
 	options = options || count;
 	count = ( typeof count === 'number' ) ? count : 1;
@@ -16035,7 +16007,7 @@ module.exports = function( collection, count, options ){
 		if( i + 1 == count ) return result;
 	}
 };
-},{}],35:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 module.exports = function( collection ){
 	if( collection.length ) return collection.length;
 	var length = 0;
@@ -16046,7 +16018,7 @@ module.exports = function( collection ){
 	}
 	return length;
 };
-},{}],36:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 module.exports = function( left, right, equal, options ){
 	options = options || equal;
 	equal = ( equal === 'equal' ) ? true : false;
@@ -16054,11 +16026,11 @@ module.exports = function( left, right, equal, options ){
 	if( is_greater ) return options.fn();
 	return options.inverse();
 };
-},{}],37:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 module.exports = function( string ){
 	return ( string || '' ).toLowerCase();	
 };
-},{}],38:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 module.exports = function( collection, start, amount, options ){
 	options = options || amount;
 	if( typeof start !== 'number' ) return;
@@ -16070,11 +16042,11 @@ module.exports = function( collection, start, amount, options ){
 	}
 	return result;
 };
-},{}],39:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 module.exports = function( string, to_replace, replacement ){
 	return ( string || '' ).replace( to_replace, replacement );
 };
-},{}],40:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 module.exports = function( collection, options ){
 	var result = '';
 	for( var i = collection.length - 1; i >= 0; i-- ){
@@ -16082,7 +16054,7 @@ module.exports = function( collection, options ){
 	}
 	return result;
 };
-},{}],41:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 // Simple shuffling method based off of http://bost.ocks.org/mike/shuffle/
 var shuffle = function( array ){
 	var i = array.length, j, swap;
@@ -16103,7 +16075,7 @@ module.exports = function( collection, options ){
 	}
 	return result;
 };
-},{}],42:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 module.exports = function( number, zero, options ){
 	options = options || zero;
 	zero = ( zero === 'zero' ) ? true : false;
@@ -16117,11 +16089,11 @@ module.exports = function( number, zero, options ){
 	}
 	return result;
 };
-},{}],43:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 module.exports = function( string ){
 	return ( string || '' ).toUpperCase();
 };
-},{}],44:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 module.exports = function( collection, key, value, limit, options ){
 	options = options || limit;
 	if( typeof limit !== 'number' ) limit = Infinity;
@@ -16136,7 +16108,7 @@ module.exports = function( collection, key, value, limit, options ){
 	}
 	return result;
 };
-},{}],45:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 var helpers = {
 	// string
 	lowercase: require('./helpers/lowercase.js'),
@@ -16170,7 +16142,7 @@ module.exports.help = function( Handlebars ){
 		Handlebars.registerHelper( name, helpers[name] );
 	}
 };
-},{"./helpers/ago.js":25,"./helpers/between.js":26,"./helpers/contains.js":27,"./helpers/encode.js":28,"./helpers/equal.js":29,"./helpers/first.js":30,"./helpers/formatDate.js":31,"./helpers/greater.js":32,"./helpers/join.js":33,"./helpers/last.js":34,"./helpers/length.js":35,"./helpers/less.js":36,"./helpers/lowercase.js":37,"./helpers/range.js":38,"./helpers/replace.js":39,"./helpers/reverse.js":40,"./helpers/shuffle.js":41,"./helpers/times.js":42,"./helpers/uppercase.js":43,"./helpers/where.js":44}],46:[function(require,module,exports){
+},{"./helpers/ago.js":23,"./helpers/between.js":24,"./helpers/contains.js":25,"./helpers/encode.js":26,"./helpers/equal.js":27,"./helpers/first.js":28,"./helpers/formatDate.js":29,"./helpers/greater.js":30,"./helpers/join.js":31,"./helpers/last.js":32,"./helpers/length.js":33,"./helpers/less.js":34,"./helpers/lowercase.js":35,"./helpers/range.js":36,"./helpers/replace.js":37,"./helpers/reverse.js":38,"./helpers/shuffle.js":39,"./helpers/times.js":40,"./helpers/uppercase.js":41,"./helpers/where.js":42}],44:[function(require,module,exports){
 //
 // strftime
 // github.com/samsonjs/strftime
@@ -16444,7 +16416,7 @@ module.exports.help = function( Handlebars ){
 
 }());
 
-},{}],47:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 var handlebars = require("./handlebars/base"),
 
 // Each of these augment the Handlebars object. No need to setup here.
@@ -16489,7 +16461,7 @@ if (require.extensions) {
 // var singleton = handlebars.Handlebars,
 //  local = handlebars.create();
 
-},{"./handlebars/base":48,"./handlebars/compiler":52,"./handlebars/runtime":56,"./handlebars/utils":57,"fs":23}],48:[function(require,module,exports){
+},{"./handlebars/base":46,"./handlebars/compiler":50,"./handlebars/runtime":54,"./handlebars/utils":55,"fs":21}],46:[function(require,module,exports){
 /*jshint eqnull: true */
 
 module.exports.create = function() {
@@ -16657,7 +16629,7 @@ Handlebars.registerHelper('log', function(context, options) {
 return Handlebars;
 };
 
-},{}],49:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -16797,7 +16769,7 @@ return Handlebars;
 };
 
 
-},{}],50:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 var handlebars = require("./parser");
 
 exports.attach = function(Handlebars) {
@@ -16820,7 +16792,7 @@ Handlebars.parse = function(input) {
 return Handlebars;
 };
 
-},{"./parser":53}],51:[function(require,module,exports){
+},{"./parser":51}],49:[function(require,module,exports){
 var compilerbase = require("./base");
 
 exports.attach = function(Handlebars) {
@@ -18127,7 +18099,7 @@ return Handlebars;
 
 
 
-},{"./base":50}],52:[function(require,module,exports){
+},{"./base":48}],50:[function(require,module,exports){
 // Each of these module will augment the Handlebars object as it loads. No need to perform addition operations
 module.exports.attach = function(Handlebars) {
 
@@ -18145,7 +18117,7 @@ return Handlebars;
 
 };
 
-},{"./ast":49,"./compiler":51,"./printer":54,"./visitor":55}],53:[function(require,module,exports){
+},{"./ast":47,"./compiler":49,"./printer":52,"./visitor":53}],51:[function(require,module,exports){
 // BEGIN(BROWSER)
 /* Jison generated parser */
 var handlebars = (function(){
@@ -18630,7 +18602,7 @@ return new Parser;
 
 module.exports = handlebars;
 
-},{}],54:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -18770,7 +18742,7 @@ return Handlebars;
 };
 
 
-},{}],55:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -18790,7 +18762,7 @@ return Handlebars;
 
 
 
-},{}],56:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -18898,7 +18870,7 @@ return Handlebars;
 
 };
 
-},{}],57:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 var toString = Object.prototype.toString;
@@ -18983,7 +18955,7 @@ Handlebars.Utils = {
 return Handlebars;
 };
 
-},{}],58:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};/*!
  * Lo-Dash v0.9.2 <http://lodash.com>
  * (c) 2012 John-David Dalton <http://allyoucanleet.com/>
@@ -23243,7 +23215,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
   }
 }(this));
 
-},{}],59:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 /*! Socket.IO.js build:0.9.16, development. Copyright(c) 2011 LearnBoost <dev@learnboost.com> MIT Licensed */
 
 var io = ('undefined' === typeof module ? {} : module.exports);
@@ -27117,5 +27089,5 @@ if (typeof define === "function" && define.amd) {
   define([], function () { return io; });
 }
 })();
-},{}]},{},[10])
+},{}]},{},[9])
 ;

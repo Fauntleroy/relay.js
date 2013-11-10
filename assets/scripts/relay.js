@@ -10,25 +10,36 @@ var $ = require('jquery');
 // set up namespace
 var relay = window.relay = window.relay || {};
 
-var Title = require('./title');
-var Connect = require('./connect.js');
-var Connections = require('./connections');
-var Connectivity = require('./connectivity.js');
-// transmit events across modules
-var mediator = _.extend( {}, Backbone.Events );
+var Title = require('./title/models/title.js');
+var TitleView = require('./title/views/title.js');
+var ConnectView = require('./connect.js');
+var Connections = require('./connections/collections/connections.js');
+var ConnectionsView = require('./connections/views/connections.js');
+var ConnectivityView = require('./connectivity.js'); 
 
 $(function(){
-	relay.mediator = mediator;
-	relay.title = new Title( mediator );
-	relay.connect = new Connect({
-		el: '#connect',
-		mediator: mediator,
-		config: relay.config
-	});
-	relay.connections = new Connections({
-		el: '#connections',
+	// start mediator for event transmission
+	var mediator = relay.mediator = _.extend( {}, Backbone.Events );
+	// initialize models and collections
+	relay.title = new Title( null, mediator );
+	relay.connections = new Connections( null, {
 		mediator: mediator,
 		max: relay.config.max_connections || Infinity
 	});
-	relay.connectivity = new Connectivity;
+	// initialize views
+	relay.views = {
+		title: new TitleView({
+			model: relay.title
+		}),
+		connect: new ConnectView({
+			el: '#connect',
+			mediator: mediator,
+			config: relay.config
+		}),
+		connections: new ConnectionsView({
+			el: '#connections',
+			collection: relay.connections
+		}),
+		connectivity: new Connectivity
+	};
 });
