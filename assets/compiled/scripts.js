@@ -315,6 +315,7 @@ module.exports = Backbone.Model.extend({
 	initialize: function(){
 		_( this ).bindAll( 'active', 'part', 'end', 'doAddMessage', 'doActive', 'doTopic' );
 		this.socket = this.collection.socket;
+		this.mediator = this.collection.mediator;
 		this.messages = new irc.Collections.Messages( null, { channel: this });
 		this.users = new irc.Collections.Users( null, { channel: this });
 		this.messages.on( 'add', this.doAddMessage );
@@ -2863,6 +2864,8 @@ module.exports = Backbone.View.extend({
 
 
 }(window.jQuery);
+},{}],"jquery":[function(require,module,exports){
+module.exports=require('O/eGLK');
 },{}],"O/eGLK":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
 /*!
@@ -12466,8 +12469,6 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
 }).call(global, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
-},{}],"jquery":[function(require,module,exports){
-module.exports=require('O/eGLK');
 },{}],17:[function(require,module,exports){
 /*!
  * jQuery serializeObject - v0.2 - 1/20/2010
