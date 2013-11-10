@@ -323,7 +323,7 @@ $(function(){
 			el: '#connections',
 			collection: relay.connections
 		}),
-		connectivity: new Connectivity
+		connectivity: new ConnectivityView
 	};
 });
 },{"./collections/connections.js":2,"./models/title.js":5,"./views/connect.js":26,"./views/connections.js":27,"./views/connectivity.js":28,"./views/title.js":29,"backbone":30,"jquery":"O/eGLK","lodash":67}],"bootstrap":[function(require,module,exports){
@@ -2493,9 +2493,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 }(window.jQuery);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery-ui":[function(require,module,exports){
-module.exports=require('eIf64p');
-},{}],"eIf64p":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"eIf64p":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -4723,8 +4721,8 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.emojify":[function(require,module,exports){
-module.exports=require('BczSQu');
+},{"jquery":"O/eGLK"}],"jquery-ui":[function(require,module,exports){
+module.exports=require('eIf64p');
 },{}],"BczSQu":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
@@ -4767,8 +4765,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery":[function(require,module,exports){
-module.exports=require('O/eGLK');
+},{"jquery":"O/eGLK"}],"jquery.emojify":[function(require,module,exports){
+module.exports=require('BczSQu');
 },{}],"O/eGLK":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
 /*!
@@ -14372,6 +14370,10 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
 }).call(global, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
+},{}],"jquery":[function(require,module,exports){
+module.exports=require('O/eGLK');
+},{}],"jquery.links":[function(require,module,exports){
+module.exports=require('eSCnzv');
 },{}],"eSCnzv":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
@@ -14411,8 +14413,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })( jQuery );
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.links":[function(require,module,exports){
-module.exports=require('eSCnzv');
+},{"jquery":"O/eGLK"}],"jquery.resize":[function(require,module,exports){
+module.exports=require('cpG4xX');
 },{}],"cpG4xX":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
@@ -14665,9 +14667,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })(jQuery,this);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.resize":[function(require,module,exports){
-module.exports=require('cpG4xX');
-},{}],"ImL1Nt":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"ImL1Nt":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -14706,6 +14706,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 },{"jquery":"O/eGLK"}],"jquery.serializeObject":[function(require,module,exports){
 module.exports=require('ImL1Nt');
+},{}],"jquery.sparkartTags":[function(require,module,exports){
+module.exports=require('cGjpmH');
 },{}],"cGjpmH":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
@@ -15013,9 +15015,7 @@ Sparkart Tags
 })( jQuery );
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.sparkartTags":[function(require,module,exports){
-module.exports=require('cGjpmH');
-},{}],"visibility":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"visibility":[function(require,module,exports){
 module.exports=require('STq6cz');
 },{}],"STq6cz":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {

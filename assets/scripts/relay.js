@@ -42,6 +42,6 @@ $(function(){
 			el: '#connections',
 			collection: relay.connections
 		}),
-		connectivity: new Connectivity
+		connectivity: new ConnectivityView
 	};
 });
