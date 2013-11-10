@@ -96,6 +96,7 @@ module.exports = Backbone.View.extend({
 		this.config = config.config;
 		this.mediator = config.mediator;
 		_( this ).bindAll( 'render', 'connect', 'show', 'hide', 'submitForm' );
+		this.listenTo( this.mediator, 'connect:show', this.show );
 		this.render();
 		this.show();
 	},

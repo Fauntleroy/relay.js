@@ -97,6 +97,7 @@ module.exports = Backbone.View.extend({
 		this.config = config.config;
 		this.mediator = config.mediator;
 		_( this ).bindAll( 'render', 'connect', 'show', 'hide', 'submitForm' );
+		this.listenTo( this.mediator, 'connect:show', this.show );
 		this.render();
 		this.show();
 	},
@@ -12802,8 +12803,6 @@ Sparkart Tags
 	};
 
 })( jQuery );
-},{}],"visibility":[function(require,module,exports){
-module.exports=require('STq6cz');
 },{}],"STq6cz":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
 /*
@@ -13059,6 +13058,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 }).call(global, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
+},{}],"visibility":[function(require,module,exports){
+module.exports=require('STq6cz');
 },{}],21:[function(require,module,exports){
 //     Backbone.js 1.0.0
 
