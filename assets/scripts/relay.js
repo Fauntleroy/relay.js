@@ -10,10 +10,12 @@ var $ = require('jquery');
 // set up namespace
 var relay = window.relay = window.relay || {};
 
+// Models and Collections
 var Title = require('./title/models/title.js');
+var Connections = require('./connections/collections/connections.js');
+// Views
 var TitleView = require('./title/views/title.js');
 var ConnectView = require('./connect.js');
-var Connections = require('./connections/collections/connections.js');
 var ConnectionsView = require('./connections/views/connections.js');
 var ConnectivityView = require('./connectivity.js'); 
 
