@@ -93,8 +93,8 @@ module.exports = Backbone.View.extend({
 		'click a[href="#advanced"]': 'clickAdvanced'
 	},
 	initialize: function( config ){
-		console.log('config',config);
 		this.config = config.config;
+		this.mediator = config.mediator;
 		_( this ).bindAll( 'render', 'connect', 'show', 'hide', 'submitForm' );
 		this.render();
 		this.show();
@@ -117,7 +117,10 @@ module.exports = Backbone.View.extend({
 		return this;
 	},
 	connect: function( parameters ){
-		$.post( '/connect', parameters, irc.connections.addConnection, 'json' );
+		var connect = this;
+		$.post( '/connect', parameters, function( data ){
+			connect.mediator.trigger( 'connections:add', data );
+		}, 'json' );
 	},
 	show: function(){
 		this.$modal.modal('show');

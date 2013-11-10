@@ -6,10 +6,11 @@ var Connection = require('../models/connection.js');
 module.exports = Backbone.Collection.extend({
 	model: Connection,
 	initialize: function( data, config ){
-		_( this ).bindAll( 'addConnection', 'updateActiveChannel' );
-		this.on( 'remove', this.updateActiveChannel );
 		this.mediator = config.mediator;
 		this.max = config.max;
+		_( this ).bindAll( 'addConnection', 'updateActiveChannel' );
+		this.on( 'remove', this.updateActiveChannel );
+		this.listenTo( this.mediator, 'connections:add', this.addConnection );
 	},
 	addConnection: function( data ){
 		this.add( data );
