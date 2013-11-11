@@ -36,7 +36,7 @@ module.exports = Backbone.Model.extend({
 		var unread = this.get('unread');
 		var channel = this.get('channel');
 		if( unread ) title_string += '('+ unread +') ';
-		title_string += channel ? channel.get('name') : this.get('title');
+		title_string += channel ? channel.get('display_name') : this.get('title');
 		return title_string;
 	}
 });

@@ -681,7 +681,7 @@ module.exports = Backbone.Model.extend({
 		var unread = this.get('unread');
 		var channel = this.get('channel');
 		if( unread ) title_string += '('+ unread +') ';
-		title_string += channel ? channel.get('name') : this.get('title');
+		title_string += channel ? channel.get('display_name') : this.get('title');
 		return title_string;
 	}
 });
@@ -770,9 +770,7 @@ $(function(){
 		connectivity: new ConnectivityView
 	};
 });
-},{"./collections/connections.js":2,"./models/title.js":9,"./views/channel.js":30,"./views/connect.js":33,"./views/connections.js":34,"./views/connectivity.js":35,"./views/title.js":37,"backbone":39,"jquery":"O/eGLK","lodash":76}],"bootstrap":[function(require,module,exports){
-module.exports=require('F4ZZz1');
-},{}],"F4ZZz1":[function(require,module,exports){
+},{"./collections/connections.js":2,"./models/title.js":9,"./views/channel.js":30,"./views/connect.js":33,"./views/connections.js":34,"./views/connectivity.js":35,"./views/title.js":37,"backbone":39,"jquery":"O/eGLK","lodash":76}],"F4ZZz1":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -2937,8 +2935,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 }(window.jQuery);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery-ui":[function(require,module,exports){
-module.exports=require('eIf64p');
+},{"jquery":"O/eGLK"}],"bootstrap":[function(require,module,exports){
+module.exports=require('F4ZZz1');
 },{}],"eIf64p":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
@@ -5167,7 +5165,9 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.emojify":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"jquery-ui":[function(require,module,exports){
+module.exports=require('eIf64p');
+},{}],"jquery.emojify":[function(require,module,exports){
 module.exports=require('BczSQu');
 },{}],"BczSQu":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
@@ -5211,9 +5211,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery":[function(require,module,exports){
-module.exports=require('O/eGLK');
-},{}],"O/eGLK":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"O/eGLK":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
 /*!
  * jQuery JavaScript Library v1.9.1
@@ -14816,6 +14814,8 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
 }).call(global, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
+},{}],"jquery":[function(require,module,exports){
+module.exports=require('O/eGLK');
 },{}],"jquery.links":[function(require,module,exports){
 module.exports=require('eSCnzv');
 },{}],"eSCnzv":[function(require,module,exports){
