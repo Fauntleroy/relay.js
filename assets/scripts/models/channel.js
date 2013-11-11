@@ -1,5 +1,6 @@
 var Backbone = require('backbone');
 var _ = require('lodash');
+var Messages = require('../collections/messages.js');
 
 module.exports = Backbone.Model.extend({
 	defaults: {
@@ -11,7 +12,7 @@ module.exports = Backbone.Model.extend({
 		_( this ).bindAll( 'active', 'part', 'end', 'doAddMessage', 'doActive', 'doTopic' );
 		this.socket = this.collection.socket;
 		this.mediator = this.collection.mediator;
-		this.messages = new irc.Collections.Messages( null, { channel: this });
+		this.messages = new Messages( null, { channel: this });
 		this.users = new irc.Collections.Users( null, { channel: this });
 		this.messages.on( 'add', this.doAddMessage );
 		this.socket.on( 'topic', this.doTopic );

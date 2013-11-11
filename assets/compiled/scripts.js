@@ -102,7 +102,7 @@ module.exports = Backbone.Collection.extend({
 		}
 	}
 });
-},{"../models/channel.js":3,"backbone":30,"lodash":67,"socket.io-client":68}],2:[function(require,module,exports){
+},{"../models/channel.js":4,"backbone":32,"lodash":69,"socket.io-client":70}],2:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var io = require('socket.io-client');
@@ -136,9 +136,239 @@ module.exports = Backbone.Collection.extend({
 		}
 	}
 });
-},{"../models/connection.js":4,"backbone":30,"lodash":67,"socket.io-client":68}],3:[function(require,module,exports){
+},{"../models/connection.js":5,"backbone":32,"lodash":69,"socket.io-client":70}],3:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
+var io = require('socket.io-client');
+var Message = require('../models/message.js');
+
+module.exports = Backbone.Collection.extend({
+	limit: 500,
+	model: Message,
+	initialize: function( models, parameters ){
+		// keep track of who's talking for user colors
+		this.presences = {};
+		this.presence_id = 1;
+		this.channel = parameters.channel;
+		this.connection = parameters.connection;
+		this.socket = this.connection.socket;
+		_( this ).bindAll( 'getPresence', 'doMessage', 'doNotice', 'doAway', 'doNowAway', 'doAction', 'doNick', 'doJoin', 'doPart', 'doQuit', 'doKick', 'doTopic', 'doModeAdd', 'doModeRemove', 'doMOTD', 'doWhois', 'doError', 'trim' );
+		// bind to all the socket events...
+		this.socket.on( 'message', this.doMessage );
+		this.socket.on( 'notice', this.doNotice );
+		this.socket.on( 'rpl_away', this.doAway );
+		this.socket.on( 'rpl_nowaway', this.doNowAway );
+		this.socket.on( 'action', this.doAction );
+		this.socket.on( 'nick', this.doNick );
+		this.socket.on( 'join', this.doJoin );
+		this.socket.on( 'part', this.doPart );
+		this.socket.on( 'quit', this.doQuit );
+		this.socket.on( 'kick', this.doKick );
+		this.socket.on( 'topic', this.doTopic );
+		this.socket.on( '+mode', this.doModeAdd );
+		this.socket.on( '-mode', this.doModeRemove );
+		this.socket.on( 'motd', this.doMOTD );
+		this.socket.on( 'whois', this.doWhois );
+		this.socket.on( 'error', this.doError );
+		this.on( 'add', this.trim );
+	},
+	// determine the presence ID to use
+	getPresence: function( nick ){
+		var presence_id = 0;
+		if( nick ){
+			presence_id = this.presences[nick] || this.presence_id++;
+			if( !this.presences[nick] ) this.presences[nick] = presence_id;
+			if( this.presence_id > 19 ) this.presence_id = 1;
+		}
+		return presence_id;
+	},
+	doMessage: function( from, to, message, timestamp ){
+		var from_self = ( from === this.connection.get('nick') );
+		var from_self_to_channel = ( from_self && to === this.channel.get('name') );
+		var from_user_to_self = ( from === this.channel.get('name') && to === this.connection.get('nick') );
+		if( from_self_to_channel || to === this.channel.get('name') || from_user_to_self ){
+			this.add({
+				message: true,
+				nick: from,
+				contents: message,
+				self: from_self,
+				presence_id: this.getPresence( from ),
+				timestamp: timestamp
+			});
+		}
+	},
+	doNotice: function( from, to, text, timestamp ){
+		// NOTICE usually pertain to the active channel
+		if( this.channel.get('active') ){
+			this.add({
+				notice: true,
+				from: from,
+				to: to,
+				text: text,
+				timestamp: timestamp
+			});
+		}
+	},
+	doAway: function( from, to, text, timestamp ){
+		if( from === this.channel.get('name') ){
+			this.add({
+				away: true,
+				nick: from,
+				contents: text,
+				timestamp: timestamp
+			});
+		}
+	},
+	doNowAway: function( to, text, timestamp ){
+		if( to === this.connection.get('nick') && this.channel.get('active') ){
+			this.add({
+				nowaway: true,
+				to: to,
+				text: text,
+				timestamp: timestamp
+			});
+		}
+	},
+	doAction: function( from, to, text, timestamp ){
+		if( to === this.channel.get('name') ){
+			this.add({
+				action: true,
+				nick: from,
+				contents: text,
+				presence_id: this.getPresence( from ),
+				timestamp: timestamp
+			});
+		}
+	},
+	doNick: function( old_nick, new_nick, channels, timestamp ){
+		if( _( channels ).indexOf( this.channel.get('name') ) >= 0 ){
+			this.add({
+				nick_change: true,
+				old_nick: old_nick,
+				new_nick: new_nick,
+				timestamp: timestamp
+			});
+			// update the presence ID on nick change
+			if( this.presences[old_nick] ) this.presences[new_nick] = this.presences[old_nick];
+		}
+	},
+	doJoin: function( channel, nick, timestamp ){
+		if( channel === this.channel.get('name') ){
+			this.add({
+				join: true,
+				nick: nick,
+				timestamp: timestamp
+			});
+		}
+	},
+	doPart: function( channel, nick, reason, timestamp ){
+		if( channel === this.channel.get('name') && nick !== this.connection.get('nick') ){
+			this.add({
+				part: true,
+				nick: nick,
+				reason: reason,
+				timestamp: timestamp
+			});
+		}
+	},
+	doQuit: function( nick, reason, channels, timestamp ){
+		if( _( channels ).indexOf( this.channel.get('name') ) >= 0 && nick !== this.connection.get('nick') ){
+			this.add({
+				part: true,
+				nick: nick,
+				reason: reason,
+				timestamp: timestamp
+			});
+		}
+	},
+	doKick: function( channel, nick, by, reason, timestamp ){
+		if( channel === this.channel.get('name') && nick !== this.connection.get('nick') ){
+			this.add({
+				kick: true,
+				nick: nick,
+				by: by,
+				reason: reason,
+				timestamp: timestamp
+			});
+		}
+	},
+	doTopic: function( channel, topic, nick, timestamp ){
+		if( channel === this.channel.get('name') ){
+			// Split nick off raw name
+			nick = nick.split('!')[0];
+			this.add({
+				topic: true,
+				nick: nick,
+				topic_text: topic,
+				timestamp: timestamp
+			});
+		}
+	},
+	doModeAdd: function( channel, by, mode, argument, timestamp ){
+		if( channel === this.channel.get('name') ){
+			this.add({
+				mode_add: true,
+				channel: channel,
+				by: by,
+				mode: mode,
+				argument: argument,
+				timestamp: timestamp
+			});
+		}
+	},
+	doModeRemove: function( channel, by, mode, argument, timestamp ){
+		if( channel === this.channel.get('name') ){
+			this.add({
+				mode_remove: true,
+				channel: channel,
+				by: by,
+				mode: mode,
+				argument: argument,
+				timestamp: timestamp
+			});
+		}
+	},
+	doMOTD: function( text, timestamp ){
+		if( !this.channel.get('name') ){
+			this.add({
+				motd: true,
+				text: text,
+				timestamp: timestamp
+			});
+		}
+	},
+	doWhois: function( info, timestamp ){
+		if( this.channel.get('active') ){
+			this.add({
+				whois: true,
+				info: info,
+				timestamp: timestamp
+			});
+		}
+	},
+	doError: function( text, timestamp ){
+		if( this.channel.get('active') ){
+			this.add({
+				error: true,
+				text: text,
+				timestamp: timestamp
+			});
+		}
+	},
+	// Ensure we never get *too* many messages
+	trim: function(){
+		if( this.length > this.limit ){
+			var messages = this.last( this.limit - parseInt( this.limit * 0.25, 10 ) );
+			this.reset( messages, {
+				silent: true
+			});
+		}
+	}
+});
+},{"../models/message.js":6,"backbone":32,"lodash":69,"socket.io-client":70}],4:[function(require,module,exports){
+var Backbone = require('backbone');
+var _ = require('lodash');
+var Messages = require('../collections/messages.js');
 
 module.exports = Backbone.Model.extend({
 	defaults: {
@@ -150,7 +380,7 @@ module.exports = Backbone.Model.extend({
 		_( this ).bindAll( 'active', 'part', 'end', 'doAddMessage', 'doActive', 'doTopic' );
 		this.socket = this.collection.socket;
 		this.mediator = this.collection.mediator;
-		this.messages = new irc.Collections.Messages( null, { channel: this });
+		this.messages = new Messages( null, { channel: this });
 		this.users = new irc.Collections.Users( null, { channel: this });
 		this.messages.on( 'add', this.doAddMessage );
 		this.socket.on( 'topic', this.doTopic );
@@ -197,7 +427,7 @@ module.exports = Backbone.Model.extend({
 		}
 	}
 });
-},{"backbone":30,"lodash":67}],4:[function(require,module,exports){
+},{"../collections/messages.js":3,"backbone":32,"lodash":69}],5:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var Channels = require('../collections/channels.js');
@@ -235,7 +465,18 @@ module.exports = Backbone.Model.extend({
 	}
 
 });
-},{"../collections/channels.js":1,"backbone":30,"lodash":67}],5:[function(require,module,exports){
+},{"../collections/channels.js":1,"backbone":32,"lodash":69}],6:[function(require,module,exports){
+var Backbone = require('backbone');
+var _ = require('lodash');
+
+module.exports = Backbone.Model.extend({
+	initialize: function(){
+		var user = this.collection.channel.users.findWhere({ nick: this.get('nick') }); // bad
+		var nick_mention_regex = new RegExp( '^'+ this.collection.connection.get('nick') ); // bad?
+		if( nick_mention_regex.test( this.get('contents') ) ) this.set( 'mention', true );
+	}
+});
+},{"backbone":32,"lodash":69}],7:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var Visibility = require('visibility');
@@ -278,7 +519,7 @@ module.exports = Backbone.Model.extend({
 		return title_string;
 	}
 });
-},{"backbone":30,"lodash":67,"visibility":"STq6cz"}],6:[function(require,module,exports){
+},{"backbone":32,"lodash":69,"visibility":"STq6cz"}],8:[function(require,module,exports){
 /*
 IRC Module
 This is the base that includes all submodules and initializes the application
@@ -326,7 +567,7 @@ $(function(){
 		connectivity: new ConnectivityView
 	};
 });
-},{"./collections/connections.js":2,"./models/title.js":5,"./views/connect.js":26,"./views/connections.js":27,"./views/connectivity.js":28,"./views/title.js":29,"backbone":30,"jquery":"O/eGLK","lodash":67}],"bootstrap":[function(require,module,exports){
+},{"./collections/connections.js":2,"./models/title.js":7,"./views/connect.js":28,"./views/connections.js":29,"./views/connectivity.js":30,"./views/title.js":31,"backbone":32,"jquery":"O/eGLK","lodash":69}],"bootstrap":[function(require,module,exports){
 module.exports=require('F4ZZz1');
 },{}],"F4ZZz1":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
@@ -4767,6 +5008,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 },{"jquery":"O/eGLK"}],"jquery.emojify":[function(require,module,exports){
 module.exports=require('BczSQu');
+},{}],"jquery":[function(require,module,exports){
+module.exports=require('O/eGLK');
 },{}],"O/eGLK":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
 /*!
@@ -14370,10 +14613,6 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
 }).call(global, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
-},{}],"jquery":[function(require,module,exports){
-module.exports=require('O/eGLK');
-},{}],"jquery.links":[function(require,module,exports){
-module.exports=require('eSCnzv');
 },{}],"eSCnzv":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
@@ -14413,7 +14652,9 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })( jQuery );
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.resize":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"jquery.links":[function(require,module,exports){
+module.exports=require('eSCnzv');
+},{}],"jquery.resize":[function(require,module,exports){
 module.exports=require('cpG4xX');
 },{}],"cpG4xX":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
@@ -14667,7 +14908,9 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })(jQuery,this);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"ImL1Nt":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"jquery.serializeObject":[function(require,module,exports){
+module.exports=require('ImL1Nt');
+},{}],"ImL1Nt":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -14704,9 +14947,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })(jQuery);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.serializeObject":[function(require,module,exports){
-module.exports=require('ImL1Nt');
-},{}],"jquery.sparkartTags":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"jquery.sparkartTags":[function(require,module,exports){
 module.exports=require('cGjpmH');
 },{}],"cGjpmH":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
@@ -15272,7 +15513,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 }).call(global, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
-},{}],25:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 var _ = require('lodash');
@@ -15341,7 +15582,7 @@ module.exports = Backbone.View.extend({
 		this.collection.get( id ).part();
 	}
 });
-},{"backbone":30,"handlebars":56,"jquery":"O/eGLK","lodash":67}],26:[function(require,module,exports){
+},{"backbone":32,"handlebars":58,"jquery":"O/eGLK","lodash":69}],28:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 require('bootstrap');
@@ -15487,7 +15728,7 @@ module.exports = Backbone.View.extend({
 	}
 });
 
-},{"backbone":30,"bootstrap":"F4ZZz1","handlebars":56,"handlebars-helper":33,"jquery":"O/eGLK","jquery.serializeObject":"ImL1Nt","jquery.sparkartTags":"cGjpmH","lodash":67}],27:[function(require,module,exports){
+},{"backbone":32,"bootstrap":"F4ZZz1","handlebars":58,"handlebars-helper":35,"jquery":"O/eGLK","jquery.serializeObject":"ImL1Nt","jquery.sparkartTags":"cGjpmH","lodash":69}],29:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 var _ = require('lodash');
@@ -15556,7 +15797,7 @@ module.exports = Backbone.View.extend({
 		connection.quit();
 	},
 });
-},{"./channels.js":25,"backbone":30,"handlebars":56,"jquery":"O/eGLK","lodash":67}],28:[function(require,module,exports){
+},{"./channels.js":27,"backbone":32,"handlebars":58,"jquery":"O/eGLK","lodash":69}],30:[function(require,module,exports){
 /*
 Connectivity Module
 Keeps track of the user's socket connection and displays its status
@@ -15601,7 +15842,7 @@ module.exports = Backbone.View.extend({
 		this.socket.on( event_name, _.bind( this.updateState, this, state ) );
 	}
 });
-},{"backbone":30,"handlebars":56,"jquery":"O/eGLK","lodash":67,"socket.io-client":68}],29:[function(require,module,exports){
+},{"backbone":32,"handlebars":58,"jquery":"O/eGLK","lodash":69,"socket.io-client":70}],31:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var $ = Backbone.$ = require('jquery');
@@ -15624,7 +15865,7 @@ module.exports = Backbone.View.extend({
 		}, UPDATE_DELAY );
 	}
 });
-},{"backbone":30,"jquery":"O/eGLK","lodash":67}],30:[function(require,module,exports){
+},{"backbone":32,"jquery":"O/eGLK","lodash":69}],32:[function(require,module,exports){
 //     Backbone.js 1.0.0
 
 //     (c) 2010-2013 Jeremy Ashkenas, DocumentCloud Inc.
@@ -17197,7 +17438,7 @@ module.exports = Backbone.View.extend({
 
 }).call(this);
 
-},{"underscore":31}],31:[function(require,module,exports){
+},{"underscore":33}],33:[function(require,module,exports){
 //     Underscore.js 1.5.2
 //     http://underscorejs.org
 //     (c) 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -18475,15 +18716,15 @@ module.exports = Backbone.View.extend({
 
 }).call(this);
 
-},{}],32:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 
 // not implemented
 // The reason for having an empty file and not throwing is to allow
 // untraditional implementation of this module.
 
-},{}],33:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 module.exports = require('./lib');
-},{"./lib":54}],34:[function(require,module,exports){
+},{"./lib":56}],36:[function(require,module,exports){
 // Modified form of `timeago` helper from https://github.com/assemble/handlebars-helpers
 var YEAR = 60 * 60 * 24 * 365;
 var MONTH = 60 * 60 * 24 * 30;
@@ -18506,7 +18747,7 @@ module.exports = function( date ){
 	if( Math.floor( seconds ) <= 1 ) return 'Just now';
 	else return Math.floor( seconds ) +' seconds ago';
 };
-},{}],35:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 module.exports = function( collection, start, end, options ){
 	options = options || end;
 	if( typeof start !== 'number' ) return;
@@ -18518,7 +18759,7 @@ module.exports = function( collection, start, end, options ){
 	}
 	return result;
 };
-},{}],36:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 module.exports = function( collection, item, options ){
 	// string check
 	if( typeof collection === 'string' ){
@@ -18537,11 +18778,11 @@ module.exports = function( collection, item, options ){
 	}
 	return options.inverse();
 };
-},{}],37:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 module.exports = function( string ){
 	return encodeURIComponent( string );	
 };
-},{}],38:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 module.exports = function( left, right, exact, options ){
 	options = options || exact;
 	exact = ( exact === 'exact' ) ? true : false;
@@ -18549,7 +18790,7 @@ module.exports = function( left, right, exact, options ){
 	if( is_equal ) return options.fn();
 	return options.inverse();
 };
-},{}],39:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 module.exports = function( collection, count, options ){
 	options = options || count;
 	count = ( typeof count === 'number' ) ? count : 1;
@@ -18559,7 +18800,7 @@ module.exports = function( collection, count, options ){
 		if( i + 1 == count ) return result;
 	}
 };
-},{}],40:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 var strftimeTZ = require('strftime').strftimeTZ;
 	
 module.exports = function( date_string, format, offset ){
@@ -18567,7 +18808,7 @@ module.exports = function( date_string, format, offset ){
 	var date = new Date( date_string );
 	return strftimeTZ( format, date, offset );
 };
-},{"strftime":55}],41:[function(require,module,exports){
+},{"strftime":57}],43:[function(require,module,exports){
 module.exports = function( left, right, equal, options ){
 	options = options || equal;
 	equal = ( equal === 'equal' ) ? true : false;
@@ -18575,7 +18816,7 @@ module.exports = function( left, right, equal, options ){
 	if( is_greater ) return options.fn();
 	return options.inverse();
 };
-},{}],42:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 module.exports = function( collection, separator ){
 	separator = ( typeof separator === 'string' ) ? separator : '';
 	// if the collectoin is an array this is easy
@@ -18589,7 +18830,7 @@ module.exports = function( collection, separator ){
 	}
 	return result.slice( 0, -separator.length );
 };
-},{}],43:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 module.exports = function( collection, count, options ){
 	options = options || count;
 	count = ( typeof count === 'number' ) ? count : 1;
@@ -18599,7 +18840,7 @@ module.exports = function( collection, count, options ){
 		if( i + 1 == count ) return result;
 	}
 };
-},{}],44:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 module.exports = function( collection ){
 	if( collection.length ) return collection.length;
 	var length = 0;
@@ -18610,7 +18851,7 @@ module.exports = function( collection ){
 	}
 	return length;
 };
-},{}],45:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 module.exports = function( left, right, equal, options ){
 	options = options || equal;
 	equal = ( equal === 'equal' ) ? true : false;
@@ -18618,11 +18859,11 @@ module.exports = function( left, right, equal, options ){
 	if( is_greater ) return options.fn();
 	return options.inverse();
 };
-},{}],46:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 module.exports = function( string ){
 	return ( string || '' ).toLowerCase();	
 };
-},{}],47:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 module.exports = function( collection, start, amount, options ){
 	options = options || amount;
 	if( typeof start !== 'number' ) return;
@@ -18634,11 +18875,11 @@ module.exports = function( collection, start, amount, options ){
 	}
 	return result;
 };
-},{}],48:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 module.exports = function( string, to_replace, replacement ){
 	return ( string || '' ).replace( to_replace, replacement );
 };
-},{}],49:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 module.exports = function( collection, options ){
 	var result = '';
 	for( var i = collection.length - 1; i >= 0; i-- ){
@@ -18646,7 +18887,7 @@ module.exports = function( collection, options ){
 	}
 	return result;
 };
-},{}],50:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 // Simple shuffling method based off of http://bost.ocks.org/mike/shuffle/
 var shuffle = function( array ){
 	var i = array.length, j, swap;
@@ -18667,7 +18908,7 @@ module.exports = function( collection, options ){
 	}
 	return result;
 };
-},{}],51:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 module.exports = function( number, zero, options ){
 	options = options || zero;
 	zero = ( zero === 'zero' ) ? true : false;
@@ -18681,11 +18922,11 @@ module.exports = function( number, zero, options ){
 	}
 	return result;
 };
-},{}],52:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 module.exports = function( string ){
 	return ( string || '' ).toUpperCase();
 };
-},{}],53:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 module.exports = function( collection, key, value, limit, options ){
 	options = options || limit;
 	if( typeof limit !== 'number' ) limit = Infinity;
@@ -18700,7 +18941,7 @@ module.exports = function( collection, key, value, limit, options ){
 	}
 	return result;
 };
-},{}],54:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 var helpers = {
 	// string
 	lowercase: require('./helpers/lowercase.js'),
@@ -18734,7 +18975,7 @@ module.exports.help = function( Handlebars ){
 		Handlebars.registerHelper( name, helpers[name] );
 	}
 };
-},{"./helpers/ago.js":34,"./helpers/between.js":35,"./helpers/contains.js":36,"./helpers/encode.js":37,"./helpers/equal.js":38,"./helpers/first.js":39,"./helpers/formatDate.js":40,"./helpers/greater.js":41,"./helpers/join.js":42,"./helpers/last.js":43,"./helpers/length.js":44,"./helpers/less.js":45,"./helpers/lowercase.js":46,"./helpers/range.js":47,"./helpers/replace.js":48,"./helpers/reverse.js":49,"./helpers/shuffle.js":50,"./helpers/times.js":51,"./helpers/uppercase.js":52,"./helpers/where.js":53}],55:[function(require,module,exports){
+},{"./helpers/ago.js":36,"./helpers/between.js":37,"./helpers/contains.js":38,"./helpers/encode.js":39,"./helpers/equal.js":40,"./helpers/first.js":41,"./helpers/formatDate.js":42,"./helpers/greater.js":43,"./helpers/join.js":44,"./helpers/last.js":45,"./helpers/length.js":46,"./helpers/less.js":47,"./helpers/lowercase.js":48,"./helpers/range.js":49,"./helpers/replace.js":50,"./helpers/reverse.js":51,"./helpers/shuffle.js":52,"./helpers/times.js":53,"./helpers/uppercase.js":54,"./helpers/where.js":55}],57:[function(require,module,exports){
 //
 // strftime
 // github.com/samsonjs/strftime
@@ -19008,7 +19249,7 @@ module.exports.help = function( Handlebars ){
 
 }());
 
-},{}],56:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 var handlebars = require("./handlebars/base"),
 
 // Each of these augment the Handlebars object. No need to setup here.
@@ -19053,7 +19294,7 @@ if (require.extensions) {
 // var singleton = handlebars.Handlebars,
 //  local = handlebars.create();
 
-},{"./handlebars/base":57,"./handlebars/compiler":61,"./handlebars/runtime":65,"./handlebars/utils":66,"fs":32}],57:[function(require,module,exports){
+},{"./handlebars/base":59,"./handlebars/compiler":63,"./handlebars/runtime":67,"./handlebars/utils":68,"fs":34}],59:[function(require,module,exports){
 /*jshint eqnull: true */
 
 module.exports.create = function() {
@@ -19221,7 +19462,7 @@ Handlebars.registerHelper('log', function(context, options) {
 return Handlebars;
 };
 
-},{}],58:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -19361,7 +19602,7 @@ return Handlebars;
 };
 
 
-},{}],59:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 var handlebars = require("./parser");
 
 exports.attach = function(Handlebars) {
@@ -19384,7 +19625,7 @@ Handlebars.parse = function(input) {
 return Handlebars;
 };
 
-},{"./parser":62}],60:[function(require,module,exports){
+},{"./parser":64}],62:[function(require,module,exports){
 var compilerbase = require("./base");
 
 exports.attach = function(Handlebars) {
@@ -20691,7 +20932,7 @@ return Handlebars;
 
 
 
-},{"./base":59}],61:[function(require,module,exports){
+},{"./base":61}],63:[function(require,module,exports){
 // Each of these module will augment the Handlebars object as it loads. No need to perform addition operations
 module.exports.attach = function(Handlebars) {
 
@@ -20709,7 +20950,7 @@ return Handlebars;
 
 };
 
-},{"./ast":58,"./compiler":60,"./printer":63,"./visitor":64}],62:[function(require,module,exports){
+},{"./ast":60,"./compiler":62,"./printer":65,"./visitor":66}],64:[function(require,module,exports){
 // BEGIN(BROWSER)
 /* Jison generated parser */
 var handlebars = (function(){
@@ -21194,7 +21435,7 @@ return new Parser;
 
 module.exports = handlebars;
 
-},{}],63:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -21334,7 +21575,7 @@ return Handlebars;
 };
 
 
-},{}],64:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -21354,7 +21595,7 @@ return Handlebars;
 
 
 
-},{}],65:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -21462,7 +21703,7 @@ return Handlebars;
 
 };
 
-},{}],66:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 var toString = Object.prototype.toString;
@@ -21547,7 +21788,7 @@ Handlebars.Utils = {
 return Handlebars;
 };
 
-},{}],67:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};/*!
  * Lo-Dash v0.9.2 <http://lodash.com>
  * (c) 2012 John-David Dalton <http://allyoucanleet.com/>
@@ -25807,7 +26048,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
   }
 }(this));
 
-},{}],68:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 /*! Socket.IO.js build:0.9.16, development. Copyright(c) 2011 LearnBoost <dev@learnboost.com> MIT Licensed */
 
 var io = ('undefined' === typeof module ? {} : module.exports);
@@ -29681,5 +29922,5 @@ if (typeof define === "function" && define.amd) {
   define([], function () { return io; });
 }
 })();
-},{}]},{},[6])
+},{}]},{},[8])
 ;
