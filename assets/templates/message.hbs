@@ -17,14 +17,14 @@
 {{#if away}}
 <li class="away">
 	<var class="timestamp">{{time timestamp}}</var>
-	<i class="icon-minus-sign"></i> <strong class="nick">{{nick}}</strong> <em>(away)</em> <span class="text">{{contents}}</span>
+	<i class="fa fa-minus-circle"></i> <strong class="nick">{{nick}}</strong> <em>(away)</em> <span class="text">{{contents}}</span>
 </li>
 {{/if}}
 
 {{#if nowaway}}
 <li class="nowaway">
 	<var class="timestamp">{{time timestamp}}</var>
-	<i class="icon-minus-sign"></i> {{text}}
+	<i class="fa fa-minus-circle"></i> {{text}}
 </li>
 {{/if}}
 
@@ -38,7 +38,7 @@
 {{#nick_change}}
 <li class="nick">
 	<var class="timestamp">{{time timestamp}}</var>
-	<i class="icon-user"></i> <strong class="nick">{{old_nick}}</strong> is now known as <strong class="nick">{{new_nick}}</strong>
+	<i class="fa fa-user"></i> <strong class="nick">{{old_nick}}</strong> is now known as <strong class="nick">{{new_nick}}</strong>
 </li>
 {{/nick_change}}
 
@@ -61,42 +61,42 @@
 {{#join}}
 <li class="join">
 	<var class="timestamp">{{time timestamp}}</var>
-	<i class="icon-chevron-right"></i> <strong>{{nick}}</strong> joined the channel
+	<i class="fa fa-chevron-right"></i> <strong>{{nick}}</strong> joined the channel
 </li>
 {{/join}}
 
 {{#part}}
 <li class="part">
 	<var class="timestamp">{{time timestamp}}</var>
-	<i class="icon-chevron-left"></i> <strong>{{nick}}</strong> left the channel{{#reason}} ( <span class="text">{{.}}</span> ){{/reason}}
+	<i class="fa fa-chevron-left"></i> <strong>{{nick}}</strong> left the channel{{#reason}} ( <span class="text">{{.}}</span> ){{/reason}}
 </li>
 {{/part}}
 
 {{#kick}}
 <li class="kick">
 	<var class="timestamp">{{time timestamp}}</var>
-	<i class="icon-chevron-left"></i> <strong class="nick">{{nick}}</strong> was kicked by <strong class="by">{{by}}</strong>{{#reason}} ( <span class="text">{{.}}</span> ){{/reason}}
+	<i class="fa fa-chevron-left"></i> <strong class="nick">{{nick}}</strong> was kicked by <strong class="by">{{by}}</strong>{{#reason}} ( <span class="text">{{.}}</span> ){{/reason}}
 </li>
 {{/kick}}
 
 {{#topic}}
 <li class="topic">
 	<var class="timestamp">{{time timestamp}}</var>
-	<i class="icon-pencil"></i> <strong>{{nick}}</strong> <span class="text">{{#topic_text}}set the topic to <em>&ldquo;{{.}}&rdquo;</em>{{/topic_text}}{{^topic_text}}cleared the topic{{/topic_text}}</span>
+	<i class="fa fa-pencil"></i> <strong>{{nick}}</strong> <span class="text">{{#topic_text}}set the topic to <em>&ldquo;{{.}}&rdquo;</em>{{/topic_text}}{{^topic_text}}cleared the topic{{/topic_text}}</span>
 </li>
 {{/topic}}
 
 {{#mode_add}}
 <li class="mode add">
 	<var class="timestamp">{{time timestamp}}</var>
-	<i class="icon-plus"></i>
+	<i class="fa fa-plus"></i>
 	<span class="text"><strong>{{by}}</strong> added the mode &ldquo;{{mode}}&rdquo; to {{channel}}{{#argument}} with the argument <code>{{.}}</code>{{/argument}}</span>
 {{/mode_add}}
 
 {{#mode_remove}}
 <li class="mode remove">
 	<var class="timestamp">{{time timestamp}}</var>
-	<i class="icon-minus"></i>
+	<i class="fa fa-minus"></i>
 	<span class="text"><strong>{{by}}</strong> removed the mode &ldquo;{{mode}}&rdquo; from {{channel}}{{#argument}} with the argument <code>{{.}}</code>{{/argument}}</span>
 {{/mode_remove}}
 
@@ -110,7 +110,7 @@
 {{#whois}}
 <li class="whois">
 	<var class="timestamp">{{time timestamp}}</var>
-	<i class="icon-question-sign"></i> WHOIS for <strong>{{info.nick}}</strong>: {{^info.server}}User not found.{{/info.server}}
+	<i class="fa fa-question-circle"></i> WHOIS for <strong>{{info.nick}}</strong>: {{^info.server}}User not found.{{/info.server}}
 	{{#info}}
 	<dl>
 		{{#if account}}<dt>account</dt><dd>{{account}}</dd>{{/if}}
@@ -127,6 +127,6 @@
 {{#error}}
 <li class="error">
 	<var class="timestamp">{{time timestamp}}</var>
-	<i class="icon-warning-sign"></i> <span class="text">{{text}}</span>
+	<i class="fa fa-exclamation-triangle"></i> <span class="text">{{text}}</span>
 </li>
 {{/error}}
