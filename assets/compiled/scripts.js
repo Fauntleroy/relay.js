@@ -103,7 +103,7 @@ module.exports = Backbone.Collection.extend({
 		}
 	}
 });
-},{"../models/channel.js":5,"backbone":36,"lodash":73,"socket.io-client":74}],2:[function(require,module,exports){
+},{"../models/channel.js":5,"backbone":37,"lodash":74,"socket.io-client":75}],2:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var io = require('socket.io-client');
@@ -137,7 +137,7 @@ module.exports = Backbone.Collection.extend({
 		}
 	}
 });
-},{"../models/connection.js":6,"backbone":36,"lodash":73,"socket.io-client":74}],3:[function(require,module,exports){
+},{"../models/connection.js":6,"backbone":37,"lodash":74,"socket.io-client":75}],3:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var io = require('socket.io-client');
@@ -366,7 +366,7 @@ module.exports = Backbone.Collection.extend({
 		}
 	}
 });
-},{"../models/message.js":7,"backbone":36,"lodash":73,"socket.io-client":74}],4:[function(require,module,exports){
+},{"../models/message.js":7,"backbone":37,"lodash":74,"socket.io-client":75}],4:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var io = require('socket.io-client');
@@ -495,7 +495,7 @@ module.exports = Backbone.Collection.extend({
 		this.sort();
 	}
 });
-},{"../models/user.js":9,"backbone":36,"lodash":73,"socket.io-client":74}],5:[function(require,module,exports){
+},{"../models/user.js":9,"backbone":37,"lodash":74,"socket.io-client":75}],5:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var Messages = require('../collections/messages.js');
@@ -564,7 +564,7 @@ module.exports = Backbone.Model.extend({
 		}
 	}
 });
-},{"../collections/messages.js":3,"../collections/users.js":4,"backbone":36,"lodash":73}],6:[function(require,module,exports){
+},{"../collections/messages.js":3,"../collections/users.js":4,"backbone":37,"lodash":74}],6:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var Channels = require('../collections/channels.js');
@@ -604,7 +604,7 @@ module.exports = Backbone.Model.extend({
 	}
 
 });
-},{"../collections/channels.js":1,"backbone":36,"lodash":73}],7:[function(require,module,exports){
+},{"../collections/channels.js":1,"backbone":37,"lodash":74}],7:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 
@@ -615,7 +615,7 @@ module.exports = Backbone.Model.extend({
 		if( nick_mention_regex.test( this.get('contents') ) ) this.set( 'mention', true );
 	}
 });
-},{"backbone":36,"lodash":73}],8:[function(require,module,exports){
+},{"backbone":37,"lodash":74}],8:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var Visibility = require('visibility');
@@ -658,7 +658,7 @@ module.exports = Backbone.Model.extend({
 		return title_string;
 	}
 });
-},{"backbone":36,"lodash":73,"visibility":"STq6cz"}],9:[function(require,module,exports){
+},{"backbone":37,"lodash":74,"visibility":"STq6cz"}],9:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 
@@ -690,7 +690,7 @@ module.exports = Backbone.Model.extend({
 		this.set( 'idle', idle + 1 );
 	}
 });
-},{"backbone":36,"lodash":73}],10:[function(require,module,exports){
+},{"backbone":37,"lodash":74}],10:[function(require,module,exports){
 /*
 IRC Module
 This is the base that includes all submodules and initializes the application
@@ -743,7 +743,9 @@ $(function(){
 		connectivity: new ConnectivityView
 	};
 });
-},{"./collections/connections.js":2,"./models/title.js":8,"./views/channel.js":29,"./views/connect.js":32,"./views/connections.js":33,"./views/connectivity.js":34,"./views/title.js":35,"backbone":36,"jquery":"O/eGLK","lodash":73}],"F4ZZz1":[function(require,module,exports){
+},{"./collections/connections.js":2,"./models/title.js":8,"./views/channel.js":29,"./views/connect.js":32,"./views/connections.js":33,"./views/connectivity.js":34,"./views/title.js":36,"backbone":37,"jquery":"O/eGLK","lodash":74}],"bootstrap":[function(require,module,exports){
+module.exports=require('F4ZZz1');
+},{}],"F4ZZz1":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -2908,9 +2910,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 }(window.jQuery);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"bootstrap":[function(require,module,exports){
-module.exports=require('F4ZZz1');
-},{}],"jquery-ui":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"jquery-ui":[function(require,module,exports){
 module.exports=require('eIf64p');
 },{}],"eIf64p":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
@@ -14830,9 +14830,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })( jQuery );
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.resize":[function(require,module,exports){
-module.exports=require('cpG4xX');
-},{}],"cpG4xX":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"cpG4xX":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -15084,7 +15082,11 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })(jQuery,this);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"ImL1Nt":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"jquery.resize":[function(require,module,exports){
+module.exports=require('cpG4xX');
+},{}],"jquery.serializeObject":[function(require,module,exports){
+module.exports=require('ImL1Nt');
+},{}],"ImL1Nt":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -15121,9 +15123,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })(jQuery);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.serializeObject":[function(require,module,exports){
-module.exports=require('ImL1Nt');
-},{}],"jquery.sparkartTags":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"jquery.sparkartTags":[function(require,module,exports){
 module.exports=require('cGjpmH');
 },{}],"cGjpmH":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
@@ -15432,9 +15432,7 @@ Sparkart Tags
 })( jQuery );
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"visibility":[function(require,module,exports){
-module.exports=require('STq6cz');
-},{}],"STq6cz":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"STq6cz":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
 /*
  * Copyright 2011 Andrey “A.I.” Sitnik <andrey@sitnik.ru>,
@@ -15689,6 +15687,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 }).call(global, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
+},{}],"visibility":[function(require,module,exports){
+module.exports=require('STq6cz');
 },{}],29:[function(require,module,exports){
 var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';
 
@@ -15698,6 +15698,7 @@ require('jquery.links');
 require('jquery.emojify');
 var _ = require('lodash');
 var Handlebars = require('handlebars');
+var MessagesView = require('./messages.js');
 
 module.exports = Backbone.View.extend({
 	template: Handlebars.compile('<div class="info">\
@@ -15725,7 +15726,7 @@ module.exports = Backbone.View.extend({
 		// Manage the subviews
 		if( this.messages ) this.messages.remove();
 		if( this.users ) this.users.remove();
-		this.messages = new irc.Views.Messages({ collection: this.model.messages, el: this.$messages });
+		this.messages = new MessagesView({ collection: this.model.messages, el: this.$messages });
 		this.messages.render();
 		if( this.model.get('channel') ){
 			this.users = new irc.Views.Users({ collection: this.model.users, el: this.$users });
@@ -15765,7 +15766,7 @@ module.exports = Backbone.View.extend({
 		this.$messages.css( 'top', height + 1 );
 	}
 });
-},{"backbone":36,"handlebars":62,"jquery":"O/eGLK","jquery.emojify":"BczSQu","jquery.links":"eSCnzv","lodash":73}],30:[function(require,module,exports){
+},{"./messages.js":35,"backbone":37,"handlebars":63,"jquery":"O/eGLK","jquery.emojify":"BczSQu","jquery.links":"eSCnzv","lodash":74}],30:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 var _ = require('lodash');
@@ -15812,7 +15813,7 @@ module.exports = Backbone.View.extend({
 		this.model.part();
 	}
 });
-},{"backbone":36,"handlebars":62,"jquery":"O/eGLK","lodash":73}],31:[function(require,module,exports){
+},{"backbone":37,"handlebars":63,"jquery":"O/eGLK","lodash":74}],31:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 require('jquery-ui');
@@ -15843,7 +15844,7 @@ module.exports = Backbone.View.extend({
 		this.$channels.append( channel_view.$el );
 	}
 });
-},{"../views/channel_listing.js":30,"backbone":36,"handlebars":62,"jquery":"O/eGLK","jquery-ui":"eIf64p","lodash":73}],32:[function(require,module,exports){
+},{"../views/channel_listing.js":30,"backbone":37,"handlebars":63,"jquery":"O/eGLK","jquery-ui":"eIf64p","lodash":74}],32:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 require('bootstrap');
@@ -15989,7 +15990,7 @@ module.exports = Backbone.View.extend({
 	}
 });
 
-},{"backbone":36,"bootstrap":"F4ZZz1","handlebars":62,"handlebars-helper":39,"jquery":"O/eGLK","jquery.serializeObject":"ImL1Nt","jquery.sparkartTags":"cGjpmH","lodash":73}],33:[function(require,module,exports){
+},{"backbone":37,"bootstrap":"F4ZZz1","handlebars":63,"handlebars-helper":40,"jquery":"O/eGLK","jquery.serializeObject":"ImL1Nt","jquery.sparkartTags":"cGjpmH","lodash":74}],33:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 var _ = require('lodash');
@@ -16058,7 +16059,7 @@ module.exports = Backbone.View.extend({
 		connection.quit();
 	},
 });
-},{"./channels.js":31,"backbone":36,"handlebars":62,"jquery":"O/eGLK","lodash":73}],34:[function(require,module,exports){
+},{"./channels.js":31,"backbone":37,"handlebars":63,"jquery":"O/eGLK","lodash":74}],34:[function(require,module,exports){
 /*
 Connectivity Module
 Keeps track of the user's socket connection and displays its status
@@ -16103,7 +16104,420 @@ module.exports = Backbone.View.extend({
 		this.socket.on( event_name, _.bind( this.updateState, this, state ) );
 	}
 });
-},{"backbone":36,"handlebars":62,"jquery":"O/eGLK","lodash":73,"socket.io-client":74}],35:[function(require,module,exports){
+},{"backbone":37,"handlebars":63,"jquery":"O/eGLK","lodash":74,"socket.io-client":75}],35:[function(require,module,exports){
+var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';
+
+var Backbone = require('backbone');
+var $ = Backbone.$ = require('jquery');
+require('jquery.links');
+require('jquery.emojify');
+var _ = require('lodash');
+var Handlebars = require('handlebars');
+
+// See if a URL is an image or not
+var testImage = function( url, callback ){
+	var is_image = /\.(?:jpg|jpeg|gif|png|bmp|svg)(?:[\?#].*){0,}$/i.test( url );
+	if( is_image ){
+		if( callback ) callback( null, {
+			url: url
+		});
+	}
+	else {
+		if( callback ) callback( 'No image found' );
+	}
+};
+
+// Get Youtube ID out of a URL
+var testYoutube = function( url, callback ){
+	var id = url.match( /(?:youtube\.com.*[\?&]v=|youtu\.be\/)(.{11})/i );
+	id = ( id )? id[1]: id;
+	if( id ){
+		var data = {
+			id: id,
+			url: url
+		};
+		if( callback ) callback( null, data );
+	}
+	else {
+		if( callback ) callback( 'Not YouTube' );
+	}
+};
+
+// Get Vimeo ID out of a URL
+var testVimeo = function( url, callback ){
+	var id = url.match( /vimeo\.com\/([0-9]*)/i );
+	id = ( id )? id[1]: id;
+	if( id ){
+		$.getJSON( 'http://vimeo.com/api/v2/video/'+ id +'.json?callback=?', function( data ){
+			var return_data = {
+				url: url,
+				thumbnail: data[0].thumbnail_large
+			};
+			if( callback ) callback( null, return_data );
+		});
+	}
+	else {
+		if( callback ) callback( 'Not Vimeo' );
+	}
+};
+
+// Get Gist ID out of a URL
+var testGist = function( url, callback ){
+	var gist_url = url.match( /(gist\.github\.com\/(?:[a-z0-9_-]+\/)?[a-z0-9]+)/i );
+	gist_url = ( gist_url )? 'https://'+ gist_url[1] +'.json': gist_url;
+	if( gist_url ){
+		$.getJSON( gist_url +'?callback=?', function( data ){
+			if( callback ) callback( null, data );
+		});
+	}
+	else {
+		if( callback ) callback( 'No Gist found' );
+	}
+};
+
+// Get SoundCloud ID out of a URL
+var testSoundCloud = function( url, callback ){
+	var is_soundcloud = /soundcloud.com/i.test( url );
+	if( is_soundcloud ) {
+		$.get( 'http://soundcloud.com/oembed', {
+			format: 'json',
+			url: url,
+			show_comments: false
+		}, function( data ){
+			if( callback ) callback( null, data );
+		});
+	} else {
+		if( callback ) callback( 'Not SoundCloud' );
+	}
+};
+
+// Get Vine ID out of a URL
+var testVine = function( url, callback ){
+	var id = url.match( /vine\.co\/v\/([0-9a-z]*)/i );
+	id = ( id )? id[1]: id;
+	if( id ){
+		var return_data = {
+			id: id
+		};
+		if( callback ) callback( null, return_data );
+	}
+	else {
+		if( callback ) callback( 'Not Vine' );
+	}
+};
+
+module.exports = Backbone.View.extend({
+	// keep track of nicks user can tab through
+	mention_nicks: null,
+	mention_next: null,
+	// know when we need to scroll down
+	is_near_bottom: true,
+	template: Handlebars.compile('<div class="scroll">\
+		<ul class="list"></ul>\
+	</div>\
+	<form class="new">\
+		<textarea name="message"></textarea>\
+	</form>'),
+	message_template: Handlebars.compile('{{#message}}\
+	{{^partial}}\
+	<li class="message{{#self}} self{{/self}}">\
+		<h5 class="nick"><a href="#{{nick}}" {{^self}}class="user{{presence_id}}"{{/self}}>{{nick}}</a></h5>\
+		<ul class="contents">\
+	{{/partial}}\
+			<li {{#mention}}class="mention"{{/mention}}>\
+				<var class="timestamp">{{time timestamp}}</var>\
+				<span class="text">{{breaklines contents}}</span>\
+			</li>\
+	{{^partial}}\
+		</ul>\
+	</li>\
+	{{/partial}}\
+	{{/message}}\
+	{{#if away}}\
+	<li class="away">\
+		<var class="timestamp">{{time timestamp}}</var>\
+		<i class="icon-minus-sign"></i> <strong class="nick">{{nick}}</strong> <em>(away)</em> <span class="text">{{contents}}</span>\
+	</li>\
+	{{/if}}\
+	{{#if nowaway}}\
+	<li class="nowaway">\
+		<var class="timestamp">{{time timestamp}}</var>\
+		<i class="icon-minus-sign"></i> {{text}}\
+	</li>\
+	{{/if}}\
+	{{#action}}\
+	<li class="action">\
+		<var class="timestamp">{{time timestamp}}</var>\
+		<em>* <strong>{{nick}}</strong> <span class="text">{{contents}}</span></em>\
+	</li>\
+	{{/action}}\
+	{{#nick_change}}\
+	<li class="nick">\
+		<var class="timestamp">{{time timestamp}}</var>\
+		<i class="icon-user"></i> <strong class="nick">{{old_nick}}</strong> is now known as <strong class="nick">{{new_nick}}</strong>\
+	</li>\
+	{{/nick_change}}\
+	{{#notice}}\
+	{{^partial}}\
+	<li class="notice">\
+		<h5>{{#from}}<span class="from">{{.}}</span> {{/from}}&#9656; <span class="to">{{to}}</span></h5>\
+		<ul class="contents">\
+	{{/partial}}\
+			<li>\
+				<var class="timestamp">{{time timestamp}}</var>\
+				<span class="text">{{text}}</span>\
+			</li>\
+	{{^partial}}\
+		</ul>\
+	</li>\
+	{{/partial}}\
+	{{/notice}}\
+	{{#join}}\
+	<li class="join">\
+		<var class="timestamp">{{time timestamp}}</var>\
+		<i class="icon-chevron-right"></i> <strong>{{nick}}</strong> joined the channel\
+	</li>\
+	{{/join}}\
+	{{#part}}\
+	<li class="part">\
+		<var class="timestamp">{{time timestamp}}</var>\
+		<i class="icon-chevron-left"></i> <strong>{{nick}}</strong> left the channel{{#reason}} ( <span class="text">{{.}}</span> ){{/reason}}\
+	</li>\
+	{{/part}}\
+	{{#kick}}\
+	<li class="kick">\
+		<var class="timestamp">{{time timestamp}}</var>\
+		<i class="icon-chevron-left"></i> <strong class="nick">{{nick}}</strong> was kicked by <strong class="by">{{by}}</strong>{{#reason}} ( <span class="text">{{.}}</span> ){{/reason}}\
+	</li>\
+	{{/kick}}\
+	{{#topic}}\
+	<li class="topic">\
+		<var class="timestamp">{{time timestamp}}</var>\
+		<i class="icon-pencil"></i> <strong>{{nick}}</strong> <span class="text">{{#topic_text}}set the topic to <em>&ldquo;{{.}}&rdquo;</em>{{/topic_text}}{{^topic_text}}cleared the topic{{/topic_text}}</span>\
+	</li>\
+	{{/topic}}\
+	{{#mode_add}}\
+	<li class="mode add">\
+		<var class="timestamp">{{time timestamp}}</var>\
+		<i class="icon-plus"></i>\
+		<span class="text"><strong>{{by}}</strong> added the mode &ldquo;{{mode}}&rdquo; to {{channel}}{{#argument}} with the argument <code>{{.}}</code>{{/argument}}</span>\
+	{{/mode_add}}\
+	{{#mode_remove}}\
+	<li class="mode remove">\
+		<var class="timestamp">{{time timestamp}}</var>\
+		<i class="icon-minus"></i>\
+		<span class="text"><strong>{{by}}</strong> removed the mode &ldquo;{{mode}}&rdquo; from {{channel}}{{#argument}} with the argument <code>{{.}}</code>{{/argument}}</span>\
+	{{/mode_remove}}\
+	{{#motd}}\
+	<li class="motd">\
+		<var class="timestamp">{{time timestamp}}</var>\
+		<pre class="text">{{text}}</pre>\
+	</li>\
+	{{/motd}}\
+	{{#whois}}\
+	<li class="whois">\
+		<var class="timestamp">{{time timestamp}}</var>\
+		<i class="icon-question-sign"></i> WHOIS for <strong>{{info.nick}}</strong>: {{^info.server}}User not found.{{/info.server}}\
+		{{#info}}\
+		<dl>\
+			{{#if account}}<dt>account</dt><dd>{{account}}</dd>{{/if}}\
+			{{#if user}}<dt>user</dt><dd>{{user}}</dd>{{/if}}\
+			{{#if host}}<dt>host</dt><dd>{{host}}</dd>{{/if}}\
+			{{#if realname}}<dt>realname</dt><dd>{{realname}}</dd>{{/if}}\
+			{{#if channels}}<dt>channels</dt><dd>{{#channels}}{{.}} {{/channels}}</dd>{{/if}}\
+			{{#if server}}<dt>server</dt><dd>{{server}} {{#if serverinfo}}({{serverinfo}}){{/if}}</dd>{{/if}}\
+		</dl>\
+		{{/info}}\
+	</li>\
+	{{/whois}}\
+	{{#error}}\
+	<li class="error">\
+		<var class="timestamp">{{time timestamp}}</var>\
+		<i class="icon-warning-sign"></i> <span class="text">{{text}}</span>\
+	</li>\
+	{{/error}}'),
+	events: {
+		'submit form.new': 'submitNew',
+		'keypress :input[name="message"]': 'keyTextarea',
+		'keydown :input[name="message"]': 'keydownTextarea'
+	},
+	initialize: function(){
+		_( this ).bindAll( 'render', 'renderMessage', 'postprocess', 'scrollBottom', 'scrollMessages', 'resizeMessages', 'submitNew', 'keyTextarea', 'keydownTextarea' );
+		this.listenTo( this.collection, 'add', this.renderMessage );
+	},
+	render: function(){
+		var html = this.template();
+		var $messages = $.parseHTML( html );
+		this.$el.html( $messages );
+		// cache elements
+		this.$form = this.$el.find('form.new');
+		this.$new_message = this.$form.find(':input[name="message"]');
+		this.$scroll = this.$el.find('div.scroll');
+		this.$messages = this.$scroll.children('ul.list');
+		// bind element events
+		this.$scroll.on( 'resize', this.resizeMessages );
+		this.$scroll.on( 'scroll', this.scrollMessages );
+		this.$messages.on( 'resize', this.resizeMessages );
+		// detach during this loop to speed up rendering
+		this.$messages = this.$messages.detach();
+		this.collection.each( this.renderMessage );
+		this.$messages.appendTo( this.$scroll );
+	},
+	// render an individual message
+	renderMessage: function( message ){
+		var json = message.toJSON();
+		var nick = message.get('nick');
+		var last_message = this.collection.at( this.collection.indexOf( message ) - 1 );
+		var $message, $partial, both_notice, both_message, notice_match, message_match;
+		// Check to see if this is a continuation of previous messaging
+		if( last_message ){
+			both_notice = ( last_message.get('notice') && message.get('notice') );
+			both_message = ( last_message.get('message') && message.get('message') );
+			notice_match = ( last_message.get('from') === message.get('from') && last_message.get('to') === message.get('to') );
+			message_match = ( last_message.get('nick') === nick );
+		}
+		// If this is a continuation, render the partial template and append it
+		if( ( both_notice && notice_match ) || ( both_message && message_match ) ){
+			json.partial = true;
+			$partial = $($.trim(this.message_template( json )));
+			this.$last_message.find('ul.contents').append( $partial );
+			this.postprocess( $partial );
+		}
+		else {
+			$message = $($.trim(this.message_template( json )));
+			this.$messages.append( $message );
+			this.postprocess( $message );
+		}
+		var force_scroll = ( nick === this.collection.connection.get('nick') );
+		this.scrollBottom( force_scroll );
+		this.last_message = message;
+		this.$last_message = $message || this.$last_message;
+	},
+	// modify the message markup after rendering
+	postprocess: function( $message ){
+		var $text = $message.find('.text');
+		var contents = $text.text();
+		var url_regex = /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/ig;
+		var urls = contents.match( url_regex ) || [];
+		$text
+		.links()
+		.emojify({
+			url: CDN_URL +'emoji',
+			attr: {
+				'class': 'emoji'
+			}
+		});
+		if( urls.length > 0 ){
+			var inlineImage = function( err, result ){
+				if( err ) return err;
+				var image_html = irc.templates['inline/image']( result );
+				$text.after( image_html );
+			};
+			var inlineGist = function( err, result ){
+				if( err ) return err;
+				var gist_html = irc.templates['inline/gist']( result );
+				$text.after( gist_html );
+			};
+			var inlineSoundCloud = function( err, result ){
+				if( err ) return err;
+				$text.after( result.html );
+			};
+			var inlineYoutube = function( err, result ){
+				if( err ) return err;
+				var youtube_html = irc.templates['inline/youtube']( result );
+				$text.after( youtube_html );
+			};
+			var inlineVimeo = function( err, result ){
+				if( err ) return err;
+				var vimeo_html = irc.templates['inline/vimeo']( result );
+				$text.after( vimeo_html );
+			};
+			var inlineVine = function( err, result ){
+				if( err ) return err;
+				var vine_html = irc.templates['inline/vine']( result );
+				$text.after( vine_html );
+			};
+			for( var i = urls.length - 1; i >= 0; i-- ){
+				// Check if it's an image
+				testImage( urls[i], inlineImage );
+				// Check if it's a soundcloud song
+				testSoundCloud( urls[i], inlineSoundCloud );
+				// Check if it's a youtube video
+				testYoutube( urls[i], inlineYoutube );
+				// Check if it's a vimeo video
+				testVimeo( urls[i], inlineVimeo );
+				// Check if it's a vine
+				testVine( urls[i], inlineVine );
+				// Check for Gists
+				testGist( urls[i], inlineGist );
+			}
+		}
+	},
+	// keep track of the user's scroll status
+	scrollMessages: function( e ){
+		var frame_height = this.$scroll.height();
+		var frame_scrollheight = this.$scroll[0].scrollHeight;
+		var frame_scrolltop = this.$scroll.scrollTop();
+		var frame_scrollbottom = frame_scrolltop + frame_height;
+		this.is_near_bottom = ( frame_scrollbottom + 50 > frame_scrollheight );
+	},
+	// Scrolls to the bottom of the chat messages
+	scrollBottom: function( force ){
+		if( this.is_near_bottom || force ){
+			try {
+				this.$scroll.scrollTop( this.$messages[0].scrollHeight );
+			} catch( err ){}
+		}
+	},
+	// update messages scroll position as elements change size
+	resizeMessages: _(function( e ){
+		this.scrollBottom();
+	}).throttle( 150, { leading: true, trailing: true } ),
+	submitNew: function( e ){
+		e.preventDefault();
+		var message = $.trim( this.$new_message.val() );
+		if( message !== '' ){
+			var socket = this.collection.socket;
+			var channel = this.collection.channel.get('name');
+			socket.emit( 'command', message, channel );
+			this.$new_message.val('');
+		}
+	},
+	keyTextarea: function( e ){
+		// send message when enter is pressed
+		if( e.which === 13 && !e.shiftKey ){
+			e.preventDefault();
+			return this.$form.trigger('submit');
+		}
+	},
+	// some things require keydown instead of keypress
+	keydownTextarea: function( e ){
+		// cancel out tabs
+		if( e.which === 9 ) e.preventDefault();
+		// try to complete a username
+		if( e.which === 9 && this.$new_message.val() ){
+			if( !this.mention_nicks ){
+				var text = this.$new_message.val();
+				var nick_regex = new RegExp( '^'+ text, 'i' );
+				var nicks = this.collection.channel.users.pluck('nick'); // bad?
+				this.mention_nicks = _( nicks ).filter( function( nick ){
+					return nick_regex.test( nick );
+				});
+				this.mention_next = this.mention_nicks[0];
+			}
+			else {
+				var mention_nick_id = _( this.mention_nicks ).indexOf( this.mention_next );
+				this.mention_next = this.mention_nicks[mention_nick_id+1] || this.mention_nicks[0];
+			}
+			if( this.mention_next )	this.$new_message.val( this.mention_next +': ' );
+		}
+		else {
+			this.mention_nicks = null;
+			this.mention_next = null;
+		}
+	}
+});
+},{"backbone":37,"handlebars":63,"jquery":"O/eGLK","jquery.emojify":"BczSQu","jquery.links":"eSCnzv","lodash":74}],36:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var $ = Backbone.$ = require('jquery');
@@ -16126,7 +16540,7 @@ module.exports = Backbone.View.extend({
 		}, UPDATE_DELAY );
 	}
 });
-},{"backbone":36,"jquery":"O/eGLK","lodash":73}],36:[function(require,module,exports){
+},{"backbone":37,"jquery":"O/eGLK","lodash":74}],37:[function(require,module,exports){
 //     Backbone.js 1.0.0
 
 //     (c) 2010-2013 Jeremy Ashkenas, DocumentCloud Inc.
@@ -17699,7 +18113,7 @@ module.exports = Backbone.View.extend({
 
 }).call(this);
 
-},{"underscore":37}],37:[function(require,module,exports){
+},{"underscore":38}],38:[function(require,module,exports){
 //     Underscore.js 1.5.2
 //     http://underscorejs.org
 //     (c) 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -18977,15 +19391,15 @@ module.exports = Backbone.View.extend({
 
 }).call(this);
 
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 
 // not implemented
 // The reason for having an empty file and not throwing is to allow
 // untraditional implementation of this module.
 
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 module.exports = require('./lib');
-},{"./lib":60}],40:[function(require,module,exports){
+},{"./lib":61}],41:[function(require,module,exports){
 // Modified form of `timeago` helper from https://github.com/assemble/handlebars-helpers
 var YEAR = 60 * 60 * 24 * 365;
 var MONTH = 60 * 60 * 24 * 30;
@@ -19008,7 +19422,7 @@ module.exports = function( date ){
 	if( Math.floor( seconds ) <= 1 ) return 'Just now';
 	else return Math.floor( seconds ) +' seconds ago';
 };
-},{}],41:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 module.exports = function( collection, start, end, options ){
 	options = options || end;
 	if( typeof start !== 'number' ) return;
@@ -19020,7 +19434,7 @@ module.exports = function( collection, start, end, options ){
 	}
 	return result;
 };
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 module.exports = function( collection, item, options ){
 	// string check
 	if( typeof collection === 'string' ){
@@ -19039,11 +19453,11 @@ module.exports = function( collection, item, options ){
 	}
 	return options.inverse();
 };
-},{}],43:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 module.exports = function( string ){
 	return encodeURIComponent( string );	
 };
-},{}],44:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 module.exports = function( left, right, exact, options ){
 	options = options || exact;
 	exact = ( exact === 'exact' ) ? true : false;
@@ -19051,7 +19465,7 @@ module.exports = function( left, right, exact, options ){
 	if( is_equal ) return options.fn();
 	return options.inverse();
 };
-},{}],45:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 module.exports = function( collection, count, options ){
 	options = options || count;
 	count = ( typeof count === 'number' ) ? count : 1;
@@ -19061,7 +19475,7 @@ module.exports = function( collection, count, options ){
 		if( i + 1 == count ) return result;
 	}
 };
-},{}],46:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 var strftimeTZ = require('strftime').strftimeTZ;
 	
 module.exports = function( date_string, format, offset ){
@@ -19069,7 +19483,7 @@ module.exports = function( date_string, format, offset ){
 	var date = new Date( date_string );
 	return strftimeTZ( format, date, offset );
 };
-},{"strftime":61}],47:[function(require,module,exports){
+},{"strftime":62}],48:[function(require,module,exports){
 module.exports = function( left, right, equal, options ){
 	options = options || equal;
 	equal = ( equal === 'equal' ) ? true : false;
@@ -19077,7 +19491,7 @@ module.exports = function( left, right, equal, options ){
 	if( is_greater ) return options.fn();
 	return options.inverse();
 };
-},{}],48:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 module.exports = function( collection, separator ){
 	separator = ( typeof separator === 'string' ) ? separator : '';
 	// if the collectoin is an array this is easy
@@ -19091,7 +19505,7 @@ module.exports = function( collection, separator ){
 	}
 	return result.slice( 0, -separator.length );
 };
-},{}],49:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 module.exports = function( collection, count, options ){
 	options = options || count;
 	count = ( typeof count === 'number' ) ? count : 1;
@@ -19101,7 +19515,7 @@ module.exports = function( collection, count, options ){
 		if( i + 1 == count ) return result;
 	}
 };
-},{}],50:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 module.exports = function( collection ){
 	if( collection.length ) return collection.length;
 	var length = 0;
@@ -19112,7 +19526,7 @@ module.exports = function( collection ){
 	}
 	return length;
 };
-},{}],51:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 module.exports = function( left, right, equal, options ){
 	options = options || equal;
 	equal = ( equal === 'equal' ) ? true : false;
@@ -19120,11 +19534,11 @@ module.exports = function( left, right, equal, options ){
 	if( is_greater ) return options.fn();
 	return options.inverse();
 };
-},{}],52:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 module.exports = function( string ){
 	return ( string || '' ).toLowerCase();	
 };
-},{}],53:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 module.exports = function( collection, start, amount, options ){
 	options = options || amount;
 	if( typeof start !== 'number' ) return;
@@ -19136,11 +19550,11 @@ module.exports = function( collection, start, amount, options ){
 	}
 	return result;
 };
-},{}],54:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 module.exports = function( string, to_replace, replacement ){
 	return ( string || '' ).replace( to_replace, replacement );
 };
-},{}],55:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 module.exports = function( collection, options ){
 	var result = '';
 	for( var i = collection.length - 1; i >= 0; i-- ){
@@ -19148,7 +19562,7 @@ module.exports = function( collection, options ){
 	}
 	return result;
 };
-},{}],56:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 // Simple shuffling method based off of http://bost.ocks.org/mike/shuffle/
 var shuffle = function( array ){
 	var i = array.length, j, swap;
@@ -19169,7 +19583,7 @@ module.exports = function( collection, options ){
 	}
 	return result;
 };
-},{}],57:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 module.exports = function( number, zero, options ){
 	options = options || zero;
 	zero = ( zero === 'zero' ) ? true : false;
@@ -19183,11 +19597,11 @@ module.exports = function( number, zero, options ){
 	}
 	return result;
 };
-},{}],58:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 module.exports = function( string ){
 	return ( string || '' ).toUpperCase();
 };
-},{}],59:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 module.exports = function( collection, key, value, limit, options ){
 	options = options || limit;
 	if( typeof limit !== 'number' ) limit = Infinity;
@@ -19202,7 +19616,7 @@ module.exports = function( collection, key, value, limit, options ){
 	}
 	return result;
 };
-},{}],60:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 var helpers = {
 	// string
 	lowercase: require('./helpers/lowercase.js'),
@@ -19236,7 +19650,7 @@ module.exports.help = function( Handlebars ){
 		Handlebars.registerHelper( name, helpers[name] );
 	}
 };
-},{"./helpers/ago.js":40,"./helpers/between.js":41,"./helpers/contains.js":42,"./helpers/encode.js":43,"./helpers/equal.js":44,"./helpers/first.js":45,"./helpers/formatDate.js":46,"./helpers/greater.js":47,"./helpers/join.js":48,"./helpers/last.js":49,"./helpers/length.js":50,"./helpers/less.js":51,"./helpers/lowercase.js":52,"./helpers/range.js":53,"./helpers/replace.js":54,"./helpers/reverse.js":55,"./helpers/shuffle.js":56,"./helpers/times.js":57,"./helpers/uppercase.js":58,"./helpers/where.js":59}],61:[function(require,module,exports){
+},{"./helpers/ago.js":41,"./helpers/between.js":42,"./helpers/contains.js":43,"./helpers/encode.js":44,"./helpers/equal.js":45,"./helpers/first.js":46,"./helpers/formatDate.js":47,"./helpers/greater.js":48,"./helpers/join.js":49,"./helpers/last.js":50,"./helpers/length.js":51,"./helpers/less.js":52,"./helpers/lowercase.js":53,"./helpers/range.js":54,"./helpers/replace.js":55,"./helpers/reverse.js":56,"./helpers/shuffle.js":57,"./helpers/times.js":58,"./helpers/uppercase.js":59,"./helpers/where.js":60}],62:[function(require,module,exports){
 //
 // strftime
 // github.com/samsonjs/strftime
@@ -19510,7 +19924,7 @@ module.exports.help = function( Handlebars ){
 
 }());
 
-},{}],62:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 var handlebars = require("./handlebars/base"),
 
 // Each of these augment the Handlebars object. No need to setup here.
@@ -19555,7 +19969,7 @@ if (require.extensions) {
 // var singleton = handlebars.Handlebars,
 //  local = handlebars.create();
 
-},{"./handlebars/base":63,"./handlebars/compiler":67,"./handlebars/runtime":71,"./handlebars/utils":72,"fs":38}],63:[function(require,module,exports){
+},{"./handlebars/base":64,"./handlebars/compiler":68,"./handlebars/runtime":72,"./handlebars/utils":73,"fs":39}],64:[function(require,module,exports){
 /*jshint eqnull: true */
 
 module.exports.create = function() {
@@ -19723,7 +20137,7 @@ Handlebars.registerHelper('log', function(context, options) {
 return Handlebars;
 };
 
-},{}],64:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -19863,7 +20277,7 @@ return Handlebars;
 };
 
 
-},{}],65:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 var handlebars = require("./parser");
 
 exports.attach = function(Handlebars) {
@@ -19886,7 +20300,7 @@ Handlebars.parse = function(input) {
 return Handlebars;
 };
 
-},{"./parser":68}],66:[function(require,module,exports){
+},{"./parser":69}],67:[function(require,module,exports){
 var compilerbase = require("./base");
 
 exports.attach = function(Handlebars) {
@@ -21193,7 +21607,7 @@ return Handlebars;
 
 
 
-},{"./base":65}],67:[function(require,module,exports){
+},{"./base":66}],68:[function(require,module,exports){
 // Each of these module will augment the Handlebars object as it loads. No need to perform addition operations
 module.exports.attach = function(Handlebars) {
 
@@ -21211,7 +21625,7 @@ return Handlebars;
 
 };
 
-},{"./ast":64,"./compiler":66,"./printer":69,"./visitor":70}],68:[function(require,module,exports){
+},{"./ast":65,"./compiler":67,"./printer":70,"./visitor":71}],69:[function(require,module,exports){
 // BEGIN(BROWSER)
 /* Jison generated parser */
 var handlebars = (function(){
@@ -21696,7 +22110,7 @@ return new Parser;
 
 module.exports = handlebars;
 
-},{}],69:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -21836,7 +22250,7 @@ return Handlebars;
 };
 
 
-},{}],70:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -21856,7 +22270,7 @@ return Handlebars;
 
 
 
-},{}],71:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -21964,7 +22378,7 @@ return Handlebars;
 
 };
 
-},{}],72:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 var toString = Object.prototype.toString;
@@ -22049,7 +22463,7 @@ Handlebars.Utils = {
 return Handlebars;
 };
 
-},{}],73:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};/*!
  * Lo-Dash v0.9.2 <http://lodash.com>
  * (c) 2012 John-David Dalton <http://allyoucanleet.com/>
@@ -26309,7 +26723,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
   }
 }(this));
 
-},{}],74:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 /*! Socket.IO.js build:0.9.16, development. Copyright(c) 2011 LearnBoost <dev@learnboost.com> MIT Licensed */
 
 var io = ('undefined' === typeof module ? {} : module.exports);
