@@ -47,6 +47,6 @@ $(function(){
 			el: '#channel',
 			mediator: mediator
 		}),
-		connectivity: new ConnectivityView
+		connectivity: new ConnectivityView()
 	};
 });
