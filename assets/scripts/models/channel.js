@@ -17,7 +17,7 @@ module.exports = Backbone.Model.extend({
 		this.users = new Users( null, { channel: this, socket: this.socket });
 		this.messages.on( 'add', this.doAddMessage );
 		this.socket.on( 'topic', this.doTopic );
-		irc.on( 'channels:active', this.doActive );
+		this.listenTo( this.mediator, 'channels:active', this.doActive );
 	},
 	active: function(){
 		if( !this.get('active') ){
@@ -26,7 +26,7 @@ module.exports = Backbone.Model.extend({
 				unread: 0
 			});
 			this.trigger( 'active', this );
-			irc.trigger( 'channels:active', this );
+			this.mediator.trigger( 'channels:active', this );
 		}
 	},
 	part: function(){
@@ -39,11 +39,10 @@ module.exports = Backbone.Model.extend({
 	end: function(){
 		this.messages.off();
 		this.socket.removeListener( 'topic', this.doTopic );
-		irc.off( 'channels:active', this.doActive );
 		this.destroy();
 	},
 	doAddMessage: function( message ){
-		if( this.get('active') ) irc.trigger( 'active:messages:add', message );
+		if( this.get('active') ) this.mediator.trigger( 'active:messages:add', message );
 		if( !this.get('active') && message.get('message') ){
 			var unread = this.get('unread');
 			this.set( 'unread', unread + 1 );

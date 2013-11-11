@@ -5,6 +5,7 @@ var Channels = require('../collections/channels.js');
 module.exports = Backbone.Model.extend({
 	initialize: function( data, config ){
 		config = config || {};
+		config.mediator = this.mediator = this.collection.mediator;
 		config.namespace = data.namespace; // attach this new connection to the config data
 		_( this ).bindAll( 'quit', 'doQuit', 'doNick', 'doRegister' );
 		this.socket = config.socket || io.connect( data.namespace );

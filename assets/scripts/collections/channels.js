@@ -6,9 +6,9 @@ var Channel = require('../models/channel.js');
 module.exports = Backbone.Collection.extend({
 	model: Channel,
 	initialize: function( models, config ){
-		_(this).bindAll( 'join', 'part', 'doChans', 'doJoin', 'doPart', 'doKick', 'doMessage', 'updateActive' );
 		this.mediator = config.mediator;
 		this.socket = config.socket || io.connect( config.namespace );
+		_(this).bindAll( 'join', 'part', 'doChans', 'doJoin', 'doPart', 'doKick', 'doMessage', 'updateActive' );
 		this.add({
 			status: true,
 			display_name: 'status'
