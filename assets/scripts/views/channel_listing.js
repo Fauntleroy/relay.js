@@ -2,15 +2,10 @@ var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 var _ = require('lodash');
 var Handlebars = require('handlebars');
+var templates = require('../../compiled/templates.js')( Handlebars );
 
 module.exports = Backbone.View.extend({
-	template: Handlebars.compile('<li data-name="{{name}}">\
-		<a class="name" href="{{display_name}}">\
-			<h5>{{#private_channel}}<i class="icon-comment"></i> {{/private_channel}}{{display_name}}</h5>\
-			<span class="unread badge badge-info">0</span>\
-		</a>\
-		{{^status}}<a class="part" href="#part">&times;</a>{{/status}}\
-	</li>'),
+	template: templates.channel_listing,
 	events: {
 		'click a.name': 'clickName',
 		'click a.part': 'clickPart'

@@ -2,11 +2,11 @@ var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 var _ = require('lodash');
 var Handlebars = require('handlebars');
+var templates = require('../../compiled/templates.js')( Handlebars );
 var ConnectionView = require('./connection.js');
 
 module.exports = Backbone.View.extend({
-	template: Handlebars.compile('<ul class="list"></ul>\
-	<button name="new_connection" class="btn"><i class="icon-plus"></i> New Connection</button>'),
+	template: templates.connections,
 	events: {
 		'click button[name="new_connection"]': 'clickNewConnection'
 	},

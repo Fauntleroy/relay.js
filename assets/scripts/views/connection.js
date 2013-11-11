@@ -2,16 +2,11 @@ var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 var _ = require('lodash');
 var Handlebars = require('handlebars');
+var templates = require('../../compiled/templates.js')( Handlebars );
 var ChannelsView = require('./channels.js');
 
 module.exports = Backbone.View.extend({
-	template: Handlebars.compile('<li data-id="{{id}}">\
-		<div class="info">\
-			<strong class="server">{{server}}</strong> (<em class="nick">{{nick}}</em>)\
-			<a class="disconnect" href="#quit">&times;</a>\
-		</div>\
-		<div class="channels"></div>\
-	</li>'),
+	template: templates.connection,
 	events: {
 		'click a[href="#quit"]': 'clickQuit'
 	},

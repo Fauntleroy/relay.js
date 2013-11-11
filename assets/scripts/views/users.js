@@ -2,17 +2,11 @@ var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 var _ = require('lodash');
 var Handlebars = require('handlebars');
+var templates = require('../../compiled/templates.js')( Handlebars );
 
 module.exports = Backbone.View.extend({
-	template: Handlebars.compile('<h6><var></var> Users</h6>\
-	<ul class="list"></ul>'),
-	user_template: Handlebars.compile('<li class="{{#active}}active{{/active}}{{^active}}inactive{{/active}}" data-nick="{{encodeURI nick}}">\
-		<a href="#{{nick}}">\
-			{{#rank}}<strong class="rank">{{.}}</strong>{{/rank}}\
-			<span class="nick">{{nick}}</span>\
-		</a>\
-		{{^active}}<var class="idle">{{idle}}m</var>{{/active}}\
-	</li>'),
+	template: templates.users,
+	user_template: templates.user,
 	initialize: function(){
 		_( this ).bindAll( 'render', 'renderUsers', 'updateUser' );
 		this.listenTo( this.collection, 'reset sort remove', this.renderUsers );

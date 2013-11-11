@@ -3,10 +3,11 @@ var $ = Backbone.$ = require('jquery');
 require('jquery-ui');
 var _ = require('lodash');
 var Handlebars = require('handlebars');
+var templates = require('../../compiled/templates.js')( Handlebars );
 var ChannelListingView = require('../views/channel_listing.js');
 
 module.exports = Backbone.View.extend({
-	template: Handlebars.compile('<ul class="list"></ul>'),
+	template: templates.channels,
 	initialize: function( data, config ){
 		_(this).bindAll( 'render', 'renderChannel' );
 		this.listenTo( this.collection, 'add', this.renderChannel );

@@ -7,16 +7,12 @@ require('jquery.emojify');
 require('jquery.resize');
 var _ = require('lodash');
 var Handlebars = require('handlebars');
+var templates = require('../../compiled/templates.js')( Handlebars );
 var MessagesView = require('./messages.js');
 var UsersView = require('./users.js');
 
 module.exports = Backbone.View.extend({
-	template: Handlebars.compile('<div class="info">\
-		<strong>{{display_name}}</strong>\
-		<span class="topic">{{topic}}</span>\
-	</div>\
-	<div class="messages"></div>\
-	<div class="users"></div>'),
+	template: templates.channel,
 	initialize: function( config ){
 		this.mediator = config.mediator;
 		_( this ).bindAll( 'render', 'clear', 'renderChannel', 'renderTopic', 'resizeMessages' );

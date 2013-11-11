@@ -21,21 +21,6 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		handlebars: {
-			compile: {
-				options: {
-					namespace: 'irc.templates',
-					processName: function( filename ){
-						filename = filename.replace( /^assets\/templates\//i, '' );
-						filename = filename.replace( /\.hbs$/i, '' );
-						return filename;
-					}
-				},
-				files: {
-					'assets/compiled/templates.js': ['assets/templates/**/*.hbs']
-				}
-			}
-		},
 		browserify: {
 			options: {
 				shim: {
@@ -101,6 +86,20 @@ module.exports = function(grunt) {
 			relay: {
 				files: {
 					'assets/compiled/scripts.js': ['assets/scripts/relay.js']
+				}
+			}
+		},
+		handlebars: {
+			templates: {
+				options: {
+					namespace: false,
+					commonjs: true,
+					processName: function( file_path ){
+						return file_path.replace( /^(assets\/templates\/)/, '' ).replace( /(\.hbs)$/, '' );
+					}
+				},
+				files: {
+					'assets/compiled/templates.js': ['assets/templates/**/*.hbs']
 				}
 			}
 		},
@@ -191,7 +190,7 @@ module.exports = function(grunt) {
 	grunt.registerTask( 'default', ['build'] );
 	grunt.registerTask( 'build', [ 'buildcss', 'buildjs' ] );
 	grunt.registerTask( 'buildcss', [ 'stylus', 'cssjoin', 'clean:css' ] );
-	grunt.registerTask( 'buildjs', [ 'jshint', 'browserify' ] );
+	grunt.registerTask( 'buildjs', [ 'jshint', 'handlebars', 'browserify' ] );
 	grunt.registerTask( 'minify', [ 'uglify', 'cssmin' ] );
 	grunt.registerTask( 'predeploy', [ 'build' ] );
 	grunt.registerTask( 'dev', [ 'build', 'server', 'watch' ] );
