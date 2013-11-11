@@ -681,7 +681,7 @@ module.exports = Backbone.Model.extend({
 		var unread = this.get('unread');
 		var channel = this.get('channel');
 		if( unread ) title_string += '('+ unread +') ';
-		title_string += channel ? channel : this.get('title');
+		title_string += channel ? channel.get('name') : this.get('title');
 		return title_string;
 	}
 });
@@ -14816,6 +14816,8 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
 }).call(global, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
+},{}],"jquery.links":[function(require,module,exports){
+module.exports=require('eSCnzv');
 },{}],"eSCnzv":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
@@ -14855,9 +14857,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })( jQuery );
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.links":[function(require,module,exports){
-module.exports=require('eSCnzv');
-},{}],"jquery.resize":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"jquery.resize":[function(require,module,exports){
 module.exports=require('cpG4xX');
 },{}],"cpG4xX":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
@@ -15111,7 +15111,9 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })(jQuery,this);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"ImL1Nt":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"jquery.serializeObject":[function(require,module,exports){
+module.exports=require('ImL1Nt');
+},{}],"ImL1Nt":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -15148,9 +15150,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })(jQuery);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.serializeObject":[function(require,module,exports){
-module.exports=require('ImL1Nt');
-},{}],"jquery.sparkartTags":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"jquery.sparkartTags":[function(require,module,exports){
 module.exports=require('cGjpmH');
 },{}],"cGjpmH":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
