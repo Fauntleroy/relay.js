@@ -731,9 +731,7 @@ $(function(){
 		connectivity: new ConnectivityView
 	};
 });
-},{"./collections/connections.js":2,"./models/title.js":8,"./views/connect.js":30,"./views/connections.js":31,"./views/connectivity.js":32,"./views/title.js":33,"backbone":34,"jquery":"O/eGLK","lodash":71}],"bootstrap":[function(require,module,exports){
-module.exports=require('F4ZZz1');
-},{}],"F4ZZz1":[function(require,module,exports){
+},{"./collections/connections.js":2,"./models/title.js":8,"./views/connect.js":30,"./views/connections.js":31,"./views/connectivity.js":32,"./views/title.js":33,"backbone":34,"jquery":"O/eGLK","lodash":71}],"F4ZZz1":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -2898,7 +2896,9 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 }(window.jQuery);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery-ui":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"bootstrap":[function(require,module,exports){
+module.exports=require('F4ZZz1');
+},{}],"jquery-ui":[function(require,module,exports){
 module.exports=require('eIf64p');
 },{}],"eIf64p":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
@@ -15072,9 +15072,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })(jQuery,this);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.serializeObject":[function(require,module,exports){
-module.exports=require('ImL1Nt');
-},{}],"ImL1Nt":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"ImL1Nt":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -15111,7 +15109,11 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })(jQuery);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"cGjpmH":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"jquery.serializeObject":[function(require,module,exports){
+module.exports=require('ImL1Nt');
+},{}],"jquery.sparkartTags":[function(require,module,exports){
+module.exports=require('cGjpmH');
+},{}],"cGjpmH":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -15418,9 +15420,7 @@ Sparkart Tags
 })( jQuery );
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.sparkartTags":[function(require,module,exports){
-module.exports=require('cGjpmH');
-},{}],"visibility":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"visibility":[function(require,module,exports){
 module.exports=require('STq6cz');
 },{}],"STq6cz":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
@@ -15932,8 +15932,8 @@ module.exports = Backbone.View.extend({
 		return this;
 	},
 	renderConnection: function( connection ){
-		var html = this.template( connection.toJSON() );
-		var $connection = $.parseHTML( html );
+		var html = this.connection_template( connection.toJSON() );
+		var $connection = $( html );
 		new ChannelsView({
 			el: $connection.find('.channels'),
 			collection: connection.channels
