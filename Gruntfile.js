@@ -150,6 +150,9 @@ module.exports = function(grunt) {
 			}
 		},
 		jshint: {
+			options: {
+				multistr: true
+			},
 			all: [ 'assets/scripts/**/*.js', '!assets/scripts/vendor/**/*.js' ]
 		}
 	});
@@ -175,7 +178,7 @@ module.exports = function(grunt) {
 	grunt.registerTask( 'default', ['build'] );
 	grunt.registerTask( 'build', [ 'buildcss', 'buildjs' ] );
 	grunt.registerTask( 'buildcss', [ 'stylus', 'cssjoin', 'clean:css' ] );
-	grunt.registerTask( 'buildjs', [ 'browserify' ] );
+	grunt.registerTask( 'buildjs', [ 'jshint', 'browserify' ] );
 	grunt.registerTask( 'minify', [ 'uglify', 'cssmin' ] );
 	grunt.registerTask( 'predeploy', [ 'build' ] );
 	grunt.registerTask( 'dev', [ 'build', 'server', 'watch' ] );
