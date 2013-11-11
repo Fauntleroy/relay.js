@@ -103,7 +103,7 @@ module.exports = Backbone.Collection.extend({
 		}
 	}
 });
-},{"../models/channel.js":5,"backbone":37,"lodash":74,"socket.io-client":75}],2:[function(require,module,exports){
+},{"../models/channel.js":6,"backbone":39,"lodash":76,"socket.io-client":77}],2:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var io = require('socket.io-client');
@@ -137,7 +137,7 @@ module.exports = Backbone.Collection.extend({
 		}
 	}
 });
-},{"../models/connection.js":6,"backbone":37,"lodash":74,"socket.io-client":75}],3:[function(require,module,exports){
+},{"../models/connection.js":7,"backbone":39,"lodash":76,"socket.io-client":77}],3:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var io = require('socket.io-client');
@@ -366,7 +366,7 @@ module.exports = Backbone.Collection.extend({
 		}
 	}
 });
-},{"../models/message.js":7,"backbone":37,"lodash":74,"socket.io-client":75}],4:[function(require,module,exports){
+},{"../models/message.js":8,"backbone":39,"lodash":76,"socket.io-client":77}],4:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var io = require('socket.io-client');
@@ -495,7 +495,34 @@ module.exports = Backbone.Collection.extend({
 		this.sort();
 	}
 });
-},{"../models/user.js":9,"backbone":37,"lodash":74,"socket.io-client":75}],5:[function(require,module,exports){
+},{"../models/user.js":10,"backbone":39,"lodash":76,"socket.io-client":77}],5:[function(require,module,exports){
+module.exports = function( Handlebars ){
+
+	Handlebars.registerHelper( 'time', function( timestamp ){
+		var datetime = new Date( timestamp );
+		var hour = datetime.getHours();
+		var hour_12 = hour % 12 || 12;
+		var minute = datetime.getMinutes().toString();
+		if( minute.length === 1 ) minute = '0'+ minute;
+		var second = datetime.getSeconds();
+		var am_pm = ( hour < 12 )? 'AM': 'PM';
+		return new Handlebars.SafeString( hour_12 +':'+ minute +' '+ am_pm );
+	});
+
+	Handlebars.registerHelper( 'breaklines', function( text ){
+	    text = Handlebars.Utils.escapeExpression( text );
+	    text = text.toString();
+	    text = text.replace( /(\r\n|\n|\r)/gm, '<br />' );
+	    return new Handlebars.SafeString( text );
+	});
+
+	Handlebars.registerHelper( 'encodeURI', function( string ){
+		string = encodeURI( string );
+		return string;
+	});
+
+};
+},{}],6:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var Messages = require('../collections/messages.js');
@@ -564,7 +591,7 @@ module.exports = Backbone.Model.extend({
 		}
 	}
 });
-},{"../collections/messages.js":3,"../collections/users.js":4,"backbone":37,"lodash":74}],6:[function(require,module,exports){
+},{"../collections/messages.js":3,"../collections/users.js":4,"backbone":39,"lodash":76}],7:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var Channels = require('../collections/channels.js');
@@ -604,7 +631,7 @@ module.exports = Backbone.Model.extend({
 	}
 
 });
-},{"../collections/channels.js":1,"backbone":37,"lodash":74}],7:[function(require,module,exports){
+},{"../collections/channels.js":1,"backbone":39,"lodash":76}],8:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 
@@ -615,7 +642,7 @@ module.exports = Backbone.Model.extend({
 		if( nick_mention_regex.test( this.get('contents') ) ) this.set( 'mention', true );
 	}
 });
-},{"backbone":37,"lodash":74}],8:[function(require,module,exports){
+},{"backbone":39,"lodash":76}],9:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var Visibility = require('visibility');
@@ -658,7 +685,7 @@ module.exports = Backbone.Model.extend({
 		return title_string;
 	}
 });
-},{"backbone":37,"lodash":74,"visibility":"STq6cz"}],9:[function(require,module,exports){
+},{"backbone":39,"lodash":76,"visibility":"STq6cz"}],10:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 
@@ -690,7 +717,7 @@ module.exports = Backbone.Model.extend({
 		this.set( 'idle', idle + 1 );
 	}
 });
-},{"backbone":37,"lodash":74}],10:[function(require,module,exports){
+},{"backbone":39,"lodash":76}],11:[function(require,module,exports){
 /*
 IRC Module
 This is the base that includes all submodules and initializes the application
@@ -743,9 +770,7 @@ $(function(){
 		connectivity: new ConnectivityView
 	};
 });
-},{"./collections/connections.js":2,"./models/title.js":8,"./views/channel.js":29,"./views/connect.js":32,"./views/connections.js":33,"./views/connectivity.js":34,"./views/title.js":36,"backbone":37,"jquery":"O/eGLK","lodash":74}],"bootstrap":[function(require,module,exports){
-module.exports=require('F4ZZz1');
-},{}],"F4ZZz1":[function(require,module,exports){
+},{"./collections/connections.js":2,"./models/title.js":9,"./views/channel.js":30,"./views/connect.js":33,"./views/connections.js":34,"./views/connectivity.js":35,"./views/title.js":37,"backbone":39,"jquery":"O/eGLK","lodash":76}],"F4ZZz1":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -2910,8 +2935,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 }(window.jQuery);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery-ui":[function(require,module,exports){
-module.exports=require('eIf64p');
+},{"jquery":"O/eGLK"}],"bootstrap":[function(require,module,exports){
+module.exports=require('F4ZZz1');
 },{}],"eIf64p":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
@@ -5140,8 +5165,8 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.emojify":[function(require,module,exports){
-module.exports=require('BczSQu');
+},{"jquery":"O/eGLK"}],"jquery-ui":[function(require,module,exports){
+module.exports=require('eIf64p');
 },{}],"BczSQu":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
@@ -5184,7 +5209,9 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"jquery.emojify":[function(require,module,exports){
+module.exports=require('BczSQu');
+},{}],"jquery":[function(require,module,exports){
 module.exports=require('O/eGLK');
 },{}],"O/eGLK":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
@@ -15123,9 +15150,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })(jQuery);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.sparkartTags":[function(require,module,exports){
-module.exports=require('cGjpmH');
-},{}],"cGjpmH":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"cGjpmH":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -15432,7 +15457,11 @@ Sparkart Tags
 })( jQuery );
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"STq6cz":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"jquery.sparkartTags":[function(require,module,exports){
+module.exports=require('cGjpmH');
+},{}],"visibility":[function(require,module,exports){
+module.exports=require('STq6cz');
+},{}],"STq6cz":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
 /*
  * Copyright 2011 Andrey “A.I.” Sitnik <andrey@sitnik.ru>,
@@ -15687,9 +15716,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 }).call(global, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
-},{}],"visibility":[function(require,module,exports){
-module.exports=require('STq6cz');
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';
 
 var Backbone = require('backbone');
@@ -15699,6 +15726,7 @@ require('jquery.emojify');
 var _ = require('lodash');
 var Handlebars = require('handlebars');
 var MessagesView = require('./messages.js');
+var UsersView = require('./users.js');
 
 module.exports = Backbone.View.extend({
 	template: Handlebars.compile('<div class="info">\
@@ -15729,7 +15757,7 @@ module.exports = Backbone.View.extend({
 		this.messages = new MessagesView({ collection: this.model.messages, el: this.$messages });
 		this.messages.render();
 		if( this.model.get('channel') ){
-			this.users = new irc.Views.Users({ collection: this.model.users, el: this.$users });
+			this.users = new UsersView({ collection: this.model.users, el: this.$users });
 			this.users.render();
 		}
 		this.messages.$new_message.focus();
@@ -15766,7 +15794,7 @@ module.exports = Backbone.View.extend({
 		this.$messages.css( 'top', height + 1 );
 	}
 });
-},{"./messages.js":35,"backbone":37,"handlebars":63,"jquery":"O/eGLK","jquery.emojify":"BczSQu","jquery.links":"eSCnzv","lodash":74}],30:[function(require,module,exports){
+},{"./messages.js":36,"./users.js":38,"backbone":39,"handlebars":65,"jquery":"O/eGLK","jquery.emojify":"BczSQu","jquery.links":"eSCnzv","lodash":76}],31:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 var _ = require('lodash');
@@ -15813,7 +15841,7 @@ module.exports = Backbone.View.extend({
 		this.model.part();
 	}
 });
-},{"backbone":37,"handlebars":63,"jquery":"O/eGLK","lodash":74}],31:[function(require,module,exports){
+},{"backbone":39,"handlebars":65,"jquery":"O/eGLK","lodash":76}],32:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 require('jquery-ui');
@@ -15844,7 +15872,7 @@ module.exports = Backbone.View.extend({
 		this.$channels.append( channel_view.$el );
 	}
 });
-},{"../views/channel_listing.js":30,"backbone":37,"handlebars":63,"jquery":"O/eGLK","jquery-ui":"eIf64p","lodash":74}],32:[function(require,module,exports){
+},{"../views/channel_listing.js":31,"backbone":39,"handlebars":65,"jquery":"O/eGLK","jquery-ui":"eIf64p","lodash":76}],33:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 require('bootstrap');
@@ -15990,7 +16018,7 @@ module.exports = Backbone.View.extend({
 	}
 });
 
-},{"backbone":37,"bootstrap":"F4ZZz1","handlebars":63,"handlebars-helper":40,"jquery":"O/eGLK","jquery.serializeObject":"ImL1Nt","jquery.sparkartTags":"cGjpmH","lodash":74}],33:[function(require,module,exports){
+},{"backbone":39,"bootstrap":"F4ZZz1","handlebars":65,"handlebars-helper":42,"jquery":"O/eGLK","jquery.serializeObject":"ImL1Nt","jquery.sparkartTags":"cGjpmH","lodash":76}],34:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 var _ = require('lodash');
@@ -16059,7 +16087,7 @@ module.exports = Backbone.View.extend({
 		connection.quit();
 	},
 });
-},{"./channels.js":31,"backbone":37,"handlebars":63,"jquery":"O/eGLK","lodash":74}],34:[function(require,module,exports){
+},{"./channels.js":32,"backbone":39,"handlebars":65,"jquery":"O/eGLK","lodash":76}],35:[function(require,module,exports){
 /*
 Connectivity Module
 Keeps track of the user's socket connection and displays its status
@@ -16104,7 +16132,7 @@ module.exports = Backbone.View.extend({
 		this.socket.on( event_name, _.bind( this.updateState, this, state ) );
 	}
 });
-},{"backbone":37,"handlebars":63,"jquery":"O/eGLK","lodash":74,"socket.io-client":75}],35:[function(require,module,exports){
+},{"backbone":39,"handlebars":65,"jquery":"O/eGLK","lodash":76,"socket.io-client":77}],36:[function(require,module,exports){
 var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';
 
 var Backbone = require('backbone');
@@ -16113,6 +16141,8 @@ require('jquery.links');
 require('jquery.emojify');
 var _ = require('lodash');
 var Handlebars = require('handlebars');
+var helpers = require('../handlebars_helpers.js');
+helpers( Handlebars );
 
 // See if a URL is an image or not
 var testImage = function( url, callback ){
@@ -16517,7 +16547,7 @@ module.exports = Backbone.View.extend({
 		}
 	}
 });
-},{"backbone":37,"handlebars":63,"jquery":"O/eGLK","jquery.emojify":"BczSQu","jquery.links":"eSCnzv","lodash":74}],36:[function(require,module,exports){
+},{"../handlebars_helpers.js":5,"backbone":39,"handlebars":65,"jquery":"O/eGLK","jquery.emojify":"BczSQu","jquery.links":"eSCnzv","lodash":76}],37:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var $ = Backbone.$ = require('jquery');
@@ -16540,7 +16570,54 @@ module.exports = Backbone.View.extend({
 		}, UPDATE_DELAY );
 	}
 });
-},{"backbone":37,"jquery":"O/eGLK","lodash":74}],37:[function(require,module,exports){
+},{"backbone":39,"jquery":"O/eGLK","lodash":76}],38:[function(require,module,exports){
+var Backbone = require('backbone');
+var $ = Backbone.$ = require('jquery');
+var _ = require('lodash');
+var Handlebars = require('handlebars');
+
+module.exports = Backbone.View.extend({
+	template: Handlebars.compile('<h6><var></var> Users</h6>\
+	<ul class="list"></ul>'),
+	user_template: Handlebars.compile('<li class="{{#active}}active{{/active}}{{^active}}inactive{{/active}}" data-nick="{{encodeURI nick}}">\
+		<a href="#{{nick}}">\
+			{{#rank}}<strong class="rank">{{.}}</strong>{{/rank}}\
+			<span class="nick">{{nick}}</span>\
+		</a>\
+		{{^active}}<var class="idle">{{idle}}m</var>{{/active}}\
+	</li>'),
+	initialize: function(){
+		_( this ).bindAll( 'render', 'renderUsers', 'updateUser' );
+		this.listenTo( this.collection, 'reset sort remove', this.renderUsers );
+		this.listenTo( this.collection, 'change', this.updateUser );
+	},
+	render: function(){
+		var html = this.template();
+		var $users = $.parseHTML( html );
+		this.$el.html( $users );
+		this.$title = this.$el.children('h6');
+		this.$count = this.$title.children('var');
+		this.$users = this.$el.find('ul.list');
+		this.renderUsers();
+		return this;
+	},
+	renderUsers: function( user ){
+		var users_view = this;
+		var html = '';
+		this.collection.each( function( user ){
+			html += users_view.user_template( user.toJSON() );
+		});
+		this.$users[0].innerHTML = html;
+		this.$count.text( this.collection.length );
+	},
+	updateUser: function( user ){
+		var $user = this.$users.find( '[data-nick="'+ encodeURI( user.get('nick') ) +'"]' );
+		var html = this.user_template( user.toJSON() );
+		var $user_new = $.parseHTML( html );
+		$user.replaceWith( $user_new );
+	}
+});
+},{"backbone":39,"handlebars":65,"jquery":"O/eGLK","lodash":76}],39:[function(require,module,exports){
 //     Backbone.js 1.0.0
 
 //     (c) 2010-2013 Jeremy Ashkenas, DocumentCloud Inc.
@@ -18113,7 +18190,7 @@ module.exports = Backbone.View.extend({
 
 }).call(this);
 
-},{"underscore":38}],38:[function(require,module,exports){
+},{"underscore":40}],40:[function(require,module,exports){
 //     Underscore.js 1.5.2
 //     http://underscorejs.org
 //     (c) 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -19391,15 +19468,15 @@ module.exports = Backbone.View.extend({
 
 }).call(this);
 
-},{}],39:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 
 // not implemented
 // The reason for having an empty file and not throwing is to allow
 // untraditional implementation of this module.
 
-},{}],40:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 module.exports = require('./lib');
-},{"./lib":61}],41:[function(require,module,exports){
+},{"./lib":63}],43:[function(require,module,exports){
 // Modified form of `timeago` helper from https://github.com/assemble/handlebars-helpers
 var YEAR = 60 * 60 * 24 * 365;
 var MONTH = 60 * 60 * 24 * 30;
@@ -19422,7 +19499,7 @@ module.exports = function( date ){
 	if( Math.floor( seconds ) <= 1 ) return 'Just now';
 	else return Math.floor( seconds ) +' seconds ago';
 };
-},{}],42:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 module.exports = function( collection, start, end, options ){
 	options = options || end;
 	if( typeof start !== 'number' ) return;
@@ -19434,7 +19511,7 @@ module.exports = function( collection, start, end, options ){
 	}
 	return result;
 };
-},{}],43:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 module.exports = function( collection, item, options ){
 	// string check
 	if( typeof collection === 'string' ){
@@ -19453,11 +19530,11 @@ module.exports = function( collection, item, options ){
 	}
 	return options.inverse();
 };
-},{}],44:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 module.exports = function( string ){
 	return encodeURIComponent( string );	
 };
-},{}],45:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 module.exports = function( left, right, exact, options ){
 	options = options || exact;
 	exact = ( exact === 'exact' ) ? true : false;
@@ -19465,7 +19542,7 @@ module.exports = function( left, right, exact, options ){
 	if( is_equal ) return options.fn();
 	return options.inverse();
 };
-},{}],46:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 module.exports = function( collection, count, options ){
 	options = options || count;
 	count = ( typeof count === 'number' ) ? count : 1;
@@ -19475,7 +19552,7 @@ module.exports = function( collection, count, options ){
 		if( i + 1 == count ) return result;
 	}
 };
-},{}],47:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 var strftimeTZ = require('strftime').strftimeTZ;
 	
 module.exports = function( date_string, format, offset ){
@@ -19483,7 +19560,7 @@ module.exports = function( date_string, format, offset ){
 	var date = new Date( date_string );
 	return strftimeTZ( format, date, offset );
 };
-},{"strftime":62}],48:[function(require,module,exports){
+},{"strftime":64}],50:[function(require,module,exports){
 module.exports = function( left, right, equal, options ){
 	options = options || equal;
 	equal = ( equal === 'equal' ) ? true : false;
@@ -19491,7 +19568,7 @@ module.exports = function( left, right, equal, options ){
 	if( is_greater ) return options.fn();
 	return options.inverse();
 };
-},{}],49:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 module.exports = function( collection, separator ){
 	separator = ( typeof separator === 'string' ) ? separator : '';
 	// if the collectoin is an array this is easy
@@ -19505,7 +19582,7 @@ module.exports = function( collection, separator ){
 	}
 	return result.slice( 0, -separator.length );
 };
-},{}],50:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 module.exports = function( collection, count, options ){
 	options = options || count;
 	count = ( typeof count === 'number' ) ? count : 1;
@@ -19515,7 +19592,7 @@ module.exports = function( collection, count, options ){
 		if( i + 1 == count ) return result;
 	}
 };
-},{}],51:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 module.exports = function( collection ){
 	if( collection.length ) return collection.length;
 	var length = 0;
@@ -19526,7 +19603,7 @@ module.exports = function( collection ){
 	}
 	return length;
 };
-},{}],52:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 module.exports = function( left, right, equal, options ){
 	options = options || equal;
 	equal = ( equal === 'equal' ) ? true : false;
@@ -19534,11 +19611,11 @@ module.exports = function( left, right, equal, options ){
 	if( is_greater ) return options.fn();
 	return options.inverse();
 };
-},{}],53:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 module.exports = function( string ){
 	return ( string || '' ).toLowerCase();	
 };
-},{}],54:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 module.exports = function( collection, start, amount, options ){
 	options = options || amount;
 	if( typeof start !== 'number' ) return;
@@ -19550,11 +19627,11 @@ module.exports = function( collection, start, amount, options ){
 	}
 	return result;
 };
-},{}],55:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 module.exports = function( string, to_replace, replacement ){
 	return ( string || '' ).replace( to_replace, replacement );
 };
-},{}],56:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 module.exports = function( collection, options ){
 	var result = '';
 	for( var i = collection.length - 1; i >= 0; i-- ){
@@ -19562,7 +19639,7 @@ module.exports = function( collection, options ){
 	}
 	return result;
 };
-},{}],57:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 // Simple shuffling method based off of http://bost.ocks.org/mike/shuffle/
 var shuffle = function( array ){
 	var i = array.length, j, swap;
@@ -19583,7 +19660,7 @@ module.exports = function( collection, options ){
 	}
 	return result;
 };
-},{}],58:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 module.exports = function( number, zero, options ){
 	options = options || zero;
 	zero = ( zero === 'zero' ) ? true : false;
@@ -19597,11 +19674,11 @@ module.exports = function( number, zero, options ){
 	}
 	return result;
 };
-},{}],59:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 module.exports = function( string ){
 	return ( string || '' ).toUpperCase();
 };
-},{}],60:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 module.exports = function( collection, key, value, limit, options ){
 	options = options || limit;
 	if( typeof limit !== 'number' ) limit = Infinity;
@@ -19616,7 +19693,7 @@ module.exports = function( collection, key, value, limit, options ){
 	}
 	return result;
 };
-},{}],61:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 var helpers = {
 	// string
 	lowercase: require('./helpers/lowercase.js'),
@@ -19650,7 +19727,7 @@ module.exports.help = function( Handlebars ){
 		Handlebars.registerHelper( name, helpers[name] );
 	}
 };
-},{"./helpers/ago.js":41,"./helpers/between.js":42,"./helpers/contains.js":43,"./helpers/encode.js":44,"./helpers/equal.js":45,"./helpers/first.js":46,"./helpers/formatDate.js":47,"./helpers/greater.js":48,"./helpers/join.js":49,"./helpers/last.js":50,"./helpers/length.js":51,"./helpers/less.js":52,"./helpers/lowercase.js":53,"./helpers/range.js":54,"./helpers/replace.js":55,"./helpers/reverse.js":56,"./helpers/shuffle.js":57,"./helpers/times.js":58,"./helpers/uppercase.js":59,"./helpers/where.js":60}],62:[function(require,module,exports){
+},{"./helpers/ago.js":43,"./helpers/between.js":44,"./helpers/contains.js":45,"./helpers/encode.js":46,"./helpers/equal.js":47,"./helpers/first.js":48,"./helpers/formatDate.js":49,"./helpers/greater.js":50,"./helpers/join.js":51,"./helpers/last.js":52,"./helpers/length.js":53,"./helpers/less.js":54,"./helpers/lowercase.js":55,"./helpers/range.js":56,"./helpers/replace.js":57,"./helpers/reverse.js":58,"./helpers/shuffle.js":59,"./helpers/times.js":60,"./helpers/uppercase.js":61,"./helpers/where.js":62}],64:[function(require,module,exports){
 //
 // strftime
 // github.com/samsonjs/strftime
@@ -19924,7 +20001,7 @@ module.exports.help = function( Handlebars ){
 
 }());
 
-},{}],63:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 var handlebars = require("./handlebars/base"),
 
 // Each of these augment the Handlebars object. No need to setup here.
@@ -19969,7 +20046,7 @@ if (require.extensions) {
 // var singleton = handlebars.Handlebars,
 //  local = handlebars.create();
 
-},{"./handlebars/base":64,"./handlebars/compiler":68,"./handlebars/runtime":72,"./handlebars/utils":73,"fs":39}],64:[function(require,module,exports){
+},{"./handlebars/base":66,"./handlebars/compiler":70,"./handlebars/runtime":74,"./handlebars/utils":75,"fs":41}],66:[function(require,module,exports){
 /*jshint eqnull: true */
 
 module.exports.create = function() {
@@ -20137,7 +20214,7 @@ Handlebars.registerHelper('log', function(context, options) {
 return Handlebars;
 };
 
-},{}],65:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -20277,7 +20354,7 @@ return Handlebars;
 };
 
 
-},{}],66:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 var handlebars = require("./parser");
 
 exports.attach = function(Handlebars) {
@@ -20300,7 +20377,7 @@ Handlebars.parse = function(input) {
 return Handlebars;
 };
 
-},{"./parser":69}],67:[function(require,module,exports){
+},{"./parser":71}],69:[function(require,module,exports){
 var compilerbase = require("./base");
 
 exports.attach = function(Handlebars) {
@@ -21607,7 +21684,7 @@ return Handlebars;
 
 
 
-},{"./base":66}],68:[function(require,module,exports){
+},{"./base":68}],70:[function(require,module,exports){
 // Each of these module will augment the Handlebars object as it loads. No need to perform addition operations
 module.exports.attach = function(Handlebars) {
 
@@ -21625,7 +21702,7 @@ return Handlebars;
 
 };
 
-},{"./ast":65,"./compiler":67,"./printer":70,"./visitor":71}],69:[function(require,module,exports){
+},{"./ast":67,"./compiler":69,"./printer":72,"./visitor":73}],71:[function(require,module,exports){
 // BEGIN(BROWSER)
 /* Jison generated parser */
 var handlebars = (function(){
@@ -22110,7 +22187,7 @@ return new Parser;
 
 module.exports = handlebars;
 
-},{}],70:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -22250,7 +22327,7 @@ return Handlebars;
 };
 
 
-},{}],71:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -22270,7 +22347,7 @@ return Handlebars;
 
 
 
-},{}],72:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -22378,7 +22455,7 @@ return Handlebars;
 
 };
 
-},{}],73:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 var toString = Object.prototype.toString;
@@ -22463,7 +22540,7 @@ Handlebars.Utils = {
 return Handlebars;
 };
 
-},{}],74:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};/*!
  * Lo-Dash v0.9.2 <http://lodash.com>
  * (c) 2012 John-David Dalton <http://allyoucanleet.com/>
@@ -26723,7 +26800,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
   }
 }(this));
 
-},{}],75:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 /*! Socket.IO.js build:0.9.16, development. Copyright(c) 2011 LearnBoost <dev@learnboost.com> MIT Licensed */
 
 var io = ('undefined' === typeof module ? {} : module.exports);
@@ -30597,5 +30674,5 @@ if (typeof define === "function" && define.amd) {
   define([], function () { return io; });
 }
 })();
-},{}]},{},[10])
+},{}]},{},[11])
 ;

@@ -7,6 +7,7 @@ require('jquery.emojify');
 var _ = require('lodash');
 var Handlebars = require('handlebars');
 var MessagesView = require('./messages.js');
+var UsersView = require('./users.js');
 
 module.exports = Backbone.View.extend({
 	template: Handlebars.compile('<div class="info">\
@@ -37,7 +38,7 @@ module.exports = Backbone.View.extend({
 		this.messages = new MessagesView({ collection: this.model.messages, el: this.$messages });
 		this.messages.render();
 		if( this.model.get('channel') ){
-			this.users = new irc.Views.Users({ collection: this.model.users, el: this.$users });
+			this.users = new UsersView({ collection: this.model.users, el: this.$users });
 			this.users.render();
 		}
 		this.messages.$new_message.focus();

@@ -6,6 +6,8 @@ require('jquery.links');
 require('jquery.emojify');
 var _ = require('lodash');
 var Handlebars = require('handlebars');
+var helpers = require('../handlebars_helpers.js');
+helpers( Handlebars );
 
 // See if a URL is an image or not
 var testImage = function( url, callback ){
