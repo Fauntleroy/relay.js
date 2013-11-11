@@ -17,7 +17,8 @@ var Connections = require('./collections/connections.js');
 var TitleView = require('./views/title.js');
 var ConnectView = require('./views/connect.js');
 var ConnectionsView = require('./views/connections.js');
-var ConnectivityView = require('./views/connectivity.js'); 
+var ChannelView = require('./views/channel.js');
+var ConnectivityView = require('./views/connectivity.js');
 
 $(function(){
 	// start mediator for event transmission
@@ -41,6 +42,10 @@ $(function(){
 		connections: new ConnectionsView({
 			el: '#connections',
 			collection: relay.connections
+		}),
+		channel: new ChannelView({
+			el: '#channel',
+			mediator: mediator
 		}),
 		connectivity: new ConnectivityView
 	};
