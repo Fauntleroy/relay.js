@@ -13,8 +13,8 @@ module.exports = Backbone.Model.extend({
 		_( this ).bindAll( 'active', 'part', 'end', 'doAddMessage', 'doActive', 'doTopic' );
 		this.socket = this.collection.socket;
 		this.mediator = this.collection.mediator;
-		this.messages = new Messages( null, { channel: this });
-		this.users = new Users( null, { channel: this });
+		this.messages = new Messages( null, { channel: this, socket: this.socket });
+		this.users = new Users( null, { channel: this, socket: this.socket });
 		this.messages.on( 'add', this.doAddMessage );
 		this.socket.on( 'topic', this.doTopic );
 		irc.on( 'channels:active', this.doActive );

@@ -6,13 +6,15 @@ var Message = require('../models/message.js');
 module.exports = Backbone.Collection.extend({
 	limit: 500,
 	model: Message,
-	initialize: function( models, parameters ){
+	initialize: function( models, config ){
 		// keep track of who's talking for user colors
 		this.presences = {};
 		this.presence_id = 1;
-		this.channel = parameters.channel;
-		this.connection = parameters.connection;
-		this.socket = this.connection.socket;
+		this.channel = config.channel;
+		this.connection = config.connection;
+		console.log( 'config', config );
+		console.log( 'this.connection', this.connection );
+		this.socket = config.socket;
 		_( this ).bindAll( 'getPresence', 'doMessage', 'doNotice', 'doAway', 'doNowAway', 'doAction', 'doNick', 'doJoin', 'doPart', 'doQuit', 'doKick', 'doTopic', 'doModeAdd', 'doModeRemove', 'doMOTD', 'doWhois', 'doError', 'trim' );
 		// bind to all the socket events...
 		this.socket.on( 'message', this.doMessage );

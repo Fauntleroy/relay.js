@@ -145,13 +145,15 @@ var Message = require('../models/message.js');
 module.exports = Backbone.Collection.extend({
 	limit: 500,
 	model: Message,
-	initialize: function( models, parameters ){
+	initialize: function( models, config ){
 		// keep track of who's talking for user colors
 		this.presences = {};
 		this.presence_id = 1;
-		this.channel = parameters.channel;
-		this.connection = parameters.connection;
-		this.socket = this.connection.socket;
+		this.channel = config.channel;
+		this.connection = config.connection;
+		console.log( 'config', config );
+		console.log( 'this.connection', this.connection );
+		this.socket = config.socket;
 		_( this ).bindAll( 'getPresence', 'doMessage', 'doNotice', 'doAway', 'doNowAway', 'doAction', 'doNick', 'doJoin', 'doPart', 'doQuit', 'doKick', 'doTopic', 'doModeAdd', 'doModeRemove', 'doMOTD', 'doWhois', 'doError', 'trim' );
 		// bind to all the socket events...
 		this.socket.on( 'message', this.doMessage );
@@ -373,10 +375,10 @@ var User = require('../models/user.js');
 
 module.exports = Backbone.Collection.extend({
 	model: User,
-	initialize: function( models, parameters ){
-		this.channel = parameters.channel;
-		this.connection = parameters.connection;
-		this.socket = this.connection.socket;
+	initialize: function( models, config ){
+		this.channel = config.channel;
+		this.connection = config.connection;
+		this.socket = config.socket;
 		_( this ).bindAll( 'idle', 'doNames', 'doMessage', 'doModeAdd', 'doModeRemove', 'doAction', 'doPart', 'doQuit', 'doKick', 'doJoin', 'doNick', 'doChange' );
 		// bind to all these socket events...
 		this.socket.on( 'names', this.doNames );
@@ -510,8 +512,8 @@ module.exports = Backbone.Model.extend({
 		_( this ).bindAll( 'active', 'part', 'end', 'doAddMessage', 'doActive', 'doTopic' );
 		this.socket = this.collection.socket;
 		this.mediator = this.collection.mediator;
-		this.messages = new Messages( null, { channel: this });
-		this.users = new Users( null, { channel: this });
+		this.messages = new Messages( null, { channel: this, socket: this.socket });
+		this.users = new Users( null, { channel: this, socket: this.socket });
 		this.messages.on( 'add', this.doAddMessage );
 		this.socket.on( 'topic', this.doTopic );
 		irc.on( 'channels:active', this.doActive );
@@ -729,9 +731,7 @@ $(function(){
 		connectivity: new ConnectivityView
 	};
 });
-},{"./collections/connections.js":2,"./models/title.js":8,"./views/connect.js":30,"./views/connections.js":31,"./views/connectivity.js":32,"./views/title.js":33,"backbone":34,"jquery":"O/eGLK","lodash":71}],"bootstrap":[function(require,module,exports){
-module.exports=require('F4ZZz1');
-},{}],"F4ZZz1":[function(require,module,exports){
+},{"./collections/connections.js":2,"./models/title.js":8,"./views/connect.js":30,"./views/connections.js":31,"./views/connectivity.js":32,"./views/title.js":33,"backbone":34,"jquery":"O/eGLK","lodash":71}],"F4ZZz1":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -2896,7 +2896,9 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 }(window.jQuery);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"eIf64p":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"bootstrap":[function(require,module,exports){
+module.exports=require('F4ZZz1');
+},{}],"eIf64p":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -5126,8 +5128,6 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 },{"jquery":"O/eGLK"}],"jquery-ui":[function(require,module,exports){
 module.exports=require('eIf64p');
-},{}],"jquery.emojify":[function(require,module,exports){
-module.exports=require('BczSQu');
 },{}],"BczSQu":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
@@ -5170,7 +5170,11 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"O/eGLK":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"jquery.emojify":[function(require,module,exports){
+module.exports=require('BczSQu');
+},{}],"jquery":[function(require,module,exports){
+module.exports=require('O/eGLK');
+},{}],"O/eGLK":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
 /*!
  * jQuery JavaScript Library v1.9.1
@@ -14773,8 +14777,6 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
 }).call(global, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
-},{}],"jquery":[function(require,module,exports){
-module.exports=require('O/eGLK');
 },{}],"eSCnzv":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
@@ -15070,9 +15072,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })(jQuery,this);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.serializeObject":[function(require,module,exports){
-module.exports=require('ImL1Nt');
-},{}],"ImL1Nt":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"ImL1Nt":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -15109,8 +15109,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })(jQuery);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.sparkartTags":[function(require,module,exports){
-module.exports=require('cGjpmH');
+},{"jquery":"O/eGLK"}],"jquery.serializeObject":[function(require,module,exports){
+module.exports=require('ImL1Nt');
 },{}],"cGjpmH":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
@@ -15418,7 +15418,9 @@ Sparkart Tags
 })( jQuery );
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"visibility":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"jquery.sparkartTags":[function(require,module,exports){
+module.exports=require('cGjpmH');
+},{}],"visibility":[function(require,module,exports){
 module.exports=require('STq6cz');
 },{}],"STq6cz":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {

@@ -5,10 +5,10 @@ var User = require('../models/user.js');
 
 module.exports = Backbone.Collection.extend({
 	model: User,
-	initialize: function( models, parameters ){
-		this.channel = parameters.channel;
-		this.connection = parameters.connection;
-		this.socket = this.connection.socket;
+	initialize: function( models, config ){
+		this.channel = config.channel;
+		this.connection = config.connection;
+		this.socket = config.socket;
 		_( this ).bindAll( 'idle', 'doNames', 'doMessage', 'doModeAdd', 'doModeRemove', 'doAction', 'doPart', 'doQuit', 'doKick', 'doJoin', 'doNick', 'doChange' );
 		// bind to all these socket events...
 		this.socket.on( 'names', this.doNames );
