@@ -101,6 +101,27 @@ var testVine = function( url, callback ){
 	}
 };
 
+var gist_template = Handlebars.compile('<div class="inline gist">\
+	{{{div}}}\
+	<link rel="stylesheet" href="https://gist.github.com/{{stylesheet}}" />\
+</div>');
+
+var image_template = Handlebars.compile('<div class="inline image">\
+	<a href="{{url}}" target="_blank"><img src="{{url}}" /></a>\
+</div>');
+
+var vimeo_template = Handlebars.compile('<div class="inline vimeo">\
+	<a href="{{url}}" target="_blank"><img src="{{thumbnail}}" /></a>\
+</div>');
+
+var vine_template = Handlebars.compile('<div class="inline vine">\
+	<iframe class="vine-embed" src="https://vine.co/v/{{id}}/embed/simple" width="320" height="320" frameborder="0"></iframe><script async src="//platform.vine.co/static/scripts/embed.js" charset="utf-8"></script>\
+</div>');
+
+var youtube_template = Handlebars.compile('<div class="inline youtube">\
+	<a href="{{url}}" target="_blank"><img src="https://i.ytimg.com/vi/{{id}}/0.jpg" /></a>\
+</div>');
+
 module.exports = Backbone.View.extend({
 	// keep track of nicks user can tab through
 	mention_nicks: null,
@@ -302,36 +323,36 @@ module.exports = Backbone.View.extend({
 				'class': 'emoji'
 			}
 		});
+		var inlineImage = function( err, result ){
+			if( err ) return err;
+			var image_html = image_template( result );
+			$text.after( image_html );
+		};
+		var inlineGist = function( err, result ){
+			if( err ) return err;
+			var gist_html = gist_template( result );
+			$text.after( gist_html );
+		};
+		var inlineSoundCloud = function( err, result ){
+			if( err ) return err;
+			$text.after( result.html );
+		};
+		var inlineYoutube = function( err, result ){
+			if( err ) return err;
+			var youtube_html = youtube_template( result );
+			$text.after( youtube_html );
+		};
+		var inlineVimeo = function( err, result ){
+			if( err ) return err;
+			var vimeo_html = vimeo_template( result );
+			$text.after( vimeo_html );
+		};
+		var inlineVine = function( err, result ){
+			if( err ) return err;
+			var vine_html = vine_template( result );
+			$text.after( vine_html );
+		};
 		if( urls.length > 0 ){
-			var inlineImage = function( err, result ){
-				if( err ) return err;
-				var image_html = irc.templates['inline/image']( result );
-				$text.after( image_html );
-			};
-			var inlineGist = function( err, result ){
-				if( err ) return err;
-				var gist_html = irc.templates['inline/gist']( result );
-				$text.after( gist_html );
-			};
-			var inlineSoundCloud = function( err, result ){
-				if( err ) return err;
-				$text.after( result.html );
-			};
-			var inlineYoutube = function( err, result ){
-				if( err ) return err;
-				var youtube_html = irc.templates['inline/youtube']( result );
-				$text.after( youtube_html );
-			};
-			var inlineVimeo = function( err, result ){
-				if( err ) return err;
-				var vimeo_html = irc.templates['inline/vimeo']( result );
-				$text.after( vimeo_html );
-			};
-			var inlineVine = function( err, result ){
-				if( err ) return err;
-				var vine_html = irc.templates['inline/vine']( result );
-				$text.after( vine_html );
-			};
 			for( var i = urls.length - 1; i >= 0; i-- ){
 				// Check if it's an image
 				testImage( urls[i], inlineImage );
