@@ -150,10 +150,23 @@ module.exports = function(grunt) {
 			}
 		},
 		jshint: {
-			options: {
-				multistr: true
+			client: {
+				options: {
+					multistr: true
+				},
+				files: {
+					src: [ 'assets/scripts/**/*.js', '!assets/scripts/vendor/**/*.js' ]
+				}
 			},
-			all: [ 'relay.js', 'lib/**/*.js', 'assets/scripts/**/*.js', '!assets/scripts/vendor/**/*.js' ]
+			server: {
+				options: {
+					node: true,
+					esnext: true
+				},
+				files: {
+					src: [ 'relay.js', 'lib/**/*.js' ]
+				}
+			}
 		}
 	});
 
