@@ -103,7 +103,7 @@ module.exports = Backbone.Collection.extend({
 		}
 	}
 });
-},{"../models/channel.js":6,"backbone":39,"lodash":76,"socket.io-client":77}],2:[function(require,module,exports){
+},{"../models/channel.js":6,"backbone":40,"lodash":77,"socket.io-client":78}],2:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var io = require('socket.io-client');
@@ -137,7 +137,7 @@ module.exports = Backbone.Collection.extend({
 		}
 	}
 });
-},{"../models/connection.js":7,"backbone":39,"lodash":76,"socket.io-client":77}],3:[function(require,module,exports){
+},{"../models/connection.js":7,"backbone":40,"lodash":77,"socket.io-client":78}],3:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var io = require('socket.io-client');
@@ -366,7 +366,7 @@ module.exports = Backbone.Collection.extend({
 		}
 	}
 });
-},{"../models/message.js":8,"backbone":39,"lodash":76,"socket.io-client":77}],4:[function(require,module,exports){
+},{"../models/message.js":8,"backbone":40,"lodash":77,"socket.io-client":78}],4:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var io = require('socket.io-client');
@@ -495,7 +495,7 @@ module.exports = Backbone.Collection.extend({
 		this.sort();
 	}
 });
-},{"../models/user.js":10,"backbone":39,"lodash":76,"socket.io-client":77}],5:[function(require,module,exports){
+},{"../models/user.js":10,"backbone":40,"lodash":77,"socket.io-client":78}],5:[function(require,module,exports){
 module.exports = function( Handlebars ){
 
 	Handlebars.registerHelper( 'time', function( timestamp ){
@@ -591,7 +591,7 @@ module.exports = Backbone.Model.extend({
 		}
 	}
 });
-},{"../collections/messages.js":3,"../collections/users.js":4,"backbone":39,"lodash":76}],7:[function(require,module,exports){
+},{"../collections/messages.js":3,"../collections/users.js":4,"backbone":40,"lodash":77}],7:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var Channels = require('../collections/channels.js');
@@ -631,7 +631,7 @@ module.exports = Backbone.Model.extend({
 	}
 
 });
-},{"../collections/channels.js":1,"backbone":39,"lodash":76}],8:[function(require,module,exports){
+},{"../collections/channels.js":1,"backbone":40,"lodash":77}],8:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 
@@ -642,7 +642,7 @@ module.exports = Backbone.Model.extend({
 		if( nick_mention_regex.test( this.get('contents') ) ) this.set( 'mention', true );
 	}
 });
-},{"backbone":39,"lodash":76}],9:[function(require,module,exports){
+},{"backbone":40,"lodash":77}],9:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var Visibility = require('visibility');
@@ -685,7 +685,7 @@ module.exports = Backbone.Model.extend({
 		return title_string;
 	}
 });
-},{"backbone":39,"lodash":76,"visibility":"STq6cz"}],10:[function(require,module,exports){
+},{"backbone":40,"lodash":77,"visibility":"STq6cz"}],10:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 
@@ -717,7 +717,7 @@ module.exports = Backbone.Model.extend({
 		this.set( 'idle', idle + 1 );
 	}
 });
-},{"backbone":39,"lodash":76}],11:[function(require,module,exports){
+},{"backbone":40,"lodash":77}],11:[function(require,module,exports){
 /*
 IRC Module
 This is the base that includes all submodules and initializes the application
@@ -770,9 +770,7 @@ $(function(){
 		connectivity: new ConnectivityView
 	};
 });
-},{"./collections/connections.js":2,"./models/title.js":9,"./views/channel.js":30,"./views/connect.js":33,"./views/connections.js":34,"./views/connectivity.js":35,"./views/title.js":37,"backbone":39,"jquery":"O/eGLK","lodash":76}],"bootstrap":[function(require,module,exports){
-module.exports=require('F4ZZz1');
-},{}],"F4ZZz1":[function(require,module,exports){
+},{"./collections/connections.js":2,"./models/title.js":9,"./views/channel.js":30,"./views/connect.js":33,"./views/connections.js":35,"./views/connectivity.js":36,"./views/title.js":38,"backbone":40,"jquery":"O/eGLK","lodash":77}],"F4ZZz1":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -2937,7 +2935,9 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 }(window.jQuery);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery-ui":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"bootstrap":[function(require,module,exports){
+module.exports=require('F4ZZz1');
+},{}],"jquery-ui":[function(require,module,exports){
 module.exports=require('eIf64p');
 },{}],"eIf64p":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
@@ -15111,9 +15111,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })(jQuery,this);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.serializeObject":[function(require,module,exports){
-module.exports=require('ImL1Nt');
-},{}],"ImL1Nt":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"ImL1Nt":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -15150,7 +15148,9 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })(jQuery);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.sparkartTags":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"jquery.serializeObject":[function(require,module,exports){
+module.exports=require('ImL1Nt');
+},{}],"jquery.sparkartTags":[function(require,module,exports){
 module.exports=require('cGjpmH');
 },{}],"cGjpmH":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
@@ -15795,7 +15795,7 @@ module.exports = Backbone.View.extend({
 		this.$messages.css( 'top', height + 1 );
 	}
 });
-},{"./messages.js":36,"./users.js":38,"backbone":39,"handlebars":65,"jquery":"O/eGLK","jquery.emojify":"BczSQu","jquery.links":"eSCnzv","jquery.resize":"cpG4xX","lodash":76}],31:[function(require,module,exports){
+},{"./messages.js":37,"./users.js":39,"backbone":40,"handlebars":66,"jquery":"O/eGLK","jquery.emojify":"BczSQu","jquery.links":"eSCnzv","jquery.resize":"cpG4xX","lodash":77}],31:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 var _ = require('lodash');
@@ -15842,7 +15842,7 @@ module.exports = Backbone.View.extend({
 		this.model.part();
 	}
 });
-},{"backbone":39,"handlebars":65,"jquery":"O/eGLK","lodash":76}],32:[function(require,module,exports){
+},{"backbone":40,"handlebars":66,"jquery":"O/eGLK","lodash":77}],32:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 require('jquery-ui');
@@ -15873,7 +15873,7 @@ module.exports = Backbone.View.extend({
 		this.$channels.append( channel_view.$el );
 	}
 });
-},{"../views/channel_listing.js":31,"backbone":39,"handlebars":65,"jquery":"O/eGLK","jquery-ui":"eIf64p","lodash":76}],33:[function(require,module,exports){
+},{"../views/channel_listing.js":31,"backbone":40,"handlebars":66,"jquery":"O/eGLK","jquery-ui":"eIf64p","lodash":77}],33:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 require('bootstrap');
@@ -16019,7 +16019,7 @@ module.exports = Backbone.View.extend({
 	}
 });
 
-},{"backbone":39,"bootstrap":"F4ZZz1","handlebars":65,"handlebars-helper":42,"jquery":"O/eGLK","jquery.serializeObject":"ImL1Nt","jquery.sparkartTags":"cGjpmH","lodash":76}],34:[function(require,module,exports){
+},{"backbone":40,"bootstrap":"F4ZZz1","handlebars":66,"handlebars-helper":43,"jquery":"O/eGLK","jquery.serializeObject":"ImL1Nt","jquery.sparkartTags":"cGjpmH","lodash":77}],34:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 var _ = require('lodash');
@@ -16027,9 +16027,7 @@ var Handlebars = require('handlebars');
 var ChannelsView = require('./channels.js');
 
 module.exports = Backbone.View.extend({
-	template: Handlebars.compile('<ul class="list"></ul>\
-	<button name="new_connection" class="btn"><i class="icon-plus"></i> New Connection</button>'),
-	connection_template: Handlebars.compile('<li data-id="{{id}}">\
+	template: Handlebars.compile('<li data-id="{{id}}">\
 		<div class="info">\
 			<strong class="server">{{server}}</strong> (<em class="nick">{{nick}}</em>)\
 			<a class="disconnect" href="#quit">&times;</a>\
@@ -16037,15 +16035,49 @@ module.exports = Backbone.View.extend({
 		<div class="channels"></div>\
 	</li>'),
 	events: {
-		'click button[name="new_connection"]': 'clickNewConnection',
-		'click div.info a[href="#quit"]': 'clickQuit'
+		'click a[href="#quit"]': 'clickQuit'
 	},
 	initialize: function(){
-		_( this ).bindAll( 'render', 'renderConnection' );
+		_( this ).bindAll( 'updateNick', 'clickQuit', 'remove' );
+		this.listenTo( this.model, 'change:nick', this.updateNick );
+		this.listenTo( this.model, 'destroy remove', this.remove );
+		this.render();
+	},
+	render: function(){
+		var html = this.template( this.model.toJSON() );
+		var $connection = $( html );
+		new ChannelsView({
+			el: $connection.find('.channels'),
+			collection: this.model.channels
+		});
+		this.setElement( $connection );
+		this.$nick = this.$el.find('.nick');
+	},
+	updateNick: function( connection, nick ){
+		this.$nick.text( nick );
+	},
+	clickQuit: function( e ){
+		e.preventDefault();
+		this.model.quit();
+	}
+});
+},{"./channels.js":32,"backbone":40,"handlebars":66,"jquery":"O/eGLK","lodash":77}],35:[function(require,module,exports){
+var Backbone = require('backbone');
+var $ = Backbone.$ = require('jquery');
+var _ = require('lodash');
+var Handlebars = require('handlebars');
+var ConnectionView = require('./connection.js');
+
+module.exports = Backbone.View.extend({
+	template: Handlebars.compile('<ul class="list"></ul>\
+	<button name="new_connection" class="btn"><i class="icon-plus"></i> New Connection</button>'),
+	events: {
+		'click button[name="new_connection"]': 'clickNewConnection'
+	},
+	initialize: function(){
+		_( this ).bindAll( 'render', 'renderConnection', 'toggleNewConnection', 'clickNewConnection' );
 		this.listenTo( this.collection, 'add', this.renderConnection );
 		this.listenTo( this.collection, 'add remove reset', this.toggleNewConnection );
-		this.listenTo( this.collection, 'remove', this.destroy );
-		this.listenTo( this.collection, 'change:nick', this.renderNick );
 		this.render();
 		this.toggleNewConnection();
 	},
@@ -16059,18 +16091,8 @@ module.exports = Backbone.View.extend({
 		return this;
 	},
 	renderConnection: function( connection ){
-		var html = this.connection_template( connection.toJSON() );
-		var $connection = $( html );
-		new ChannelsView({
-			el: $connection.find('.channels'),
-			collection: connection.channels
-		});
-		this.$connections.append( $connection );
-		return this;
-	},
-	renderNick: function( connection, nick ){
-		var $connection = this.$connections.children('[data-id="'+ connection.id +'"]');
-		$connection.find('.nick').text( nick );
+		var connection_view = new ConnectionView({ model: connection });
+		this.$connections.append( connection_view.$el );
 	},
 	toggleNewConnection: function(){
 		var show_hide = ( this.collection.length < this.collection.max );
@@ -16079,16 +16101,9 @@ module.exports = Backbone.View.extend({
 	clickNewConnection: function( e ){
 		e.preventDefault();
 		this.collection.mediator.trigger('connect:show');
-	},
-	clickQuit: function( e ){
-		e.preventDefault();
-		var $connection = $(e.target).closest('li');
-		var id = $connection.data('id');
-		var connection = this.collection.get( id );
-		connection.quit();
-	},
+	}
 });
-},{"./channels.js":32,"backbone":39,"handlebars":65,"jquery":"O/eGLK","lodash":76}],35:[function(require,module,exports){
+},{"./connection.js":34,"backbone":40,"handlebars":66,"jquery":"O/eGLK","lodash":77}],36:[function(require,module,exports){
 /*
 Connectivity Module
 Keeps track of the user's socket connection and displays its status
@@ -16133,7 +16148,7 @@ module.exports = Backbone.View.extend({
 		this.socket.on( event_name, _.bind( this.updateState, this, state ) );
 	}
 });
-},{"backbone":39,"handlebars":65,"jquery":"O/eGLK","lodash":76,"socket.io-client":77}],36:[function(require,module,exports){
+},{"backbone":40,"handlebars":66,"jquery":"O/eGLK","lodash":77,"socket.io-client":78}],37:[function(require,module,exports){
 var CDN_URL = 'https://s3-us-west-2.amazonaws.com/relayjs/';
 
 var Backbone = require('backbone');
@@ -16570,7 +16585,7 @@ module.exports = Backbone.View.extend({
 		}
 	}
 });
-},{"../handlebars_helpers.js":5,"backbone":39,"handlebars":65,"jquery":"O/eGLK","jquery.emojify":"BczSQu","jquery.links":"eSCnzv","jquery.resize":"cpG4xX","lodash":76}],37:[function(require,module,exports){
+},{"../handlebars_helpers.js":5,"backbone":40,"handlebars":66,"jquery":"O/eGLK","jquery.emojify":"BczSQu","jquery.links":"eSCnzv","jquery.resize":"cpG4xX","lodash":77}],38:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var $ = Backbone.$ = require('jquery');
@@ -16593,7 +16608,7 @@ module.exports = Backbone.View.extend({
 		}, UPDATE_DELAY );
 	}
 });
-},{"backbone":39,"jquery":"O/eGLK","lodash":76}],38:[function(require,module,exports){
+},{"backbone":40,"jquery":"O/eGLK","lodash":77}],39:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 var _ = require('lodash');
@@ -16640,7 +16655,7 @@ module.exports = Backbone.View.extend({
 		$user.replaceWith( $user_new );
 	}
 });
-},{"backbone":39,"handlebars":65,"jquery":"O/eGLK","lodash":76}],39:[function(require,module,exports){
+},{"backbone":40,"handlebars":66,"jquery":"O/eGLK","lodash":77}],40:[function(require,module,exports){
 //     Backbone.js 1.0.0
 
 //     (c) 2010-2013 Jeremy Ashkenas, DocumentCloud Inc.
@@ -18213,7 +18228,7 @@ module.exports = Backbone.View.extend({
 
 }).call(this);
 
-},{"underscore":40}],40:[function(require,module,exports){
+},{"underscore":41}],41:[function(require,module,exports){
 //     Underscore.js 1.5.2
 //     http://underscorejs.org
 //     (c) 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -19491,15 +19506,15 @@ module.exports = Backbone.View.extend({
 
 }).call(this);
 
-},{}],41:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 
 // not implemented
 // The reason for having an empty file and not throwing is to allow
 // untraditional implementation of this module.
 
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 module.exports = require('./lib');
-},{"./lib":63}],43:[function(require,module,exports){
+},{"./lib":64}],44:[function(require,module,exports){
 // Modified form of `timeago` helper from https://github.com/assemble/handlebars-helpers
 var YEAR = 60 * 60 * 24 * 365;
 var MONTH = 60 * 60 * 24 * 30;
@@ -19522,7 +19537,7 @@ module.exports = function( date ){
 	if( Math.floor( seconds ) <= 1 ) return 'Just now';
 	else return Math.floor( seconds ) +' seconds ago';
 };
-},{}],44:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 module.exports = function( collection, start, end, options ){
 	options = options || end;
 	if( typeof start !== 'number' ) return;
@@ -19534,7 +19549,7 @@ module.exports = function( collection, start, end, options ){
 	}
 	return result;
 };
-},{}],45:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 module.exports = function( collection, item, options ){
 	// string check
 	if( typeof collection === 'string' ){
@@ -19553,11 +19568,11 @@ module.exports = function( collection, item, options ){
 	}
 	return options.inverse();
 };
-},{}],46:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 module.exports = function( string ){
 	return encodeURIComponent( string );	
 };
-},{}],47:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 module.exports = function( left, right, exact, options ){
 	options = options || exact;
 	exact = ( exact === 'exact' ) ? true : false;
@@ -19565,7 +19580,7 @@ module.exports = function( left, right, exact, options ){
 	if( is_equal ) return options.fn();
 	return options.inverse();
 };
-},{}],48:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 module.exports = function( collection, count, options ){
 	options = options || count;
 	count = ( typeof count === 'number' ) ? count : 1;
@@ -19575,7 +19590,7 @@ module.exports = function( collection, count, options ){
 		if( i + 1 == count ) return result;
 	}
 };
-},{}],49:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 var strftimeTZ = require('strftime').strftimeTZ;
 	
 module.exports = function( date_string, format, offset ){
@@ -19583,7 +19598,7 @@ module.exports = function( date_string, format, offset ){
 	var date = new Date( date_string );
 	return strftimeTZ( format, date, offset );
 };
-},{"strftime":64}],50:[function(require,module,exports){
+},{"strftime":65}],51:[function(require,module,exports){
 module.exports = function( left, right, equal, options ){
 	options = options || equal;
 	equal = ( equal === 'equal' ) ? true : false;
@@ -19591,7 +19606,7 @@ module.exports = function( left, right, equal, options ){
 	if( is_greater ) return options.fn();
 	return options.inverse();
 };
-},{}],51:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 module.exports = function( collection, separator ){
 	separator = ( typeof separator === 'string' ) ? separator : '';
 	// if the collectoin is an array this is easy
@@ -19605,7 +19620,7 @@ module.exports = function( collection, separator ){
 	}
 	return result.slice( 0, -separator.length );
 };
-},{}],52:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 module.exports = function( collection, count, options ){
 	options = options || count;
 	count = ( typeof count === 'number' ) ? count : 1;
@@ -19615,7 +19630,7 @@ module.exports = function( collection, count, options ){
 		if( i + 1 == count ) return result;
 	}
 };
-},{}],53:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 module.exports = function( collection ){
 	if( collection.length ) return collection.length;
 	var length = 0;
@@ -19626,7 +19641,7 @@ module.exports = function( collection ){
 	}
 	return length;
 };
-},{}],54:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 module.exports = function( left, right, equal, options ){
 	options = options || equal;
 	equal = ( equal === 'equal' ) ? true : false;
@@ -19634,11 +19649,11 @@ module.exports = function( left, right, equal, options ){
 	if( is_greater ) return options.fn();
 	return options.inverse();
 };
-},{}],55:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 module.exports = function( string ){
 	return ( string || '' ).toLowerCase();	
 };
-},{}],56:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 module.exports = function( collection, start, amount, options ){
 	options = options || amount;
 	if( typeof start !== 'number' ) return;
@@ -19650,11 +19665,11 @@ module.exports = function( collection, start, amount, options ){
 	}
 	return result;
 };
-},{}],57:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 module.exports = function( string, to_replace, replacement ){
 	return ( string || '' ).replace( to_replace, replacement );
 };
-},{}],58:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 module.exports = function( collection, options ){
 	var result = '';
 	for( var i = collection.length - 1; i >= 0; i-- ){
@@ -19662,7 +19677,7 @@ module.exports = function( collection, options ){
 	}
 	return result;
 };
-},{}],59:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 // Simple shuffling method based off of http://bost.ocks.org/mike/shuffle/
 var shuffle = function( array ){
 	var i = array.length, j, swap;
@@ -19683,7 +19698,7 @@ module.exports = function( collection, options ){
 	}
 	return result;
 };
-},{}],60:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 module.exports = function( number, zero, options ){
 	options = options || zero;
 	zero = ( zero === 'zero' ) ? true : false;
@@ -19697,11 +19712,11 @@ module.exports = function( number, zero, options ){
 	}
 	return result;
 };
-},{}],61:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 module.exports = function( string ){
 	return ( string || '' ).toUpperCase();
 };
-},{}],62:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 module.exports = function( collection, key, value, limit, options ){
 	options = options || limit;
 	if( typeof limit !== 'number' ) limit = Infinity;
@@ -19716,7 +19731,7 @@ module.exports = function( collection, key, value, limit, options ){
 	}
 	return result;
 };
-},{}],63:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 var helpers = {
 	// string
 	lowercase: require('./helpers/lowercase.js'),
@@ -19750,7 +19765,7 @@ module.exports.help = function( Handlebars ){
 		Handlebars.registerHelper( name, helpers[name] );
 	}
 };
-},{"./helpers/ago.js":43,"./helpers/between.js":44,"./helpers/contains.js":45,"./helpers/encode.js":46,"./helpers/equal.js":47,"./helpers/first.js":48,"./helpers/formatDate.js":49,"./helpers/greater.js":50,"./helpers/join.js":51,"./helpers/last.js":52,"./helpers/length.js":53,"./helpers/less.js":54,"./helpers/lowercase.js":55,"./helpers/range.js":56,"./helpers/replace.js":57,"./helpers/reverse.js":58,"./helpers/shuffle.js":59,"./helpers/times.js":60,"./helpers/uppercase.js":61,"./helpers/where.js":62}],64:[function(require,module,exports){
+},{"./helpers/ago.js":44,"./helpers/between.js":45,"./helpers/contains.js":46,"./helpers/encode.js":47,"./helpers/equal.js":48,"./helpers/first.js":49,"./helpers/formatDate.js":50,"./helpers/greater.js":51,"./helpers/join.js":52,"./helpers/last.js":53,"./helpers/length.js":54,"./helpers/less.js":55,"./helpers/lowercase.js":56,"./helpers/range.js":57,"./helpers/replace.js":58,"./helpers/reverse.js":59,"./helpers/shuffle.js":60,"./helpers/times.js":61,"./helpers/uppercase.js":62,"./helpers/where.js":63}],65:[function(require,module,exports){
 //
 // strftime
 // github.com/samsonjs/strftime
@@ -20024,7 +20039,7 @@ module.exports.help = function( Handlebars ){
 
 }());
 
-},{}],65:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 var handlebars = require("./handlebars/base"),
 
 // Each of these augment the Handlebars object. No need to setup here.
@@ -20069,7 +20084,7 @@ if (require.extensions) {
 // var singleton = handlebars.Handlebars,
 //  local = handlebars.create();
 
-},{"./handlebars/base":66,"./handlebars/compiler":70,"./handlebars/runtime":74,"./handlebars/utils":75,"fs":41}],66:[function(require,module,exports){
+},{"./handlebars/base":67,"./handlebars/compiler":71,"./handlebars/runtime":75,"./handlebars/utils":76,"fs":42}],67:[function(require,module,exports){
 /*jshint eqnull: true */
 
 module.exports.create = function() {
@@ -20237,7 +20252,7 @@ Handlebars.registerHelper('log', function(context, options) {
 return Handlebars;
 };
 
-},{}],67:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -20377,7 +20392,7 @@ return Handlebars;
 };
 
 
-},{}],68:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 var handlebars = require("./parser");
 
 exports.attach = function(Handlebars) {
@@ -20400,7 +20415,7 @@ Handlebars.parse = function(input) {
 return Handlebars;
 };
 
-},{"./parser":71}],69:[function(require,module,exports){
+},{"./parser":72}],70:[function(require,module,exports){
 var compilerbase = require("./base");
 
 exports.attach = function(Handlebars) {
@@ -21707,7 +21722,7 @@ return Handlebars;
 
 
 
-},{"./base":68}],70:[function(require,module,exports){
+},{"./base":69}],71:[function(require,module,exports){
 // Each of these module will augment the Handlebars object as it loads. No need to perform addition operations
 module.exports.attach = function(Handlebars) {
 
@@ -21725,7 +21740,7 @@ return Handlebars;
 
 };
 
-},{"./ast":67,"./compiler":69,"./printer":72,"./visitor":73}],71:[function(require,module,exports){
+},{"./ast":68,"./compiler":70,"./printer":73,"./visitor":74}],72:[function(require,module,exports){
 // BEGIN(BROWSER)
 /* Jison generated parser */
 var handlebars = (function(){
@@ -22210,7 +22225,7 @@ return new Parser;
 
 module.exports = handlebars;
 
-},{}],72:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -22350,7 +22365,7 @@ return Handlebars;
 };
 
 
-},{}],73:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -22370,7 +22385,7 @@ return Handlebars;
 
 
 
-},{}],74:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -22478,7 +22493,7 @@ return Handlebars;
 
 };
 
-},{}],75:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 var toString = Object.prototype.toString;
@@ -22563,7 +22578,7 @@ Handlebars.Utils = {
 return Handlebars;
 };
 
-},{}],76:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};/*!
  * Lo-Dash v0.9.2 <http://lodash.com>
  * (c) 2012 John-David Dalton <http://allyoucanleet.com/>
@@ -26823,7 +26838,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
   }
 }(this));
 
-},{}],77:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 /*! Socket.IO.js build:0.9.16, development. Copyright(c) 2011 LearnBoost <dev@learnboost.com> MIT Licensed */
 
 var io = ('undefined' === typeof module ? {} : module.exports);

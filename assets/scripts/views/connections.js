@@ -2,28 +2,18 @@ var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 var _ = require('lodash');
 var Handlebars = require('handlebars');
-var ChannelsView = require('./channels.js');
+var ConnectionView = require('./connection.js');
 
 module.exports = Backbone.View.extend({
 	template: Handlebars.compile('<ul class="list"></ul>\
 	<button name="new_connection" class="btn"><i class="icon-plus"></i> New Connection</button>'),
-	connection_template: Handlebars.compile('<li data-id="{{id}}">\
-		<div class="info">\
-			<strong class="server">{{server}}</strong> (<em class="nick">{{nick}}</em>)\
-			<a class="disconnect" href="#quit">&times;</a>\
-		</div>\
-		<div class="channels"></div>\
-	</li>'),
 	events: {
-		'click button[name="new_connection"]': 'clickNewConnection',
-		'click div.info a[href="#quit"]': 'clickQuit'
+		'click button[name="new_connection"]': 'clickNewConnection'
 	},
 	initialize: function(){
-		_( this ).bindAll( 'render', 'renderConnection' );
+		_( this ).bindAll( 'render', 'renderConnection', 'toggleNewConnection', 'clickNewConnection' );
 		this.listenTo( this.collection, 'add', this.renderConnection );
 		this.listenTo( this.collection, 'add remove reset', this.toggleNewConnection );
-		this.listenTo( this.collection, 'remove', this.destroy );
-		this.listenTo( this.collection, 'change:nick', this.renderNick );
 		this.render();
 		this.toggleNewConnection();
 	},
@@ -37,18 +27,8 @@ module.exports = Backbone.View.extend({
 		return this;
 	},
 	renderConnection: function( connection ){
-		var html = this.connection_template( connection.toJSON() );
-		var $connection = $( html );
-		new ChannelsView({
-			el: $connection.find('.channels'),
-			collection: connection.channels
-		});
-		this.$connections.append( $connection );
-		return this;
-	},
-	renderNick: function( connection, nick ){
-		var $connection = this.$connections.children('[data-id="'+ connection.id +'"]');
-		$connection.find('.nick').text( nick );
+		var connection_view = new ConnectionView({ model: connection });
+		this.$connections.append( connection_view.$el );
 	},
 	toggleNewConnection: function(){
 		var show_hide = ( this.collection.length < this.collection.max );
@@ -57,12 +37,5 @@ module.exports = Backbone.View.extend({
 	clickNewConnection: function( e ){
 		e.preventDefault();
 		this.collection.mediator.trigger('connect:show');
-	},
-	clickQuit: function( e ){
-		e.preventDefault();
-		var $connection = $(e.target).closest('li');
-		var id = $connection.data('id');
-		var connection = this.collection.get( id );
-		connection.quit();
-	},
+	}
 });
