@@ -7,6 +7,7 @@ module.exports = Backbone.Model.extend({
 		config = config || {};
 		config.mediator = this.mediator = this.collection.mediator;
 		config.namespace = data.namespace; // attach this new connection to the config data
+		config.connection = this;
 		_( this ).bindAll( 'quit', 'doQuit', 'doNick', 'doRegister' );
 		this.socket = config.socket || io.connect( data.namespace );
 		this.channels = new Channels( null, config );

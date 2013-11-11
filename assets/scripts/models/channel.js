@@ -13,8 +13,15 @@ module.exports = Backbone.Model.extend({
 		_( this ).bindAll( 'active', 'part', 'end', 'doAddMessage', 'doActive', 'doTopic' );
 		this.socket = this.collection.socket;
 		this.mediator = this.collection.mediator;
-		this.messages = new Messages( null, { channel: this, socket: this.socket });
-		this.users = new Users( null, { channel: this, socket: this.socket });
+		this.connection = this.collection.connection;
+		var config = {
+			channel: this,
+			connection: this.connection,
+			socket: this.socket,
+			mediator: this.mediator
+		};
+		this.messages = new Messages( null, config );
+		this.users = new Users( null, config );
 		this.messages.on( 'add', this.doAddMessage );
 		this.socket.on( 'topic', this.doTopic );
 		this.listenTo( this.mediator, 'channels:active', this.doActive );

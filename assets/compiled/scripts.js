@@ -7,7 +7,9 @@ var Channel = require('../models/channel.js');
 module.exports = Backbone.Collection.extend({
 	model: Channel,
 	initialize: function( models, config ){
+		console.log('channels config',config);
 		this.mediator = config.mediator;
+		this.connection = config.connection;
 		this.socket = config.socket || io.connect( config.namespace );
 		_(this).bindAll( 'join', 'part', 'doChans', 'doJoin', 'doPart', 'doKick', 'doMessage', 'updateActive' );
 		this.add({
@@ -512,8 +514,15 @@ module.exports = Backbone.Model.extend({
 		_( this ).bindAll( 'active', 'part', 'end', 'doAddMessage', 'doActive', 'doTopic' );
 		this.socket = this.collection.socket;
 		this.mediator = this.collection.mediator;
-		this.messages = new Messages( null, { channel: this, socket: this.socket });
-		this.users = new Users( null, { channel: this, socket: this.socket });
+		this.connection = this.collection.connection;
+		var config = {
+			channel: this,
+			connection: this.connection,
+			socket: this.socket,
+			mediator: this.mediator
+		};
+		this.messages = new Messages( null, config );
+		this.users = new Users( null, config );
 		this.messages.on( 'add', this.doAddMessage );
 		this.socket.on( 'topic', this.doTopic );
 		this.listenTo( this.mediator, 'channels:active', this.doActive );
@@ -568,6 +577,7 @@ module.exports = Backbone.Model.extend({
 		config = config || {};
 		config.mediator = this.mediator = this.collection.mediator;
 		config.namespace = data.namespace; // attach this new connection to the config data
+		config.connection = this;
 		_( this ).bindAll( 'quit', 'doQuit', 'doNick', 'doRegister' );
 		this.socket = config.socket || io.connect( data.namespace );
 		this.channels = new Channels( null, config );
@@ -2898,6 +2908,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 },{"jquery":"O/eGLK"}],"bootstrap":[function(require,module,exports){
 module.exports=require('F4ZZz1');
+},{}],"jquery-ui":[function(require,module,exports){
+module.exports=require('eIf64p');
 },{}],"eIf64p":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
@@ -5126,9 +5138,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery-ui":[function(require,module,exports){
-module.exports=require('eIf64p');
-},{}],"BczSQu":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"BczSQu":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -5172,8 +5182,6 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 },{"jquery":"O/eGLK"}],"jquery.emojify":[function(require,module,exports){
 module.exports=require('BczSQu');
-},{}],"jquery":[function(require,module,exports){
-module.exports=require('O/eGLK');
 },{}],"O/eGLK":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
 /*!
@@ -14777,6 +14785,8 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
 }).call(global, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
+},{}],"jquery":[function(require,module,exports){
+module.exports=require('O/eGLK');
 },{}],"jquery.links":[function(require,module,exports){
 module.exports=require('eSCnzv');
 },{}],"eSCnzv":[function(require,module,exports){
