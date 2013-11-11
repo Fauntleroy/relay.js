@@ -770,7 +770,9 @@ $(function(){
 		connectivity: new ConnectivityView
 	};
 });
-},{"./collections/connections.js":2,"./models/title.js":9,"./views/channel.js":30,"./views/connect.js":33,"./views/connections.js":34,"./views/connectivity.js":35,"./views/title.js":37,"backbone":39,"jquery":"O/eGLK","lodash":76}],"F4ZZz1":[function(require,module,exports){
+},{"./collections/connections.js":2,"./models/title.js":9,"./views/channel.js":30,"./views/connect.js":33,"./views/connections.js":34,"./views/connectivity.js":35,"./views/title.js":37,"backbone":39,"jquery":"O/eGLK","lodash":76}],"bootstrap":[function(require,module,exports){
+module.exports=require('F4ZZz1');
+},{}],"F4ZZz1":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -2935,8 +2937,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 }(window.jQuery);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"bootstrap":[function(require,module,exports){
-module.exports=require('F4ZZz1');
+},{"jquery":"O/eGLK"}],"jquery-ui":[function(require,module,exports){
+module.exports=require('eIf64p');
 },{}],"eIf64p":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
@@ -5165,9 +5167,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery-ui":[function(require,module,exports){
-module.exports=require('eIf64p');
-},{}],"BczSQu":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"BczSQu":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -5211,8 +5211,6 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 },{"jquery":"O/eGLK"}],"jquery.emojify":[function(require,module,exports){
 module.exports=require('BczSQu');
-},{}],"jquery":[function(require,module,exports){
-module.exports=require('O/eGLK');
 },{}],"O/eGLK":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
 /*!
@@ -14816,6 +14814,10 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
 }).call(global, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
+},{}],"jquery":[function(require,module,exports){
+module.exports=require('O/eGLK');
+},{}],"jquery.links":[function(require,module,exports){
+module.exports=require('eSCnzv');
 },{}],"eSCnzv":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
@@ -14855,9 +14857,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })( jQuery );
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.links":[function(require,module,exports){
-module.exports=require('eSCnzv');
-},{}],"jquery.resize":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"jquery.resize":[function(require,module,exports){
 module.exports=require('cpG4xX');
 },{}],"cpG4xX":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
@@ -15111,7 +15111,9 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })(jQuery,this);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"ImL1Nt":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"jquery.serializeObject":[function(require,module,exports){
+module.exports=require('ImL1Nt');
+},{}],"ImL1Nt":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -15148,8 +15150,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 })(jQuery);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.serializeObject":[function(require,module,exports){
-module.exports=require('ImL1Nt');
+},{"jquery":"O/eGLK"}],"jquery.sparkartTags":[function(require,module,exports){
+module.exports=require('cGjpmH');
 },{}],"cGjpmH":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
@@ -15457,9 +15459,7 @@ Sparkart Tags
 })( jQuery );
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.sparkartTags":[function(require,module,exports){
-module.exports=require('cGjpmH');
-},{}],"visibility":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"visibility":[function(require,module,exports){
 module.exports=require('STq6cz');
 },{}],"STq6cz":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
@@ -16140,6 +16140,7 @@ var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 require('jquery.links');
 require('jquery.emojify');
+require('jquery.resize');
 var _ = require('lodash');
 var Handlebars = require('handlebars');
 var helpers = require('../handlebars_helpers.js');
@@ -16569,7 +16570,7 @@ module.exports = Backbone.View.extend({
 		}
 	}
 });
-},{"../handlebars_helpers.js":5,"backbone":39,"handlebars":65,"jquery":"O/eGLK","jquery.emojify":"BczSQu","jquery.links":"eSCnzv","lodash":76}],37:[function(require,module,exports){
+},{"../handlebars_helpers.js":5,"backbone":39,"handlebars":65,"jquery":"O/eGLK","jquery.emojify":"BczSQu","jquery.links":"eSCnzv","jquery.resize":"cpG4xX","lodash":76}],37:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('lodash');
 var $ = Backbone.$ = require('jquery');
