@@ -1,57 +1,41 @@
-irc.Views.Connection = Backbone.View.extend({
+var Backbone = require('backbone');
+var $ = Backbone.$ = require('jquery');
+var _ = require('lodash');
+var Handlebars = require('handlebars');
+var ChannelsView = require('./channels.js');
 
-	template: irc.templates.connection,
-
+module.exports = Backbone.View.extend({
+	template: Handlebars.compile('<li data-id="{{id}}">\
+		<div class="info">\
+			<strong class="server">{{server}}</strong> (<em class="nick">{{nick}}</em>)\
+			<a class="disconnect" href="#quit">&times;</a>\
+		</div>\
+		<div class="channels"></div>\
+	</li>'),
 	events: {
-		'click div.info a[href="#quit"]': 'clickQuit'
+		'click a[href="#quit"]': 'clickQuit'
 	},
-
 	initialize: function(){
-
-		_( this ).bindAll( 'render', 'clickQuit', 'renderNick', 'destroy' );
-
-		this.listenTo( this.model, 'remove', this.destroy );
-		this.listenTo( this.model, 'change:nick', this.renderNick );
-
+		_( this ).bindAll( 'updateNick', 'clickQuit', 'remove' );
+		this.listenTo( this.model, 'change:nick', this.updateNick );
+		this.listenTo( this.model, 'destroy remove', this.remove );
+		this.render();
 	},
-
 	render: function(){
-
 		var html = this.template( this.model.toJSON() );
-		var $connection = $.parseHTML( html );
+		var $connection = $( html );
+		new ChannelsView({
+			el: $connection.find('.channels'),
+			collection: this.model.channels
+		});
 		this.setElement( $connection );
-
-		this.$info = this.$el.children('.info');
-		this.$nick = this.$info.find('.nick');
-		this.$channels = this.$el.children('.channels');
-
-		this.channels = new irc.Views.Channels({ collection: this.model.channels, $el: this.$channels });
-		var $channels = this.channels.render().$el;
-		this.$channels.html( $channels );
-
-		return this;
-
+		this.$nick = this.$el.find('.nick');
 	},
-
-	renderNick: function( connection, nick ){
-
+	updateNick: function( connection, nick ){
 		this.$nick.text( nick );
-
 	},
-
 	clickQuit: function( e ){
-
 		e.preventDefault();
-
 		this.model.quit();
-
-	},
-
-	destroy: function(){
-
-		this.off();
-		this.remove();
-
 	}
-
 });

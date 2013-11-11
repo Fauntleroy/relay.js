@@ -1,0 +1,47 @@
+#connectivity {
+
+	position: fixed;
+	bottom: -30px;
+	right: 0;
+	z-index: 99999;
+	transition: all 125ms 2500ms;
+
+	> * {
+		display: none;
+		padding: 3px 8px;
+		color: #fff;
+		background: rgb( 175, 175, 175 );
+	}
+
+	div.connect_failed,
+	div.reconnect_failed,
+	div.disconnected {
+		background: rgb( 226, 27, 27 );
+	}
+
+	div.connecting,
+	div.reconnecting {
+		background: rgb( 226, 151, 17 );
+	}
+
+	div.connected,
+	div.reconnected {
+		background: rgb( 72, 211, 116 );
+	}
+
+}
+
+body.connected #connectivity div.connected { display: block; }
+body.connecting #connectivity div.connecting { display: block; }
+body.connect_failed #connectivity div.connect_failed { display: block; }
+body.reconnecting #connectivity div.reconnecting { display: block; }
+body.reconnected #connectivity div.reconnected { display: block; }
+body.reconnect_failed #connectivity div.reconnect_failed { display: block; }
+body.disconnected #connectivity div.disconnected { display: block; }
+
+body:not(.connected):not(.reconnected) #connectivity {
+
+	bottom: 0;
+	transition: all 125ms;
+
+}

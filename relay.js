@@ -16,7 +16,8 @@ winston.loggers.add( 'development', {
 // Pull in configuration data
 var config = {
 	defaults: {
-		server: {}
+		server: {},
+		channels: []
 	}
 };
 try { _( config ).extend( require('./config.js') ); } catch( err ){}

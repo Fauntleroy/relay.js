@@ -1,64 +1,22 @@
-irc.Views.Title = Backbone.View.extend({
+var Backbone = require('backbone');
+var _ = require('lodash');
+var $ = Backbone.$ = require('jquery');
 
-	channel: '',
-	focus: true,
-	unread: 0,
+var UPDATE_DELAY = 200;
 
+module.exports = Backbone.View.extend({
+	el: 'title',
 	initialize: function(){
-
-		_( this ).bindAll( 'doMessageAdd', 'doChannelActive', 'doFocus', 'doBlur', 'render' );
-
-		this.listenTo( irc, 'active:messages:add', this.doMessageAdd );
-		this.listenTo( irc, 'channels:active', this.doChannelActive );
-		$(window).on({
-			focus: this.doFocus,
-			blur: this.doBlur
-		});
-
-	},
-
-	doMessageAdd: function( message ){
-
-		if( message.get('message') && !this.focus ){
-
-			this.unread++;
-			this.render();
-
-		}
-
-	},
-
-	doChannelActive: function( channel ){
-
-		this.channel = ( channel )? channel.get('name') || '': '';
+		this.listenTo( this.model, 'change', this.render );
 		this.render();
-
 	},
-
-	doFocus: function(){
-
-		this.focus = true;
-		this.unread = 0;
-		this.render();
-
-	},
-
-	doBlur: function(){
-
-		this.focus = false;
-
-	},
-
 	render: function(){
-
-		var title = this.channel;
-		if( this.unread ) title = '('+ this.unread +') '+ title;
-
-		// Hack to force title to update properly
+		var title_view = this;
+		var newtitle = this.model.getTitle();
+		// For some reason there are problems updating the title too quickly
+		// in some browsers (namely Chrome), so we wait
 		setTimeout( function(){
-			document.title = title;
-		}, 150 );
-
+			title_view.$el.text( newtitle );	
+		}, UPDATE_DELAY );
 	}
-
 });

@@ -1,36 +1,30 @@
-irc.Views.Channels = Backbone.View.extend({
+var Backbone = require('backbone');
+var $ = Backbone.$ = require('jquery');
+require('jquery-ui');
+var _ = require('lodash');
+var Handlebars = require('handlebars');
+var ChannelListingView = require('../views/channel_listing.js');
 
-	template: irc.templates.channels,
-
-	initialize: function(){
-
+module.exports = Backbone.View.extend({
+	template: Handlebars.compile('<ul class="list"></ul>'),
+	initialize: function( data, config ){
 		_(this).bindAll( 'render', 'renderChannel' );
-
 		this.listenTo( this.collection, 'add', this.renderChannel );
-
+		this.render();
 	},
-
 	render: function(){
-
 		var html = this.template();
-		var $channels = $.parseHTML( html );
-		this.setElement( $channels );
+		this.$el.html( html );
+		this.$channels = this.$el.find('ul.list');
 		this.collection.each( this.renderChannel );
-		this.$el.sortable({
+		this.$channels.sortable({
 			axis: 'y',
 			revert: 100
 		});
-
 		return this;
-
 	},
-
 	renderChannel: function( channel ){
-
-		var channel_listing_view = new irc.Views.ChannelListing({ model: channel });
-		var $channel_listing = channel_listing_view.render().$el;
-		this.$el.append( $channel_listing );
-
+		var channel_view = new ChannelListingView({ model: channel });
+		this.$channels.append( channel_view.$el );
 	}
-
 });
