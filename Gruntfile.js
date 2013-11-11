@@ -153,7 +153,7 @@ module.exports = function(grunt) {
 			options: {
 				multistr: true
 			},
-			all: [ 'assets/scripts/**/*.js', '!assets/scripts/vendor/**/*.js' ]
+			all: [ 'relay.js', 'lib/**/*.js', 'assets/scripts/**/*.js', '!assets/scripts/vendor/**/*.js' ]
 		}
 	});
 
