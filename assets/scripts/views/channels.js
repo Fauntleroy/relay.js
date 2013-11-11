@@ -3,26 +3,13 @@ var $ = Backbone.$ = require('jquery');
 require('jquery-ui');
 var _ = require('lodash');
 var Handlebars = require('handlebars');
+var ChannelListingView = require('../views/channel_listing.js');
 
 module.exports = Backbone.View.extend({
 	template: Handlebars.compile('<ul class="list"></ul>'),
-	channel_template: Handlebars.compile('<li data-id="{{id}}" data-name="{{name}}">\
-		<a class="name" href="{{display_name}}">\
-			<h5>{{#private_channel}}<i class="icon-comment"></i> {{/private_channel}}{{display_name}}</h5>\
-			<span class="unread badge badge-info">0</span>\
-		</a>\
-		{{^status}}<a class="part" href="#part">&times;</a>{{/status}}\
-	</li>'),
-	events: {
-		'click a.name': 'clickName',
-		'click a.part': 'clickPart'
-	},
 	initialize: function( data, config ){
-		_(this).bindAll( 'render', 'renderChannel', 'updateUnread', 'updateActive', 'clickName', 'clickPart' );
+		_(this).bindAll( 'render', 'renderChannel' );
 		this.listenTo( this.collection, 'add', this.renderChannel );
-		this.listenTo( this.collection, 'remove destroy', this.remove );
-		this.listenTo( this.collection, 'change:unread', this.updateUnread );
-		this.listenTo( this.collection, 'active', this.updateActive );
 		this.render();
 	},
 	render: function(){
@@ -37,32 +24,7 @@ module.exports = Backbone.View.extend({
 		return this;
 	},
 	renderChannel: function( channel ){
-		var html = this.channel_template( channel.toJSON() );
-		this.$channels.append( html );
-		return this;
-	},
-	updateUnread: function( channel, unread ){
-		var $channel = this.$channels.children('[data-id="'+ channel.id +'"]');
-		$channel
-			.toggleClass( 'unread', ( unread > 0 ) )
-			.find('.unread').text( unread );
-	},
-	updateActive: function( name ){
-		var $channel = this.$channels.children('[data-name="'+ name +'"]');
-		$channel
-			.addClass('active')
-			.siblings().removeClass('active');
-	},
-	clickName: function( e ){
-		e.preventDefault();
-		var $channel = $(e.target).closest('li');
-		var id = $channel.data('id');
-		this.collection.get( id ).active();
-	},
-	clickPart: function( e ){
-		e.preventDefault();
-		var $channel = $(e.target).closest('li');
-		var id = $channel.data('id');
-		this.collection.get( id ).part();
+		var channel_view = new ChannelListingView({ model: channel });
+		this.$channels.append( channel_view.$el );
 	}
 });
