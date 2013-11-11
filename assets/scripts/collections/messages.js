@@ -12,8 +12,6 @@ module.exports = Backbone.Collection.extend({
 		this.presence_id = 1;
 		this.channel = config.channel;
 		this.connection = config.connection;
-		console.log( 'config', config );
-		console.log( 'this.connection', this.connection );
 		this.socket = config.socket;
 		_( this ).bindAll( 'getPresence', 'doMessage', 'doNotice', 'doAway', 'doNowAway', 'doAction', 'doNick', 'doJoin', 'doPart', 'doQuit', 'doKick', 'doTopic', 'doModeAdd', 'doModeRemove', 'doMOTD', 'doWhois', 'doError', 'trim' );
 		// bind to all the socket events...

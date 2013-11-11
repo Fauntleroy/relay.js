@@ -6,7 +6,6 @@ var Channel = require('../models/channel.js');
 module.exports = Backbone.Collection.extend({
 	model: Channel,
 	initialize: function( models, config ){
-		console.log('channels config',config);
 		this.mediator = config.mediator;
 		this.connection = config.connection;
 		this.socket = config.socket || io.connect( config.namespace );

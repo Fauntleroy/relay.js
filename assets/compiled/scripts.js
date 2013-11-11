@@ -7,7 +7,6 @@ var Channel = require('../models/channel.js');
 module.exports = Backbone.Collection.extend({
 	model: Channel,
 	initialize: function( models, config ){
-		console.log('channels config',config);
 		this.mediator = config.mediator;
 		this.connection = config.connection;
 		this.socket = config.socket || io.connect( config.namespace );
@@ -153,8 +152,6 @@ module.exports = Backbone.Collection.extend({
 		this.presence_id = 1;
 		this.channel = config.channel;
 		this.connection = config.connection;
-		console.log( 'config', config );
-		console.log( 'this.connection', this.connection );
 		this.socket = config.socket;
 		_( this ).bindAll( 'getPresence', 'doMessage', 'doNotice', 'doAway', 'doNowAway', 'doAction', 'doNick', 'doJoin', 'doPart', 'doQuit', 'doKick', 'doTopic', 'doModeAdd', 'doModeRemove', 'doMOTD', 'doWhois', 'doError', 'trim' );
 		// bind to all the socket events...
@@ -741,7 +738,9 @@ $(function(){
 		connectivity: new ConnectivityView
 	};
 });
-},{"./collections/connections.js":2,"./models/title.js":8,"./views/connect.js":31,"./views/connections.js":32,"./views/connectivity.js":33,"./views/title.js":34,"backbone":35,"jquery":"O/eGLK","lodash":72}],"F4ZZz1":[function(require,module,exports){
+},{"./collections/connections.js":2,"./models/title.js":8,"./views/connect.js":31,"./views/connections.js":32,"./views/connectivity.js":33,"./views/title.js":34,"backbone":35,"jquery":"O/eGLK","lodash":72}],"bootstrap":[function(require,module,exports){
+module.exports=require('F4ZZz1');
+},{}],"F4ZZz1":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
 ; global.$ = require("jquery");
@@ -2906,8 +2905,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 }(window.jQuery);
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"bootstrap":[function(require,module,exports){
-module.exports=require('F4ZZz1');
+},{"jquery":"O/eGLK"}],"jquery-ui":[function(require,module,exports){
+module.exports=require('eIf64p');
 },{}],"eIf64p":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
@@ -5136,8 +5135,8 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery-ui":[function(require,module,exports){
-module.exports=require('eIf64p');
+},{"jquery":"O/eGLK"}],"jquery.emojify":[function(require,module,exports){
+module.exports=require('BczSQu');
 },{}],"BczSQu":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, define) {
 
@@ -5180,9 +5179,7 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"jquery.emojify":[function(require,module,exports){
-module.exports=require('BczSQu');
-},{}],"jquery":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"jquery":[function(require,module,exports){
 module.exports=require('O/eGLK');
 },{}],"O/eGLK":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
@@ -15430,9 +15427,7 @@ Sparkart Tags
 })( jQuery );
 }).call(global, module, undefined);
 
-},{"jquery":"O/eGLK"}],"visibility":[function(require,module,exports){
-module.exports=require('STq6cz');
-},{}],"STq6cz":[function(require,module,exports){
+},{"jquery":"O/eGLK"}],"STq6cz":[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
 /*
  * Copyright 2011 Andrey “A.I.” Sitnik <andrey@sitnik.ru>,
@@ -15687,6 +15682,8 @@ var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? 
 
 }).call(global, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
+},{}],"visibility":[function(require,module,exports){
+module.exports=require('STq6cz');
 },{}],29:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
