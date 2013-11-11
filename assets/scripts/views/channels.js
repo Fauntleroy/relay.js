@@ -1,5 +1,6 @@
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
+require('jquery-ui');
 var _ = require('lodash');
 var Handlebars = require('handlebars');
 
@@ -22,13 +23,14 @@ module.exports = Backbone.View.extend({
 		this.listenTo( this.collection, 'remove destroy', this.remove );
 		this.listenTo( this.collection, 'change:unread', this.updateUnread );
 		this.listenTo( this.collection, 'active', this.updateActive );
+		this.render();
 	},
 	render: function(){
 		var html = this.template();
-		var $channels = $.parseHTML( html );
-		this.setElement( $channels );
+		this.$el.html( html );
+		this.$channels = this.$el.find('ul.list');
 		this.collection.each( this.renderChannel );
-		this.$el.sortable({
+		this.$channels.sortable({
 			axis: 'y',
 			revert: 100
 		});
@@ -36,18 +38,17 @@ module.exports = Backbone.View.extend({
 	},
 	renderChannel: function( channel ){
 		var html = this.channel_template( channel.toJSON() );
-		var $channel = $.parseHTML( html );
-		this.$el.append( $channel );
+		this.$channels.append( html );
 		return this;
 	},
 	updateUnread: function( channel, unread ){
-		var $channel = this.$el.children('[data-id="'+ channel.id +'"]');
+		var $channel = this.$channels.children('[data-id="'+ channel.id +'"]');
 		$channel
 			.toggleClass( 'unread', ( unread > 0 ) )
 			.find('.unread').text( unread );
 	},
 	updateActive: function( name ){
-		var $channel = this.$el.children('[data-name="'+ name +'"]');
+		var $channel = this.$channels.children('[data-name="'+ name +'"]');
 		$channel
 			.addClass('active')
 			.siblings().removeClass('active');
