@@ -18,11 +18,10 @@ module.exports = Backbone.View.extend({
 	},
 	initialize: function( data, config ){
 		_(this).bindAll( 'render', 'renderChannel', 'updateUnread', 'updateActive', 'clickName', 'clickPart' );
-		this.mediator = config.mediator;
 		this.listenTo( this.collection, 'add', this.renderChannel );
 		this.listenTo( this.collection, 'remove destroy', this.remove );
 		this.listenTo( this.collection, 'change:unread', this.updateUnread );
-		this.listenTo( this.mediator, 'channels:active', this.updateActive );
+		this.listenTo( this.collection, 'active', this.updateActive );
 	},
 	render: function(){
 		var html = this.template();
