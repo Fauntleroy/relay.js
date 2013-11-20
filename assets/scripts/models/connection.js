@@ -1,6 +1,7 @@
 var Backbone = require('backbone');
 var _ = require('lodash');
 var Channels = require('../collections/channels.js');
+var io = require('socket.io-client');
 
 module.exports = Backbone.Model.extend({
 	initialize: function( data, config ){
@@ -9,7 +10,7 @@ module.exports = Backbone.Model.extend({
 		config.namespace = data.namespace; // attach this new connection to the config data
 		config.connection = this;
 		_( this ).bindAll( 'quit', 'doQuit', 'doNick', 'doRegister' );
-		this.socket = config.socket || io.connect( data.namespace );
+		this.socket = config.socket || io.connect( window.location.host + data.namespace );
 		this.channels = new Channels( null, config );
 		this.socket.on( 'quit', this.doQuit );
 		this.socket.on( 'nick', this.doNick );
