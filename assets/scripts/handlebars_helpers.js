@@ -18,9 +18,4 @@ module.exports = function( Handlebars ){
 		return new Handlebars.SafeString( text );
 	});
 
-	Handlebars.registerHelper( 'encodeURI', function( string ){
-		string = encodeURI( string );
-		return string;
-	});
-
 };
