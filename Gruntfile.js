@@ -192,7 +192,7 @@ module.exports = function(grunt) {
 	grunt.registerTask( 'buildcss', [ 'stylus', 'cssjoin', 'clean:css' ] );
 	grunt.registerTask( 'buildjs', [ 'jshint', 'handlebars', 'browserify' ] );
 	grunt.registerTask( 'minify', [ 'uglify', 'cssmin' ] );
-	grunt.registerTask( 'predeploy', [ 'build' ] );
+	grunt.registerTask( 'predeploy', [ 'build', 'minify' ] );
 	grunt.registerTask( 'dev', [ 'build', 'server', 'watch' ] );
 
 };
