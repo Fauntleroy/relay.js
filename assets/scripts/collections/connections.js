@@ -1,5 +1,5 @@
 var Backbone = require('backbone');
-var _ = require('lodash');
+var _ = require('underscore');
 var io = require('socket.io-client');
 var Connection = require('../models/connection.js');
 

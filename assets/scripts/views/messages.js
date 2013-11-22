@@ -5,7 +5,7 @@ var $ = Backbone.$ = require('jquery');
 require('jquery.links');
 require('jquery.emojify');
 require('jquery.resize');
-var _ = require('lodash');
+var _ = require('underscore');
 var Handlebars = require('handlebars');
 var helpers = require('../handlebars_helpers.js');
 helpers( Handlebars );

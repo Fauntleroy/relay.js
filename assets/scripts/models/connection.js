@@ -1,5 +1,5 @@
 var Backbone = require('backbone');
-var _ = require('lodash');
+var _ = require('underscore');
 var Channels = require('../collections/channels.js');
 var io = require('socket.io-client');
 

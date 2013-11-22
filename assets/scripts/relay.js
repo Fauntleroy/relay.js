@@ -3,7 +3,7 @@ IRC Module
 This is the base that includes all submodules and initializes the application
 */
 
-var _ = require('lodash');
+var _ = require('underscore');
 var Backbone = require('backbone');
 var $ = require('jquery');
 

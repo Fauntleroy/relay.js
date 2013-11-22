@@ -1,7 +1,7 @@
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
 require('jquery-ui');
-var _ = require('lodash');
+var _ = require('underscore');
 var Handlebars = require('handlebars');
 var templates = require('../../compiled/templates.js')( Handlebars );
 var ChannelListingView = require('../views/channel_listing.js');

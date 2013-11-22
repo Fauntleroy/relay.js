@@ -1,5 +1,5 @@
 var Backbone = require('backbone');
-var _ = require('lodash');
+var _ = require('underscore');
 var Messages = require('../collections/messages.js');
 var Users = require('../collections/users.js');
 

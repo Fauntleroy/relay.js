@@ -1,5 +1,5 @@
 var Backbone = require('backbone');
-var _ = require('lodash');
+var _ = require('underscore');
 var $ = Backbone.$ = require('jquery');
 
 var UPDATE_DELAY = 200;

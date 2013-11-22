@@ -1,6 +1,6 @@
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
-var _ = require('lodash');
+var _ = require('underscore');
 var Handlebars = require('handlebars');
 var handlebars_helper = require('handlebars-helper');
 handlebars_helper.help( Handlebars );

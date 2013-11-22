@@ -5,7 +5,7 @@ var $ = Backbone.$ = require('jquery');
 require('jquery.links');
 require('jquery.emojify');
 require('jquery.resize');
-var _ = require('lodash');
+var _ = require('underscore');
 var Handlebars = require('handlebars');
 var templates = require('../../compiled/templates.js')( Handlebars );
 var MessagesView = require('./messages.js');

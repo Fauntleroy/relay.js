@@ -1,5 +1,5 @@
 var Backbone = require('backbone');
-var _ = require('lodash');
+var _ = require('underscore');
 var Visibility = require('visibility');
 
 module.exports = Backbone.Model.extend({

@@ -1,5 +1,5 @@
 var fs = require('fs');
-var _ = require('lodash');
+var _ = require('underscore');
 var optimist = require('optimist');
 var argv = optimist.argv;
 

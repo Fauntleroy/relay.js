@@ -4,7 +4,6 @@
   "author": "Timothy Kempf",
   "version": "0.0.4-3",
   "dependencies": {
-    "lodash": "~0.9.2",
     "express": "3.x",
     "express-expose": "0.3.x",
     "hogy": "0.0.x",
@@ -14,7 +13,8 @@
     "winston": "0.6.x",
     "optimist": "0.3.x",
     "handlebars": "~1.0.12",
-    "handlebars-helper": "0.0.5"
+    "handlebars-helper": "0.0.5",
+    "underscore": "~1.5.2"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

@@ -5,7 +5,7 @@ Keeps track of the user's socket connection and displays its status
 
 var Backbone = require('backbone');
 var $ = Backbone.$ = require('jquery');
-var _ = require('lodash');
+var _ = require('underscore');
 var Handlebars = require('handlebars');
 var templates = require('../../compiled/templates.js')( Handlebars );
 var io = require('socket.io-client');
