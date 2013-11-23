@@ -159,7 +159,7 @@ module.exports = Backbone.View.extend({
 			this.postprocess( $partial );
 		}
 		else {
-			$message = $($.trim(this.message_template( json )));
+			$message = $($.parseHTML( this.message_template( json ) ));
 			this.$messages.append( $message );
 			this.postprocess( $message );
 		}
