@@ -25,7 +25,7 @@ Relay.js is a web-based IRC client that focuses on making IRC less intimidating 
 - Interface elements for certain IRC commands, such as banning/kicking a user
 - Tab completion for usernames, emoticons, certain commands
 - Tests
-- Persistent connections
+- ~~Persistent connections~~ (persistent connections should be handled by some kind of [bouncer](https://www.ircrelay.com/))
 - Logging
 
 ## Installation
