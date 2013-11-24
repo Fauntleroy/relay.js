@@ -18,7 +18,8 @@
     "optimist": "0.3.x",
     "handlebars": "~1.0.12",
     "handlebars-helper": "~0.0.5",
-    "underscore": "~1.5.2"
+    "underscore": "~1.5.2",
+    "clone": "~0.1.11"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
