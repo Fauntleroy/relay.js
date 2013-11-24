@@ -2,7 +2,7 @@
   "name": "relay.js",
   "description": "A web-based IRC client that focuses on making IRC less intimidating and easier to use",
   "author": "Timothy Kempf",
-  "version": "0.0.4-3",
+  "version": "0.0.4",
   "dependencies": {
     "express": "3.x",
     "express-expose": "0.3.x",
