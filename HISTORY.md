@@ -1,3 +1,19 @@
+### 0.0.5
+*11/24/2013*
+- Switch out [Lodash](http://lodash.com/) for [Underscore](http://underscorejs.org/) (due to lodash API inconsistencies when not using compatibility packages)
+- Mode change timestamps fixed
+- Use imports to concat CSS
+- Resolve issues with channel capitalization
+- Fix Gist stylesheet inclusion
+- Use [browserify](http://browserify.org/) for client side dependency management
+- Use `relay` as client side namespace instead of `irc`
+- Utilize [Visibility.js](https://github.com/ai/visibility.js) to keep track of app visibility rather than `window` events
+- Add automatic [JSHint](http://www.jshint.com/) linting to `grunt dev` task
+- Update dependencies ([Fontawesome](http://fontawesome.io/), [Underscore](http://underscorejs.org/), [Backbone](http://backbonejs.org/), [jQuery](http://jquery.com/))
+- Use [Handlebars Helper](https://github.com/SparkartGroupInc/handlebars-helper)
+
+---
+
 ### 0.0.4
 *6/2/2013*
 - Optimize render time of channels with a large number of messages
