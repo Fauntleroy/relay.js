@@ -10,8 +10,9 @@ module.exports = Backbone.View.extend({
 	template: templates.users,
 	user_template: templates.user,
 	initialize: function(){
-		_( this ).bindAll( 'render', 'renderUsers', 'updateUser' );
-		this.listenTo( this.collection, 'reset sort remove', this.renderUsers );
+		_( this ).bindAll( 'render', 'renderUsers', 'removeUser', 'updateUser' );
+		this.listenTo( this.collection, 'reset sort', this.renderUsers );
+		this.listenTo( this.collection, 'remove', this.removeUser );
 		this.listenTo( this.collection, 'change', this.updateUser );
 	},
 	render: function(){
@@ -24,7 +25,7 @@ module.exports = Backbone.View.extend({
 		this.renderUsers();
 		return this;
 	},
-	renderUsers: function( user ){
+	renderUsers: _.throttle( function( user ){
 		var users_view = this;
 		var html = '';
 		this.collection.each( function( user ){
@@ -32,11 +33,13 @@ module.exports = Backbone.View.extend({
 		});
 		this.$users[0].innerHTML = html;
 		this.$count.text( this.collection.length );
+	}, 150 ),
+	removeUser: function( user ){
+		var $user = this.$users.find( '[data-nick="'+ encodeURI( user.get('nick') ) +'"]' );
+		$user.remove();
 	},
 	updateUser: function( user ){
 		var $user = this.$users.find( '[data-nick="'+ encodeURI( user.get('nick') ) +'"]' );
-		var html = this.user_template( user.toJSON() );
-		var $user_new = $.parseHTML( html );
-		$user.replaceWith( $user_new );
+		$user.replaceWith( this.user_template( user.toJSON() ) );
 	}
 });
