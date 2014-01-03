@@ -49,7 +49,7 @@ module.exports = Backbone.Model.extend({
 		this.destroy();
 	},
 	doAddMessage: function( message ){
-		if( this.get('active') ) this.mediator.trigger( 'active:messages:add', message );
+		if( this.get('active') ) this.mediator.trigger( 'active:messages:add', message.toJSON() );
 		if( !this.get('active') && message.get('message') ){
 			var unread = this.get('unread');
 			this.set( 'unread', unread + 1 );

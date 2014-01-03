@@ -11,16 +11,18 @@ module.exports = Backbone.Model.extend({
 	initialize: function( data, mediator ){
 		_( this ).bindAll( 'updateVisibility', 'clearUnread' );
 		this.mediator = mediator;
-		this.listenTo( this.mediator, 'chat:active:message', this.updateUnread );
+		this.listenTo( this.mediator, 'active:messages:add', this.updateUnread );
 		this.listenTo( this.mediator, 'channels:active', this.updateChannel );
 		Visibility.change( this.updateVisibility );
 	},
 	isHidden: function(){
 		return Visibility.hidden();
 	},
-	updateUnread: function(){
+	// update unread message count
+	// only updates for 'message' type messages now
+	updateUnread: function( message ){
 		if( !this.isHidden() ) return;
-		this.set( 'unread', this.get('unread') + 1 );
+		if( message.message ) this.set( 'unread', this.get('unread') + 1 );
 	},
 	updateChannel: function( channel ){
 		this.set( 'channel', channel );
