@@ -17,7 +17,7 @@ module.exports = Backbone.View.extend({
 	template: templates.connectivity,
 	initialize: function(){
 		_( this ).bindAll( 'bindState' );
-		this.socket = io.connect( 'http://localhost' );
+		this.socket = io.connect( window.location.host );
 		_( STATES ).each( this.bindState );
 		this.render();
 	},
