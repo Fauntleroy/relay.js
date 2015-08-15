@@ -1,15 +1,10 @@
-var app = require('app');
-var BrowserWindow = require('browser-window');
+var node_jsx = require('node-jsx');
+var React = require('react');
 
-const MAIN_WINDOW_HTML_PATH = 'file://'+ __dirname +'/index.html';
-
-var mainWindow;
-
-app.on('ready', function(){
-    mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600
-    });
-
-    mainWindow.loadUrl( MAIN_WINDOW_HTML_PATH );
+node_jsx.install({
+    extension: '.jsx'
 });
+
+var App = require('./components/App.jsx');
+
+React.render( React.createElement( App, null ), document.body );
