@@ -1,5 +1,5 @@
-var app = require('app');
-var BrowserWindow = require('browser-window');
+import app from 'app';
+import BrowserWindow from 'browser-window';
 
 const MAIN_WINDOW_HTML_PATH = 'file://'+ __dirname +'/index.html';
 

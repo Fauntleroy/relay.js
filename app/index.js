@@ -1,10 +1,5 @@
-var node_jsx = require('node-jsx');
-var React = require('react');
+import React from 'react';
 
-node_jsx.install({
-    extension: '.jsx'
-});
+import App from './components/App.jsx';
 
-var App = require('./components/App.jsx');
-
-React.render( React.createElement( App, null ), document.body );
+React.render( <App />, document.body );
