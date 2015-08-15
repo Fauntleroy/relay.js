@@ -1,8 +1,8 @@
 import app from 'app';
 import BrowserWindow from 'browser-window';
 
-const MAIN_WINDOW_HTML_PATH = 'file://'+ __dirname +'/index.html';
-
+const MAIN_WINDOW_HTML_PATH = 'file://'+ __dirname +'/windows/index.html';
+console.log(MAIN_WINDOW_HTML_PATH);
 var mainWindow;
 
 app.on('ready', function(){

@@ -16,3 +16,6 @@ node_modules
 emoji
 *.psd
 assets/compiled/
+
+#ignore progress screenshots
+_screenshots

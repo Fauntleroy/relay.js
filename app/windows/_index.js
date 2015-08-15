@@ -1,3 +1,3 @@
 require('babel/register');
 
-require('./index.js');
+require('./index.jsx');

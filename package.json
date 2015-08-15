@@ -16,9 +16,13 @@
     "handlebars-helper": "~0.0.5",
     "hogy": "0.0.x",
     "irc": "0.3.x",
+    "irc-factory": "^1.10.1",
+    "lodash": "^3.10.1",
     "node-uuid": "1.4.x",
     "optimist": "0.3.x",
     "react": "^0.13.3",
+    "react-redux": "^0.8.2",
+    "redux": "^1.0.1",
     "socket.io": "git://github.com/Fauntleroy/socket.io.git#Branch_0.9.13",
     "underscore": "~1.5.2",
     "winston": "0.6.x"
