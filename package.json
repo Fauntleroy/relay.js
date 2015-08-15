@@ -43,7 +43,7 @@
   "scripts": {
     "predeploy": "grunt predeploy",
     "start": "node relay.js",
-    "startapp": "electron .",
+    "app": "electron .",
     "dev": "grunt dev"
   },
   "engines": {
