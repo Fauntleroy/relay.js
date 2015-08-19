@@ -1,23 +1,14 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 
-import { IRC_RECEIVE_MESSAGE } from '../constants/action_types.js';
+import connectionsReducer from './connections.js';
+import channelsReducer from './channels.js';
+import messagesReducer from './messages.js';
 
-const initial_state = {
-    messages: []
-};
-
-var stateReducer = function( state = initial_state, action ){
-    switch( action.type ){
-        case IRC_RECEIVE_MESSAGE:
-            return Object.assign( {}, state, {
-                messages: [ action.message, ...state.messages ]
-            });
-        break;
-        default:
-            return state;
-    }
-};
-
-var store = createStore( stateReducer );
+var reducer = combineReducers({
+    connections: connectionsReducer,
+    channels: channelsReducer,
+    messages: messagesReducer
+});
+var store = createStore( reducer );
 
 export default store;

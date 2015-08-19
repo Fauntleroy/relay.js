@@ -9,9 +9,12 @@ var App = React.createClass({
     },
     componentWillMount: function(){
         this._unsubscribe = store.subscribe( this._onStoreChange );
-        action_creators.createConnection();
+        action_creators.createConnection({
+            nick: 'relayjs_app_test',
+            server: 'irc.freenode.net'
+        });
     },
-    componentWillUnmount: function () {
+    componentWillUnmount: function() {
         this._unsubscribe();
     },
     render: function(){

@@ -5,10 +5,11 @@ import irc_utils from '../utils/irc.js';
 import { dispatch } from '../stores/irc.js';
 
 var action_creators = {
-    createConnection: function(){
-        irc_utils.createConnection();
+    createConnection: function( options ){
+        var connection = irc_utils.createConnection( options );
         return {
-            type: action_types.IRC_CREATE_CONNECTION
+            type: action_types.IRC_CREATE_CONNECTION,
+            connection: connection
         };
     },
     receiveMessage: function( message ){
