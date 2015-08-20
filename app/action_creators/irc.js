@@ -12,10 +12,27 @@ var action_creators = {
             connection: connection
         };
     },
-    receiveMessage: function( message ){
+    receiveAny: function( message ){
+        return {
+            type: action_types.IRC_RECEIVE_ANY,
+            message: message
+        };
+    },
+    receiveJoin: function( user, channel, connection_id ){
+        return {
+            type: action_types.IRC_RECEIVE_JOIN,
+            user: user,
+            channel: channel,
+            connection_id: connection_id
+        };
+    },
+    receiveMessage: function( text, origin, destination, connection_id ){
         return {
             type: action_types.IRC_RECEIVE_MESSAGE,
-            message: message
+            text: text,
+            origin: origin,
+            destination: destination,
+            connection_id: connection_id
         };
     }
 };

@@ -12,4 +12,5 @@ app.on('ready', function(){
     });
 
     mainWindow.loadUrl( MAIN_WINDOW_HTML_PATH );
+    mainWindow.openDevTools();
 });

@@ -4,7 +4,7 @@ const initial_state = [];
 
 var messagesReducer = function( state = initial_state, action ){
     switch( action.type ){
-        case action_types.IRC_RECEIVE_MESSAGE:
+        case action_types.IRC_RECEIVE_ANY:
             var message = action.message;
             return [ message, ...state ];
         break;
