@@ -16,3 +16,4 @@ node_modules
 emoji
 *.psd
 assets/compiled/
+_screenshots/
