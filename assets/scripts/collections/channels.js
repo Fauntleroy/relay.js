@@ -8,7 +8,7 @@ module.exports = Backbone.Collection.extend({
 	initialize: function( models, config ){
 		this.mediator = config.mediator;
 		this.connection = config.connection;
-		this.socket = config.socket || io.connect( 'http://'+ window.location.host + config.namespace );
+		this.socket = config.socket || io.connect( '//'+ window.location.host + config.namespace );
 		_(this).bindAll( 'join', 'part', 'doChans', 'doJoin', 'doPart', 'doKick', 'doMessage', 'updateActive' );
 		this.add({
 			status: true,
@@ -76,7 +76,7 @@ module.exports = Backbone.Collection.extend({
 		}
 	},
 	doMessage: function( from, to, text, timestamp ){
-		var nick = this.connection.get('nick');		
+		var nick = this.connection.get('nick');
 		var channel = ( to === nick )? from: to;
 		var existing_channels = this.where({ name: channel });
 		if( existing_channels.length === 0 ){
