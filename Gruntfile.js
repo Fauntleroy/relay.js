@@ -170,8 +170,8 @@ module.exports = function(grunt) {
 	});
 
 	// the cool/easy way to do it
-	Object.keys( pkg.devDependencies ).forEach( function( dep ){
-		if( dep.substring( 0, 6 ) === 'grunt-' ) grunt.loadNpmTasks( dep );
+	Object.keys( pkg.dependencies ).forEach( function( dep ){
+		if( dep !== 'grunt-cli' && dep.substring( 0, 6 ) === 'grunt-' ) grunt.loadNpmTasks( dep );
 	});
 
 	grunt.registerTask( 'server', 'Start the relay.js server', function(){
