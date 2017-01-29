@@ -5,7 +5,7 @@
 Relay.js is a web-based IRC client that focuses on making IRC less intimidating and easier to use.
 
 
-### Demo: [demo.relayjs.com](http://demo.relayjs.com?server=irc.freenode.net&channels=relay.js)
+### Demo: [www.relayjs.com](http://www.relayjs.com?server=irc.freenode.net&channels=relay.js)
 
 * *This is only a demonstration server. It may break, crash, or stall at any time without warning. It's highly recommended that you host your own instance of Relay.js for prolonged use.*
 
@@ -67,7 +67,7 @@ module.exports = {
 
 Some defaults may also be set using URL parameters. Defaults specified in the URL will override those in `config.js`, except for locked parameters. The following parameters are available:
 
-* **server** - The URL of an IRC server (ex: "irc.freenode.net"). Maps to **defaults.server.host**. 
+* **server** - The URL of an IRC server (ex: "irc.freenode.net"). Maps to **defaults.server.host**.
 * **port** - The port of an IRC server (ex: 9001). Maps to **defaults.server.port**.
 * **ssl** - Connect with SSL (ex: true). Maps to **defaults.server.ssl**.
 * **nick** - The default nick to connect with (ex: "Fauntleroy"). Maps to **defaults.nick**.
